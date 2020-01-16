@@ -1,0 +1,59 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+h3{
+    font-size: 35px;
+    color: whitesmoke;
+    font-weight: bold;
+}
+.fa-pencil-square-o{
+    font-size: 30px;
+    color:black;
+    margin-top: 5px;
+    float: right;
+    color: whitesmoke;
+}
+.col-md-5{
+    box-shadow: -1px 1px 60px 10px black;
+    background: rgba(0, 0, 0, 0.4);
+}
+.label{
+    font-weight: normal;
+    color: black;
+}
+.input-field{
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    border: 0px;
+    border-bottom: 1px solid whitesmoke;
+    color: black;
+    font-size: 18px;
+    margin-top: 15px;
+    font-family: 'Roboto',sans-serif;
+}
+.col-md-10 input:focus{
+    background: none;
+    outline: none;
+    
+}
+.btn-info{
+    margin-top: 20px;
+    width: 150px;
+    margin-bottom: 20px;
+    margin-left: 32%;
+}
+::placeholder{
+    color: #080808;
+}
+.danger-error{
+    margin-left: 32%;
+    color: red;
+    font-size: 15px;
+}
+.input-field:focus{
+    background: none;
+}
