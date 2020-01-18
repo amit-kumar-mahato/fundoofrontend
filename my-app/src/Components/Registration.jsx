@@ -157,7 +157,7 @@ class Registration extends Component {
                 <h3 className="text-left">Registration Form</h3>
               </div>
               <div className="col-md-6">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
               </div>
             </div>
             <hr />

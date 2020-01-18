@@ -7,7 +7,7 @@
     margin-top: 5px;
 }
 .header{
-    margin-left: 20%;
+    margin-left: 23%;
     font-family: 'M PLUS Rounded 1c', sans-serif;
 }
 .col-md-4 {
@@ -75,21 +75,18 @@ h5 {
 
 /* /////////////////RESPONSIVE//////////// */
 
- @media(min-width:992px){
-    
-
-}
-@media(min-width:768px) and (max-width:991px){
+@media(min-width:768px) and (max-width:992px){
     .header{
-        margin-left: 10%;
+        margin-left: 20%;
         font-family: 'M PLUS Rounded 1c', sans-serif;
     }
     .col-md-4 {
         margin-top: 60px !important; 
+        max-width: 50% !important;
     }
     .buttons {
         margin-top: 30px;
-        margin-left: 20%;
+        margin-left: 33%;
       }
     #submit{
         margin-left: 0px !important;

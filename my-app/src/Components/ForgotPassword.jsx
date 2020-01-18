@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import UserController from "../Controller/UserController";
 export default class ForgotPassword extends Component {
   constructor(props) {
     super(props);
@@ -7,6 +8,33 @@ export default class ForgotPassword extends Component {
       error: false,
       message: null
     };
+  }
+
+  onChangeEmail = (event) => {
+    var mail = event.target.value
+    this.setState({email: mail})
+  }
+  onSubmit = () =>{
+    if (this.state.email === "") {
+      this.setState({
+          error: true,
+          message: "Email cannot be empty"
+      });
+    }
+    else{
+      var userEmail = {
+        email: this.state.email
+      };
+
+      UserController.forgotPassword(userEmail).then(response => {
+        this.setState({message: "Please check your mail"})
+        //this.props.history.push('/updatePassword');
+      })
+      .catch(error => {
+        console.log("error", error.response.data);
+        this.setState({message: "Email doesn't exist"})
+      })
+    }
   }
   render() {
     const divStyle = {
@@ -43,10 +71,17 @@ export default class ForgotPassword extends Component {
               className="input-field col-md-10"
               placeholder="E-mail"
               required
+              onChange={this.onChangeEmail}
             />
           </div>
+          <span className="text-danger font-weight-normal">{this.state.message}</span>
           <footer>
-            <button className="btn btn-outline-primary" style={divStyle}>
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              style={divStyle}
+              onClick={this.onSubmit}
+            >
               Submit
             </button>
           </footer>

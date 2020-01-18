@@ -1,26 +1,71 @@
 import React, { Component } from "react";
 import "../Login.css";
 import { Link } from "react-router-dom";
+import UserController from "../Controller/UserController";
 
 export default class Login extends Component {
   constructor(props){
     super(props);
     this.state = {
-      email:'',
-      password:'',
-      error:false,
-      message:null
+      email:"",
+      password:"",
+      message:null,
+      error: false
     };
   }
 
+  onChangeEmail = (event) => {
+    var mail = event.target.value;
+    this.setState({
+        email: mail
+    })
+}
+
+onChangePassword = (event) => {
+    var pswd = event.target.value;
+    this.setState({
+        password: pswd
+    })
+}
+
+onSubmit = () => {
+    if (this.state.email === "") {
+        this.setState({
+            Error: true,
+            message: "Email cannot be empty"
+        })
+    }
+    else {
+        var loginDetails = {
+            email: this.state.email,
+            password: this.state.password
+        };
+       // console.log(loginDetails);
+        UserController.authentication(loginDetails).then(response => {
+          
+            console.log('response---', response.data.token);
+            if (response.data.statuscode === 200) {
+
+                //localStorage.setItem('token', response.data.token);
+                this.props.history.push("/dashboard")
+            }
+        }).catch((err) => {
+            console.log("error", err.response.data);
+            this.setState({ message: 'Invalid credentials' })
+
+        })
+        //console.log('-----', this.state.message);
+    }
+  }
   render() {
+  
     return (
       <div className="container">
         <div className="col-md-4 offset-md-4">
           <div className="form-group">
             <div className="form-row ">
               <span>
-                <img src="../keep.png" className="logo"></img>
+                <img src="../keep.png" alt="logo" className="logo"></img>
               </span>
               <h1 className="header">fundoo</h1>
             </div>
@@ -35,6 +80,7 @@ export default class Login extends Component {
               className="input-field col-md-10"
               placeholder="E-mail"
               required
+              onChange={this.onChangeEmail}
             />
           </div>
 
@@ -46,14 +92,19 @@ export default class Login extends Component {
               className="input-field col-md-10"
               placeholder="Password"
               required
+              onChange={this.onChangePassword}
             />
           </div>
+          <span className="text-danger font-weight-normal">
+                {this.state.message}
+          </span>
           <div className="buttons">
             <button
-              type="submit"
+              type="button"
               value="submit"
               className="btn btn-outline-primary text-center"
               id="submit"
+              onClick={this.onSubmit}
             >
               Login
             </button>
@@ -83,4 +134,3 @@ export default class Login extends Component {
     );
   }
 }
-// export default Login;

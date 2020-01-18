@@ -1,5 +1,70 @@
 import React, { Component } from "react";
-export default class UpdatePassword extends Component {
+import UserController from "../Controller/UserController";
+import { withRouter } from "react-router-dom";
+class UpdatePassword extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token:this.props.match.params.token,
+      newPassword: "",
+      cnfPassword: "",
+      error: false,
+      message: null
+    };
+  }
+  onChangePswd = event => {
+    var pswd = event.target.value;
+    this.setState({ newPassword: pswd });
+  };
+  onChangeCnfPswd = event => {
+    var cpswd = event.target.value;
+    this.setState({ cnfPassword: cpswd });
+  };
+
+  onSubmit = () => {
+    if (this.state.newPassword === "") {
+      this.setState({
+        error: true,
+        message: "Please enter the password"
+      });
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(
+        this.state.newPassword
+      )
+    ) {
+      this.setState({
+        error: true,
+        message:
+          "At least 1 lowercase 1 uppercase 1 number and 1 special character and length should be minimum 6"
+      });
+    }
+    if (this.setState.cnfPassword === "") {
+      this.setState({
+        error: true,
+        message: "Please enter the Confirm Password"
+      });
+    } else if (this.state.cnfPassword !== this.state.newPassword) {
+      this.setState({
+        error: true,
+        message: "Password and Confirm Password should be same"
+      });
+    } else {
+      var pswdInfo = {
+        newPassword: this.state.newPassword,
+        cnfPassword: this.state.cnfPassword
+      };
+
+      console.log("TOKEN :" + this.state.token);
+      UserController.updatePassword(pswdInfo, this.state.token).then(response => {
+        console.log(response.data);
+        this.props.histroy.push("/");
+      })
+        .catch(error => {
+          console.log("ERROR :"+error.response);
+          this.setState({ message: "Something went wrong" });
+        });
+    }
+  }
   render() {
     const divStyle = {
       width: "50%",
@@ -28,27 +93,40 @@ export default class UpdatePassword extends Component {
           </div>
 
           <div className="input-icons">
-          <i className="fa fa-key" aria-hidden="true"></i>
+            <i className="fa fa-key" aria-hidden="true"></i>
             <input
               type="password"
-              name="pswd"
+              name="newPassword"
               className="input-field col-md-10"
               placeholder="Password"
               required
+              onChange={this.onChangePswd}
             />
           </div>
+          <span className="text-danger font-weight-normal">
+            {this.state.message}
+          </span>
           <div className="input-icons">
-          <i className="fa fa-key" aria-hidden="true"></i>
+            <i className="fa fa-key" aria-hidden="true"></i>
             <input
               type="password"
-              name="cnfpswd"
+              name="cnfPassword"
               className="input-field col-md-10"
               placeholder="Confirm Password"
               required
+              onChange={this.onChangeCnfPswd}
             />
           </div>
+          <span className="text-danger font-weight-normal">
+            {this.state.message}
+          </span>
           <footer>
-            <button className="btn btn-outline-primary" style={divStyle}>
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              style={divStyle}
+              onClick={this.onSubmit}
+            >
               Submit
             </button>
           </footer>
@@ -57,3 +135,4 @@ export default class UpdatePassword extends Component {
     );
   }
 }
+export default withRouter(UpdatePassword);
