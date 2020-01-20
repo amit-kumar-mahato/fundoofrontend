@@ -6,6 +6,9 @@ import ForgotPassword from './Components/ForgotPassword';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import UpdatePassword from './Components/UpdatePassword';
 import Dashboard from './Components/Dashboard';
+import SideNav from './Components/SideNav';
+import Header from './Components/Header';
+import Newheader from './Components/Newheader'
 
 class App extends Component {
   render() {
@@ -17,6 +20,9 @@ class App extends Component {
         <Route path="/forgotPassword" component={ForgotPassword}></Route>
         <Route path="/updatePassword/:token" component={UpdatePassword}></Route>
         <Route path="/dashboard" component={Dashboard}></Route>
+        <Route path="/sidenav" component={SideNav}></Route>
+        <Route path="/headers" component={Header}></Route>
+        <Route path="/newheader" component={Newheader}></Route>
       </Router>
     );
   }

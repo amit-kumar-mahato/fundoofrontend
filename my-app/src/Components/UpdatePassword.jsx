@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import UserController from "../Controller/UserController";
-import { withRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 class UpdatePassword extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +21,7 @@ class UpdatePassword extends Component {
     this.setState({ cnfPassword: cpswd });
   };
 
-  onSubmit = () => {
+  onSubmit = (e) => {
     if (this.state.newPassword === "") {
       this.setState({
         error: true,
@@ -56,12 +56,12 @@ class UpdatePassword extends Component {
 
       console.log("TOKEN :" + this.state.token);
       UserController.updatePassword(pswdInfo, this.state.token).then(response => {
-        console.log(response.data);
-        this.props.histroy.push("/");
+        console.log("Data :"+response);
+        this.props.router.push('/');
       })
         .catch(error => {
-          console.log("ERROR :"+error.response);
-          this.setState({ message: "Something went wrong" });
+          console.log("ERROR :"+error);
+        //  this.setState({ message: "Something went wrong" });
         });
     }
   }
@@ -96,6 +96,7 @@ class UpdatePassword extends Component {
             <i className="fa fa-key" aria-hidden="true"></i>
             <input
               type="password"
+              //pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"
               name="newPassword"
               className="input-field col-md-10"
               placeholder="Password"
@@ -135,4 +136,4 @@ class UpdatePassword extends Component {
     );
   }
 }
-export default withRouter(UpdatePassword);
+export default UpdatePassword;

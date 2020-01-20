@@ -2,10 +2,12 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:8081",
+  "proxy": "http://localhost:8081",
   "dependencies": {
     "axios": "^0.19.1",
     "bootstrap": "^4.4.1",
+    "mdbootstrap": "^4.11.0",
+    "mdbreact": "^4.24.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router": "^5.1.2",
