@@ -46,7 +46,7 @@ onSubmit = () => {
             console.log('response---', response.data.token);
             if (response.data.statuscode === 200) {
 
-                //localStorage.setItem('token', response.data.token);
+                localStorage.setItem('token', response.data.token);
                 this.props.history.push("/dashboard")
             }
         }).catch((err) => {

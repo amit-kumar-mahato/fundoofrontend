@@ -8,7 +8,10 @@ import UpdatePassword from './Components/UpdatePassword';
 import Dashboard from './Components/Dashboard';
 import SideNav from './Components/SideNav';
 import Header from './Components/Header';
-import Newheader from './Components/Newheader'
+import Newheader from './Components/Newheader';
+import CreateNote from './Components/CreateNote';
+import {Example} from './Components/CustomTogglerNote';
+import Reminder from './Components/Reminder';
 
 class App extends Component {
   render() {
@@ -23,6 +26,9 @@ class App extends Component {
         <Route path="/sidenav" component={SideNav}></Route>
         <Route path="/headers" component={Header}></Route>
         <Route path="/newheader" component={Newheader}></Route>
+        <Route path="/createnote" exact component={CreateNote}></Route>
+        <Route path ="/toggler" component={Example}></Route> 
+        <Route path="/reminder" component={Reminder}></Route>
       </Router>
     );
   }

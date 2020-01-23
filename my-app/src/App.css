@@ -13,12 +13,7 @@
    font-size: 20px;
    color: whitesmoke
 }
-.fa-search:hover {
-    /* color: red; */
-    /* border: 2px solid red;
-    border-radius: 70%;
-    border-color: teal; */
-}
+
 .search-field{
     width: 70%;
     background: transparent;
@@ -42,9 +37,7 @@
     font-size: 20px;
     color: whitesmoke;
 }
-.refresh{
-}
-.profile-pic{}
+
 .right-content{
     margin-right: 50%;
 }
@@ -56,4 +49,62 @@
 }
 .main-content{
     border: 2px solid whitesmoke;
+}
+/* CSS for Create Note */
+.collapsible {
+    width: 100%;
+    background-color:transparent;
+    color: black;
+    cursor: pointer;
+    border: none;
+    text-align: left;
+    font-size: 20px;
+    border-radius: 5px;
+  }
+  
+  .active, .collapsible:hover {
+    outline:none;
+    border: none;
+  }
+  .note-content {
+    width: 100%;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+  }
+  .note-container{
+    margin-top: 5%;
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+  .notes{
+    box-shadow: 0px 0px 00px 1.5px black;
+  }
+  .note-fa{
+    padding: 7px;
+  }
+  .closeBtn{
+    background-color: transparent;
+  }
+  .desc-icon{
+      background-color: white;
+      border-radius: 5px;
+  }
+  /*------------*/
+ 
+  .createNote-container {
+   margin-left: 30%;
+   margin-right: 30%;
+  }
+  .noteComponent {
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  .inputbase {
+    padding: 11px 13 7px;
+    font-size: 15px;
+  }
+.button-icon {
+    margin-top: 5%;
+   padding: 5px;
 }
