@@ -2,70 +2,8 @@ import React, { Component } from "react";
 import "../App.css";
 import NoteController from "../Controller/NoteController";
 import { Card, Button, FormControl } from "react-bootstrap";
-import CustomTogglerNote from "../Components/CustomTogglerNote";
 
 class CreateNote extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     openNote: false,
-  //     title: "",
-  //     description: "",
-  //     createNote: false
-  //   };
-  // }
-
-  // onChangeTitle(event) {
-  //   this.setState({ title: event.target.value });
-  // }
-  // onChangeDesc(event) {
-  //   this.setState({ description: event.target.value });
-  // }
-  // onClose = () => {
-  //   if (this.state.title === "" && this.state.description == "") {
-  //     this.setState({ openNote: false });
-  //   } else {
-  //     var noteDetails = {
-  //       title: this.state.title,
-  //       description: this.state.description
-  //     };
-
-  //     noteController
-  //       .createNote(noteDetails)
-  //       .then(response => {
-  //         console.log("Note Data :" + response.data);
-  //       })
-  //       .catch(error => {
-  //         console.log("ERROR :" + error.data);
-  //       });
-  //   }
-  // };
-  // render() {
-  //   return (
-  //     <div className="note-container">
-  //       <div className="notes">
-  //         <input type="text" className="collapsible" placeholder="Title" onChange={this.onChangeTitle}/>
-  //         <div className="note-content">
-  //           <textarea
-  //             type="text"
-  //             className="collapsible"
-  //             placeholder="Description"
-  //             onChange={this.onChangeDesc}
-  //           />
-  //           <p
-  //             className="d-flex justify-content-end"
-  //             style={{ color: "black" }}
-  //             onClick={this.onClose}
-  //           >
-  //             Close
-  //           </p>
-  //         </div>
-  //       </div>
-  //     </div>
-
-  //   );
-  // }
-
   constructor(props) {
     super(props);
     this.state = {

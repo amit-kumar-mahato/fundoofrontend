@@ -1,0 +1,28 @@
+.side-drawer{
+    margin-top: 8%;
+    height: 100%;
+    background: transparent;
+    box-shadow: 2px 8px 5px rgba(0, 0, 0, 0.5) ;
+    position: fixed;
+    width: 300px;
+}
+.side-drawer ul{
+    list-style: none;
+    margin-left: 7%;
+}
+.side-drawer li .p-2{
+    text-decoration: none;
+}
+.active{
+    width:80%;
+   border: 1px solid whitesmoke;
+   border-top-right-radius: 50px;
+   border-bottom-right-radius: 50px;
+}
+
+.side-drawer ul li:hover{
+    width:80%;
+    border: 1px solid whitesmoke;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
