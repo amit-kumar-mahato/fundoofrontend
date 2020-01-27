@@ -1,17 +1,18 @@
 .side-drawer{
-    margin-top: 8%;
+    margin-top: 5%;
+    padding-top: 1%;
     height: 100%;
-    background: transparent;
     box-shadow: 2px 8px 5px rgba(0, 0, 0, 0.5) ;
     position: fixed;
-    width: 300px;
+    width: 250px;
 }
 .side-drawer ul{
     list-style: none;
     margin-left: 7%;
 }
-.side-drawer li .p-2{
+.side-drawer li .p-3{
     text-decoration: none;
+    padding-top: 5px;
 }
 .active{
     width:80%;

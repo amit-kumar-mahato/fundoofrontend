@@ -11,6 +11,13 @@ class NoteController{
             headers:headers
         })
     }
+
+    allNotes(){
+        console.log("Inside allNotes method...");
+        return Axios.get('notes',{
+            headers:headers
+        })
+    }
     setReminder(reminder){
         console.log("DATA :"+reminder.datetime);
         return Axios.put('notes/reminder?noteId='+reminder.noteId,reminder,{

@@ -3,13 +3,13 @@ import "../App.css";
 class Header extends Component {
   render() {
     return (
-      <div className="container-fluid">
-        <div className="row" style={{ display: "flex", alignItems: "center" }}>
+      <div className="container-fluid nav-bar">
+        <div className="row header" style={{ display: "flex", alignItems: "center" }}>
           <div
             className="col-sm-3"
             style={{ display: "flex", alignItems: "center"}}
           >
-            <div className="col-sm-2" style={{ color: "whitesmoke" }}>
+            <div className="col-sm-2" style={{ color: "gray" }}>
               <i
                 className="fa fa-bars"
                 aria-hidden="true"
@@ -20,7 +20,7 @@ class Header extends Component {
               <img src="../keep.png" alt="logo" width="40px" height="40px" />
             </div>
             <div className="col-sm-3">
-              <span style={{ fontSize: "29px", color: "whitesmoke" }}>
+              <span style={{ fontSize: "29px", color: "gray" }}>
                 fundoo
               </span>
             </div>
@@ -28,7 +28,7 @@ class Header extends Component {
         
           <div className="col-sm-6 has-search">
           <i className="fa fa-search form-control-feedback" title="Search"></i>
-          <input type="text" class="form-control" placeholder="Search..." />
+          <input type="text" className="form-control" placeholder="Search..." />
           <button type="button" className="close" aria-label="Close" />
           </div>
 
@@ -37,14 +37,14 @@ class Header extends Component {
             style={{ display: "flex", alignItems: "center"}}
           >
             <div className="col-sm-3"></div>
-            <div className="col-sm-3" style={{ color: "whitesmoke" }}>
+            <div className="col-sm-3" style={{ color: "gray" }}>
             <i
                 className="fa fa-refresh"
                 title="Refresh"
                 aria-hidden="true"
               ></i>
             </div>
-            <div className="col-sm-3" style={{ color: "whitesmoke" }}>
+            <div className="col-sm-3" style={{ color: "gray" }}>
             <i
                 className="fa fa-th-list"
                 title="List View"
@@ -56,7 +56,6 @@ class Header extends Component {
             </div>
           </div>
         </div>
-        <hr />
       </div>
     );
   }
