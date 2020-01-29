@@ -27,7 +27,7 @@ class App extends Component {
         <Route path="/headers" component={Header}></Route>
         <Route path="/newheader" component={Newheader}></Route>
         <Route path="/createnote" exact component={CreateNote}></Route>
-        <Route path ="/toggler" component={Example}></Route> 
+        <Route path="/toggler" component={Example}></Route> 
         <Route path="/reminder" component={Reminder}></Route>
       </Router>
     );

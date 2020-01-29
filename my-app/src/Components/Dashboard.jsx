@@ -6,6 +6,7 @@ import SideDrawer from "../Components/SideDrawer";
 import CreateNote from "./CreateNote";
 import NoteList from "../Components/NoteList";
 import '../App.css';
+import Reminder from "../Components/Reminder";
 export default class Dashboard extends Component {
   state = {
     titles: [],
@@ -17,8 +18,8 @@ export default class Dashboard extends Component {
     addReminder:false
   };
   /*-----Add Reminder---------*/
-  onClickReminderIcon = () => {
-    this.setState({addReminder: true})
+  onClickReminderIcon = () =>{
+    this.setState({addReminder:true})
   }
   handleClickOpen = () => {
     this.setState({
@@ -83,20 +84,6 @@ export default class Dashboard extends Component {
       marginTop: "9%"
     };
     return (
-      // <div className="App">
-
-      //     <Header />
-
-      //   <div className="Side_Drawer d-flex justify-content-start">
-      //     <SideDrawer />
-      //   </div>
-      //   <div className="Main_Content d-flex justify-content-center" style={mainContent}>
-      //     <CreateNote />
-      //   </div>
-      //   </div>
-
-      /* New Code*/
-
       <div className="App">
         <Header />
         <div className="Side_Drawer d-flex justify-content-start">
@@ -116,8 +103,22 @@ export default class Dashboard extends Component {
         <div className="Main_Content" style={{backgroundColor:'',marginLeft:'16rem'}}>
           <NoteList 
             titles={this.state.listOfNotes} 
+            date={this.state.date}
+            time={this.state.time}
+            addReminder={this.state.addReminder}
+            onChangeDate={this.onChangeDate}
+            onChangeTime={this.onChangeTime}
             onClickReminderIcon={this.onClickReminderIcon}/>
         </div>
+        {/* {this.state.addReminder ?
+          <div>
+          <Reminder />
+        </div>
+        :<div>
+          
+        </div>  
+      } */}
+        
       </div>
     );
   }

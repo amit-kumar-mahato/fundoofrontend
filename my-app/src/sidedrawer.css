@@ -15,15 +15,18 @@
     padding-top: 5px;
 }
 .active{
-    width:80%;
-   border: 1px solid whitesmoke;
+    width:100%;
+   background-color: #feefc3;
    border-top-right-radius: 50px;
    border-bottom-right-radius: 50px;
 }
 
 .side-drawer ul li:hover{
-    width:80%;
-    border: 1px solid whitesmoke;
+    width:100%;
+    background-color: rgba(0,0,0,0.12);
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
+}
+.side-drawer ul li.active:hover{
+    background-color: #feefc3;
 }

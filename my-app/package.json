@@ -4,6 +4,8 @@
   "private": true,
   "proxy": "http://localhost:8081",
   "dependencies": {
+    "@syncfusion/ej2-react-grids": "^17.4.44",
+    "@syncfusion/ej2-react-splitbuttons": "^17.4.43",
     "axios": "^0.19.1",
     "bootstrap": "^4.4.1",
     "moment": "^2.24.0",

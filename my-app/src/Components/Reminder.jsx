@@ -1,17 +1,24 @@
 import React, { Component } from "react";
-import { Card, Button, FormControl, Row, Col, OverlayTrigger, Popover } from "react-bootstrap";
+import { Card, Button, FormControl, Row, Col, OverlayTrigger, Popover, Dropdown, Modal } from "react-bootstrap";
 import NoteController from '../Controller/NoteController';
 class Reminder extends Component {
     constructor(props){
         super(props);
         this.state={
-        noteId:'',
-            date:"",
-            time:"",
-            error:false,
-            dateErr:null,
-            timeErr:null
+          date:"",
+          time:"",
+          error:false,
+          dateErr:null,
+          timeErr:null,
+          show:false, 
+          setShow:false
         }
+    }
+    handleClose= () =>{
+      this.setState({setShow:false})
+    }
+    handleShow = () =>{
+      this.setState({setShow:true})
     }
     onChangeDate = (event) =>{
         this.setState({date:event.target.value,dateErr:null})
@@ -29,7 +36,7 @@ class Reminder extends Component {
         else{
             var reminder = {
                 datetime: this.state.date+" "+this.state.time,
-                noteId: this.state.noteId
+                noteId: this.props.noteId
             }
             this.setState({date:"",time:""})
            NoteController.setReminder(reminder).then(response => {
@@ -40,7 +47,9 @@ class Reminder extends Component {
            })
         }   
     }
+    
   render() {
+   
     const popover = (
         <Popover id="popover-basic">
           <Popover.Title as="h4">Pick date & time</Popover.Title>
@@ -54,6 +63,7 @@ class Reminder extends Component {
         </Popover>
       );
     return (
+      <div>
       <Card className="float-center" style={{ width: "18rem" }}>
         <Card.Header>Reminder:</Card.Header>
         <Card.Body>
@@ -91,6 +101,29 @@ class Reminder extends Component {
           </Row>
         </Card.Body>
       </Card>
+      </div>
+   
+    // return (
+    //   <div>
+    //     <Button variant="primary" onClick={this.handleShow}>
+    //       Launch demo modal
+    //     </Button>
+  
+    //     <Modal show={this.state.show} onHide={this.handleShow} animation={true}>
+    //       <Modal.Header closeButton>
+    //         <Modal.Title>Modal heading</Modal.Title>
+    //       </Modal.Header>
+    //       <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+    //       <Modal.Footer>
+    //         <Button variant="secondary" onClick={this.handleClose}>
+    //           Close
+    //         </Button>
+    //         <Button variant="primary" onClick={this.handleClose}>
+    //           Save Changes
+    //         </Button>
+    //       </Modal.Footer>
+    //     </Modal>
+    //   </div>
     );
   }
 }
