@@ -47,6 +47,7 @@ onSubmit = () => {
             if (response.data.statuscode === 200) {
 
                 localStorage.setItem('token', response.data.token);
+                localStorage.setItem('email', this.state.email);
                 this.props.history.push("/dashboard")
             }
         }).catch((err) => {

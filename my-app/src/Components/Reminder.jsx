@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Button, FormControl, Row, Col, OverlayTrigger, Popover, Dropdown, Modal } from "react-bootstrap";
 import NoteController from '../Controller/NoteController';
+import '../Reminder.css';
 class Reminder extends Component {
     constructor(props){
         super(props);
@@ -10,16 +11,15 @@ class Reminder extends Component {
           error:false,
           dateErr:null,
           timeErr:null,
-          show:false, 
-          setShow:false
+          isOpened:false,
         }
+        this.toggleBox = this.toggleBox.bind(this);
+        
     }
-    handleClose= () =>{
-      this.setState({setShow:false})
+    toggleBox() {
+      this.setState(oldState => ({ isOpened: !oldState.isOpened }));
     }
-    handleShow = () =>{
-      this.setState({setShow:true})
-    }
+
     onChangeDate = (event) =>{
         this.setState({date:event.target.value,dateErr:null})
     }
@@ -49,81 +49,68 @@ class Reminder extends Component {
     }
     
   render() {
-   
-    const popover = (
-        <Popover id="popover-basic">
-          <Popover.Title as="h4">Pick date & time</Popover.Title>
-          <Popover.Content>
-           <FormControl type="date" name="date" placeholder="Select date" onChange={this.onChangeDate} required/>
-            <small className="danger-error">{this.state.dateErr}</small>
-           <FormControl type="time" name="time" placeholder="Set time" onChange={this.onChangeTime} required/>
-           <small className="danger-error">{this.state.timeErr}</small>
-           <Button variant="light" className="float-right" onClick={this.onSubmit}>Save</Button>
-          </Popover.Content>
-        </Popover>
-      );
+    const {isOpened} = this.state;
+
     return (
-      <div>
-      <Card className="float-center" style={{ width: "18rem" }}>
-        <Card.Header>Reminder:</Card.Header>
+      <div className="reminder-card">
+      <Card className="float-center" style={{position:'absolute',zIndex:5003,width:'100%',backgroundColor:'#fff',boxShadow: '#adb5bda1 0px 0px 5px 0.5px'}}>
         <Card.Body>
-          <Row>
-            <Col>Later today</Col>
-            <Col className="text-right">8:00 PM</Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>Tomorrow</Col>
-            <Col className="text-right">8:00 AM</Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>Next Week</Col>
-            <Col className="text-right">Mon,8:00 AM</Col>
-          </Row>
-          <br />
-          <Row>
-            <Col>
-              <OverlayTrigger
-                trigger="click"
-                placement="bottom"
-                overlay={popover}
-              >
-                <Button variant="light">
-                <i className="fa fa-clock-o" aria-hidden="true"></i>
-                <span style={{ paddingLeft: "10px" }}>
-                Pick date & time
-              </span>
-                </Button>
-                
-              </OverlayTrigger>
-            </Col>
-          </Row>
+          <div className="Reminder-Heading" style={{fontSize:'18px',padding:'10px'}}>
+            Reminder:
+          </div>
+          <div style={{border:0,padding:'10px 15px'}}>
+            <div style={{display:'flex',cursor:'pointer'}}>
+              <div style={{flex:'1 1 auto'}}>Later today</div>
+              <div>8:00PM</div>
+            </div>
+          </div>
+          <div style={{border:0,padding:'10px 15px'}}>
+            <div style={{display:'flex',cursor:'pointer'}}>
+              <div style={{flex:'1 1 auto'}}>Tommorow</div>
+              <div>8:00AM</div>
+            </div>
+          </div>
+          <div style={{border:0,padding:'10px 15px'}}>
+            <div style={{display:'flex',cursor:'pointer'}}>
+              <div style={{flex:'1 1 auto'}}>Next Week</div>
+              <div>Mon,8:00AM</div>
+            </div>
+          </div>
+          <div style={{border:0,padding:'10px 15px'}}>
+            <div style={{display:'flex',cursor:'pointer'}}>
+              <i className="fa fa-clock-o" aria-hidden="true" onClick={this.toggleBox}>
+                <span className="px-3">Pick date & time</span></i>
+            </div>
+          </div>
         </Card.Body>
       </Card>
+      {isOpened===true ? 
+            <div style={{position:'absolute',zIndex:5003,width:'100%',backgroundColor:'#fff',boxShadow: '#adb5bda1 0px 0px 5px 0.5px'}}>
+              <div className="px-2" style={{padding:'15px'}}>
+                <i className="fa fa-arrow-left" aria-hidden="true">
+                  <span className="px-4">Pick Date & Time</span>
+                </i>
+              </div>
+              <div style={{background:'#dadce0',height:'1px'}}></div>
+              <div style={{padding:'0 15px 15px',width:'250px'}}>
+                <div style={{marginTop:'17px'}}>
+                  <FormControl type="date" name="date" onChange={this.onChangeDate} required
+                  style={{backgroundColor:'transparent',border:'none',height:'25px',outline:'none',padding:0}}/>
+                </div>
+                <div style={{background:'#dadce0',height:'1px'}}></div>
+                <small style={{color:'red'}}>{this.state.dateErr}</small>
+                <div style={{marginTop:'15px'}}>
+                  <FormControl type="time" name="time" onChange={this.onChangeTime} required
+                  style={{backgroundColor:'transparent',border:'none',height:'25px',outline:'none',padding:0}}/>
+                </div>
+                <div style={{background:'#dadce0',height:'1px'}}></div>
+                <small style={{color:'red'}}>{this.state.timeErr}</small>
+              </div>
+              <Button variant="light" className="float-right" onClick={this.onSubmit}>Save</Button>
+            </div> :
+            <div />  
+          }
       </div>
-   
-    // return (
-    //   <div>
-    //     <Button variant="primary" onClick={this.handleShow}>
-    //       Launch demo modal
-    //     </Button>
-  
-    //     <Modal show={this.state.show} onHide={this.handleShow} animation={true}>
-    //       <Modal.Header closeButton>
-    //         <Modal.Title>Modal heading</Modal.Title>
-    //       </Modal.Header>
-    //       <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-    //       <Modal.Footer>
-    //         <Button variant="secondary" onClick={this.handleClose}>
-    //           Close
-    //         </Button>
-    //         <Button variant="primary" onClick={this.handleClose}>
-    //           Save Changes
-    //         </Button>
-    //       </Modal.Footer>
-    //     </Modal>
-    //   </div>
     );
   }
 }

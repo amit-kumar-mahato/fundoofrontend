@@ -110,15 +110,6 @@ export default class Dashboard extends Component {
             onChangeTime={this.onChangeTime}
             onClickReminderIcon={this.onClickReminderIcon}/>
         </div>
-        {/* {this.state.addReminder ?
-          <div>
-          <Reminder />
-        </div>
-        :<div>
-          
-        </div>  
-      } */}
-        
       </div>
     );
   }
