@@ -7,6 +7,7 @@ import CreateNote from "./CreateNote";
 import NoteList from "../Components/NoteList";
 import '../App.css';
 import Reminder from "../Components/Reminder";
+import PinnedNotes from "../Components/PinnedNotes";
 export default class Dashboard extends Component {
   state = {
     titles: [],
@@ -15,7 +16,8 @@ export default class Dashboard extends Component {
     description: "",
     listOfNotes: [],
     openNote: false,
-    addReminder:false
+    addReminder:false,
+    listOfPinnedNotes: []
   };
   /*-----Add Reminder---------*/
   onClickReminderIcon = () =>{
@@ -43,14 +45,14 @@ export default class Dashboard extends Component {
       };
       NoteController.createNote(notes)
         .then(response => {
-          console.log(response.data.obj);
-          console.log(response.data.obj.title);
+         // console.log(response.data.obj);
+         // console.log(response.data.obj.title);
           this.setState({
             title: "",
             description: "",
             createNote: true
           });
-          this.props.response(this.state.createNote);
+          //this.props.response(this.state.createNote);
         })
         .catch(err => {
           console.log("error", err.response.data);
@@ -70,6 +72,7 @@ export default class Dashboard extends Component {
   };
   componentDidMount() {
     this.getAllNotes();
+    //this.getPinnedNotes();
   }
 
   getAllNotes = () =>{
@@ -79,6 +82,12 @@ export default class Dashboard extends Component {
 
     })
   }
+  // getPinnedNotes = () =>{
+  //   NoteController.getAllPinnedNotes().then(response => {
+  //     console.log('Pinned Notes List',response.data.obj);
+  //     this.setState({listOfPinnedNotes: response.data.obj})
+  //   })
+  // }
   render() {
     let mainContent = {
       marginTop: "9%"
@@ -100,15 +109,18 @@ export default class Dashboard extends Component {
           onClose={this.onClose}
         />
         </div>
-        <div className="Main_Content" style={{backgroundColor:'',marginLeft:'16rem'}}>
+        <div className="Main_Content" style={{marginLeft:'16rem'}}>
+          {/* <PinnedNotes pinnedNotes={this.state.listOfPinnedNotes} /> */}
           <NoteList 
-            titles={this.state.listOfNotes} 
-            date={this.state.date}
-            time={this.state.time}
-            addReminder={this.state.addReminder}
-            onChangeDate={this.onChangeDate}
-            onChangeTime={this.onChangeTime}
-            onClickReminderIcon={this.onClickReminderIcon}/>
+            titles={this.state.listOfNotes}
+           // pinnedNotes={this.state.listOfPinnedNotes}
+            // date={this.state.date}
+            // time={this.state.time}
+            // addReminder={this.state.addReminder}
+            // onChangeDate={this.onChangeDate}
+            // onChangeTime={this.onChangeTime}
+            // onClickReminderIcon={this.onClickReminderIcon}
+            />
         </div>
       </div>
     );

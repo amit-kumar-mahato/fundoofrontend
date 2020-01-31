@@ -130,3 +130,24 @@
 .note-list{
   padding-left:32px;
 }
+/* Note */
+.pin-icon{
+  height: 32px;
+  width: 32px;
+  font-size: 22px;
+  cursor: pointer;
+  opacity: 0.8;
+  text-align: center;
+  border:none;
+  border-radius: 50%;
+}
+.pin-icon :hover{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: gainsboro;
+}
+.icon-div-content{
+  padding: 9.2px;
+}

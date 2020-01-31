@@ -4,7 +4,7 @@ import Note from '../Components/Note';
 import Reminder from '../Components/Reminder';
 class NoteList extends Component{       
     render(){
-    const {titles,onClickReminderIcon,addReminder} = this.props;
+    const {titles,onClickReminderIcon,addReminder,pinnedNotes} = this.props;
     console.log("Inside NoteList :",titles);
     //console.log(onClickReminderIcon);
     
@@ -13,9 +13,13 @@ class NoteList extends Component{
                {
                    titles.map(note => {
                        return<Note 
-                       noteId={note.noteId} title={note.title} description={note.description} 
-                       onClickReminderIcon={onClickReminderIcon}
-                       addReminder={addReminder}
+                       noteId={note.noteId} 
+                       title={note.title} 
+                       description={note.description} 
+                       pin={note.pin}
+                    //    onClickReminderIcon={onClickReminderIcon}
+                    //    addReminder={addReminder}
+                       pinnedNotes={pinnedNotes}
                        />
                    })
                }
