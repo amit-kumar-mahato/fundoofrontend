@@ -18,12 +18,12 @@ class NoteController{
             headers:headers
         })
     }
-    
-    getAllPinnedNotes(){
-        console.log("All Pinned Notes...");
-        return Axios.get('pinnednotes',{
+   
+    pinNote(noteId){
+        console.log("NOTE ID :"+noteId);
+        return Axios.put('notes/pin?noteId='+noteId,{
             headers:headers
-        })
+        });
     }
     setReminder(reminder){
         console.log("DATA :"+reminder.datetime);

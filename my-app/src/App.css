@@ -120,9 +120,8 @@
 }
 
 .row.header{
-  padding: 5px 0;
+  padding-bottom: 3px;
   border: 1px solid whitesmoke;
-  /* background-color: violet; */
 }
 .form-control ::placeholder{
   font-size: 25px;

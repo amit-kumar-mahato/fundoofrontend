@@ -8,6 +8,7 @@ import NoteList from "../Components/NoteList";
 import '../App.css';
 import Reminder from "../Components/Reminder";
 import PinnedNotes from "../Components/PinnedNotes";
+import Note from '../Components/Note';
 export default class Dashboard extends Component {
   state = {
     titles: [],
@@ -94,10 +95,15 @@ export default class Dashboard extends Component {
     };
     return (
       <div className="App">
-        <Header />
-        <div className="Side_Drawer d-flex justify-content-start">
+        <div style={{backgroundColor:''}}>
+          <Header />
+        </div>
+        
+        <div style={{backgroundColor:''}}>
+        <div className="Side_Drawer d-flex justify-content-start" style={{backgroundColor:''}}>
           <SideDrawer />
         </div>
+        <div style={{backgroundColor:''}}>
         <div className="Main_Content d-flex justify-content-center" style={{mainContent}}>
         <CreateNote
           title={this.state.title}
@@ -110,17 +116,11 @@ export default class Dashboard extends Component {
         />
         </div>
         <div className="Main_Content" style={{marginLeft:'16rem'}}>
-          {/* <PinnedNotes pinnedNotes={this.state.listOfPinnedNotes} /> */}
-          <NoteList 
+           <NoteList 
             titles={this.state.listOfNotes}
-           // pinnedNotes={this.state.listOfPinnedNotes}
-            // date={this.state.date}
-            // time={this.state.time}
-            // addReminder={this.state.addReminder}
-            // onChangeDate={this.onChangeDate}
-            // onChangeTime={this.onChangeTime}
-            // onClickReminderIcon={this.onClickReminderIcon}
             />
+        </div>
+        </div>
         </div>
       </div>
     );
