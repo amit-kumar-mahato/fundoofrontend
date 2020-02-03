@@ -150,3 +150,14 @@
 .icon-div-content{
   padding: 9.2px;
 }
+/* ModalBox*/
+.modal-main-div{
+  left: 185.5px;
+  top: 128.425px;
+}
+.modal-content{
+  width: 600px;
+  background: #fff;
+  border: none;
+  box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
+}

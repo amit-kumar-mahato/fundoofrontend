@@ -3,32 +3,59 @@ import { Card } from "react-bootstrap";
 import Note from "../Components/Note";
 import Reminder from "../Components/Reminder";
 class NoteList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pinnedNote: [],
+      unPinnedNote: [],
+      archiveNote: [],
+      titles: []
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+    return {
+      pinnedNote: props.titles.filter(note => {
+        return note.pin;
+      }),
+      unPinnedNote: props.titles.filter(note => {
+        return !note.pin;
+      }),
+      archiveNote: props.titles.filter(note => {
+        return note.archiev;
+      })
+    };
+  }
+
+  updatepinnedNote(id) {
+    this.setState({
+      titles: this.titles.map(note => {
+        console.log(note.noteId);
+        if (note.noteId === id) {
+          note.pin = !note.pin;
+        }
+      })
+    });
+  }
+
+  updateTitle(id){
+    this.setState({
+      titles: this.titles.map(note => {
+        console.log(note.noteId);
+        if (note.noteId === id) {
+          note.title = document.getElementById(id+"title").value;
+        }
+      })
+    });
+  }
   render() {
-    var pinnedNote = [];
-    var unPinnedNote = [];
-    const {titles} = this.props;
-    console.log("Inside NoteList :", titles);
-    //console.log(onClickReminderIcon);
-    pinnedNote = titles.filter(note => {
-      return note.pin;
-    });
-    unPinnedNote = titles.filter(note => {
-      return !note.pin;
-    });
-    pinnedNote = titles.filter(note => {
-      return note.pin;
-    });
-    unPinnedNote = titles.filter(note => {
-      return !note.pin;
-    });
-    
+    this.titles = this.props.titles;
     return (
       <div>
         <div>
-          <strong style={{paddingLeft:'18px'}}>PINNED</strong>
+          <strong style={{ paddingLeft: "18px" }}>PINNED</strong>
           <div className="note-list row">
-            {pinnedNote.map(note => {
-              console.log("Inside MAP :" + note.pin);
+            {this.state.pinnedNote.map(note => {
+              // console.log("Inside MAP :" + note.pin);
               return (
                 <Note
                   noteId={note.noteId}
@@ -36,14 +63,15 @@ class NoteList extends Component {
                   description={note.description}
                   pin={note.pin}
                   fnote={note}
+                  onPinClick={() => this.updatepinnedNote(note.noteId)}
                 />
               );
             })}
           </div>
-          <strong style={{paddingLeft:'18px'}}>OTHERS</strong>
+          <strong style={{ paddingLeft: "18px" }}>OTHERS</strong>
           <div className="note-list row">
-            {unPinnedNote.map(note => {
-              console.log("Inside MAP :" + note.pin);
+            {this.state.unPinnedNote.map(note => {
+              //  console.log("Inside MAP :" + note.pin);
               return (
                 <Note
                   noteId={note.noteId}
@@ -51,6 +79,7 @@ class NoteList extends Component {
                   description={note.description}
                   pin={note.pin}
                   fnote={note}
+                  onPinClick={() => this.updatepinnedNote(note.noteId)}
                 />
               );
             })}

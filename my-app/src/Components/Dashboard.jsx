@@ -17,8 +17,7 @@ export default class Dashboard extends Component {
     description: "",
     listOfNotes: [],
     openNote: false,
-    addReminder:false,
-    listOfPinnedNotes: []
+    addReminder:false
   };
   /*-----Add Reminder---------*/
   onClickReminderIcon = () =>{
@@ -73,7 +72,6 @@ export default class Dashboard extends Component {
   };
   componentDidMount() {
     this.getAllNotes();
-    //this.getPinnedNotes();
   }
 
   getAllNotes = () =>{
@@ -83,12 +81,7 @@ export default class Dashboard extends Component {
 
     })
   }
-  // getPinnedNotes = () =>{
-  //   NoteController.getAllPinnedNotes().then(response => {
-  //     console.log('Pinned Notes List',response.data.obj);
-  //     this.setState({listOfPinnedNotes: response.data.obj})
-  //   })
-  // }
+
   render() {
     let mainContent = {
       marginTop: "9%"

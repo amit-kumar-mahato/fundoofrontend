@@ -21,7 +21,14 @@ class NoteController{
    
     pinNote(noteId){
         console.log("NOTE ID :"+noteId);
-        return Axios.put('notes/pin?noteId='+noteId,{
+        return Axios.put('notes/pin?noteId='+noteId,null,{
+            headers:headers
+        });
+    }
+
+    archiveNote(noteId){
+        console.log("NOTE ID :"+noteId);
+        return Axios.put('notes/archive/'+noteId,null, {
             headers:headers
         });
     }

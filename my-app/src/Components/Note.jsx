@@ -35,8 +35,7 @@ class Note extends Component {
   handleIcon() {
     this.setState(icons => ({ iconShow: !icons.iconShow }));
   }
-  handlePinned = (event) =>{
-    event.preventDefault();
+  handlePinned = (noteid) =>{
     NoteController.pinNote(this.props.noteId).then(response => {
       console.log("Note Pinned");
     })
@@ -44,11 +43,19 @@ class Note extends Component {
       console.log("not pinned");
     })
   }
+  handleArchive = (event) => {
+    NoteController.archiveNote(this.props.noteId).then(response => {
+      console.log("Note Archive");
+    })
+    .catch(error => {
+      console.log('not archive');
+    })
+  }
   render() {
-    const { condition, modelOpen, iconShow, isPinned } = this.state;
-    const { title, description, noteId, onClickReminderIcon, pin } = this.props;
+    const { condition, modelOpen} = this.state;
+    const { title, description, noteId} = this.props;
 
-    console.log("Inside Note :" + condition + ", " + modelOpen);
+    // console.log("Inside Note :" + condition + ", " + modelOpen);
     return (
       <div>
   
@@ -56,22 +63,23 @@ class Note extends Component {
           <Card
             className="my-2 mr-2"
             style={{ width: "15rem", borderRadius: "7px" }}
+            //onClick={this.handleShow}
           >
             <Card.Body>
               <div style={{ display: "flex" }}>
-                <div style={{ flex: 1 }}>{title}</div>
+                <div style={{ flex: 1 }} onClick={this.handleShow}>{title}</div>
                 <div className="pin-icon">
                   <i
                     className="fa fa-thumb-tack"
                     aria-hidden="true"
-                    onClick={this.handlePinned}
+                    onClick={this.props.onPinClick}
                   ></i>
                 </div>
               </div>
-              <div>{description}</div>
+              <div onClick={this.handleShow}>{description}</div>
               {/* {iconShow ===true ? */}
               <div className="d-flex icon-div" style={{ cursor: "pointer" }}>
-                <div className="icon-div-content" onClick={this.handleShow}>
+                <div className="icon-div-content">
                   <i
                     className="fa fa-bell"
                     title="Remind me"
@@ -106,6 +114,7 @@ class Note extends Component {
                     className="fa fa-archive"
                     title="Archive"
                     aria-hidden="true"
+                    onClick={this.handleArchive}
                   ></i>
                 </div>
                 <div className="icon-div-content">
