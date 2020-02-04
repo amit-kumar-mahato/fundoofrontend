@@ -17,11 +17,13 @@
   }
 .side-drawer ul{
     list-style: none;
-    margin-left: 7%;
 }
 .side-drawer li .p-3{
     text-decoration: none;
     padding-top: 5px;
+}
+.side-drawer li .d-flex{
+  align-items: center;
 }
 .active{
     width:100%;
@@ -38,4 +40,9 @@
 }
 .side-drawer ul li.active:hover{
     background-color: #feefc3;
+}
+.side-drawer-content{
+  color:black;
+  font-size: 15px;
+  font-weight:bold
 }
