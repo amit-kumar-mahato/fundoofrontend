@@ -1,8 +1,4 @@
-.container-fluid.nav-bar{
-  top: 0;
-  left: 0;
-  position: fixed;
-}
+
 .bars :hover{
     background-color: chartreuse;
     border: 1px solid black;
@@ -93,7 +89,7 @@
     font-size: 15px;
   }
 .button-icon {
-    margin-top: 5%;
+    margin-top: 2%;
    padding: 5px;
 }
 
@@ -167,4 +163,35 @@
   background-color: gray;
   display: block;
   cursor: pointer;
+}
+/* New Code for Dashboard*/
+.new-nav{
+  top: 0;
+  left: 0;
+  /* background-color: red;
+  border: 2px solid black; */
+  position: fixed;
+  width: 100%;
+}
+
+.content-main{
+  width:100%;
+  margin-left: 26%;
+  /* background-color: yellow;
+  border: 2px solid violet; */
+}
+.note-create{
+  /* background-color: violet; */
+}
+.note-create-content{
+  /* border: 1px solid black; */
+  /* padding: 1%; */
+  border-radius: 8px;
+}
+.notelist{
+  /* background-color: tomato; */
+}
+.notelist-content{
+  /* border: 2px solid black; */
+  padding: 1%;
 }
