@@ -70,47 +70,38 @@ class CreateNote extends Component {
   render() {
     const {title,description,onChangeTitle,onChangeDescription,onClose,handleClickOpen,openNote} = this.props;
     return (
-      <div className="createNote-container">
-        <div className="noteComponent d-flex justify-content-center">
+      <div>
+        <div style={{margin:'0px 22%'}}>
          {/* {!this.state.openNote ? ( */}
           {!openNote ? (
-            <Card className="note-button" style={{border:'none',outline:'none'}}>
-              <div>
-                <FormControl
-                  className="inputbase"
-                  style={{ width: "100%", padding: "10px" }}
-                  //multiline
+            <Card style={{borderRadius:'8px'}}>
+              
+                <input
                   spellCheck={true}
                   placeholder="Take a note...."
                   // onClick={this.handleClickOpen}
                   onClick={handleClickOpen}
+                  style={{height:'48px',borderRadius:'8px',outline:'none',border:'none',fontSize:'20px',paddingLeft:'8px'}}
                 />
-              </div>
+             
             </Card>
           ) : (
             <Card>
-              <div>
-                <FormControl
+             
+                <input
                   name="title"
-                  className="inputbase"
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    fontWeight: "bold",
-                    fontSize: "120%"
-                  }}
-                  //multiline
-                  // spellCheck={true}
+                  className=""
+                  style={{height:'48px',borderRadius:'8px',outline:'none',border:'none',fontSize:'20px',paddingLeft:'8px'}}
                   placeholder="Tittle...."
                   // value={this.state.title}
                   value={title}
                   // onChange={this.onChangeTitle}
                   onChange={onChangeTitle}
                 />
-                <FormControl
+                <input
                   name="description"
-                  className="inputbase"
-                  style={{ width: "100%", padding: "10px" }}
+                  className=""
+                  style={{height:'48px',borderRadius:'8px',outline:'none',border:'none',fontSize:'20px',paddingLeft:'8px'}}
                  // multiline
                   // spellCheck={true}
                   placeholder="Take a note...."
@@ -119,7 +110,7 @@ class CreateNote extends Component {
                   // onChange={this.onChangeDescription}
                   onChange={onChangeDescription}
                 />
-              </div>
+             
 
               <div>
                 <div className="button-icon">
@@ -159,7 +150,7 @@ class CreateNote extends Component {
                       variant="light"
                       // onClick={this.onClose}
                       onClick={onClose}
-                      style={{height:'33px',background:'none',fontWeight:'bold'}}
+                      style={{height:'33px',background:'none',fontWeight:'bold',outline:'none'}}
                     >
                       Close
                     </Button>
