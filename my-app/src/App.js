@@ -13,6 +13,7 @@ import CreateNote from './Components/CreateNote';
 import {Example} from './Components/CustomTogglerNote';
 import Reminder from './Components/Reminder';
 
+
 class App extends Component {
   render() {
     return (
@@ -29,6 +30,7 @@ class App extends Component {
         <Route path="/createnote" exact component={CreateNote}></Route>
         <Route path="/toggler" component={Example}></Route> 
         <Route path="/reminder" component={Reminder}></Route>
+       
       </Router>
     );
   }
