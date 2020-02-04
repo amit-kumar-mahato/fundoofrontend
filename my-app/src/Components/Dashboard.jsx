@@ -17,8 +17,13 @@ export default class Dashboard extends Component {
     description: "",
     listOfNotes: [],
     openNote: false,
-    addReminder:false
+    addReminder:false,
+    editLabel:false
   };
+   /*-----Edit Label---------*/
+   onClickEditLabel = () =>{
+     this.setState({editLabel: !this.state.editLabel})
+   }
   /*-----Add Reminder---------*/
   onClickReminderIcon = () =>{
     this.setState({addReminder:true})
