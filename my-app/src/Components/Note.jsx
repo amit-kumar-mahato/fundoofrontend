@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Card,Modal,Button } from "react-bootstrap";
+import { Card} from "react-bootstrap";
 import Reminder from "../Components/Reminder";
-import cx from "classnames";
 import Collaborator from "./Collaborators/Collaborator";
-import PinnedNotes from "../Components/PinnedNotes";
 import NoteController from "../Controller/NoteController";
 import ModalBox from "./ModalBox";
+import Icon from "./Icon";
+import AddLabel from "./AddLabel";
 
 
 class Note extends Component {
@@ -16,11 +16,13 @@ class Note extends Component {
       modelOpen: false,
       //iconShow: false,
       isPinned: false,
-      show:false
+      show:false,
+      moreOption:false
     };
     this.handleClick = this.handleClick.bind(this);
-    this.handleCollaborator = this.handleCollaborator.bind(this);
+    //this.handleCollaborator = this.handleCollaborator.bind(this);
     //this.handleIcon = this.handleIcon.bind(this);
+    this.handleMoreOption = this.handleMoreOption.bind(this);
   }
 
   handleClose = () => this.setState({show:false});
@@ -29,36 +31,36 @@ class Note extends Component {
   handleClick() {
     this.setState(oldState => ({ condition: !oldState.condition }));
   }
-  handleCollaborator() {
-    this.setState(collaborator => ({ modelOpen: !collaborator.modelOpen }));
+  handleMoreOption() {
+    this.setState(prevState => ({moreOption: !prevState.moreOption}));
   }
-  handleIcon() {
-    this.setState(icons => ({ iconShow: !icons.iconShow }));
-  }
+  // handleCollaborator() {
+  //   this.setState(collaborator => ({ modelOpen: !collaborator.modelOpen }));
+  // }
+  // handleIcon() {
+  //   this.setState(icons => ({ iconShow: !icons.iconShow }));
+  // }
   handlePinned = (noteid) =>{
     NoteController.pinNote(this.props.noteId).then(response => {
-      console.log("Note Pinned");
+      console.log("Message :",response.data.message);
     })
     .catch(error => {
-      console.log("not pinned");
+      console.log("Message :",error.data.message);
     })
   }
   handleArchive = (event) => {
     NoteController.archiveNote(this.props.noteId).then(response => {
-      console.log("Note Archive");
+      console.log("Message :",response.data.message);
     })
     .catch(error => {
-      console.log('not archive');
+      console.log("Message :",error.data.message);
     })
   }
   render() {
-    const { condition, modelOpen} = this.state;
+    const { condition, modelOpen,moreOption} = this.state;
     const { title, description, noteId} = this.props;
-
-    // console.log("Inside Note :" + condition + ", " + modelOpen);
     return (
       <div>
-  
           <div>
           <Card
             className="my-2 mr-2"
@@ -77,8 +79,11 @@ class Note extends Component {
                 </div>
               </div>
               <div onClick={this.handleShow}>{description}</div>
+              <div style={{marginTop:'30px'}}>
+                <Icon handleClick={this.handleClick} handleMoreOption={this.handleMoreOption}/>
+              </div>
               {/* {iconShow ===true ? */}
-              <div className="d-flex icon-div" style={{ cursor: "pointer" }}>
+              {/* <div className="d-flex icon-div" style={{ cursor: "pointer" }}>
                 <div className="icon-div-content">
                   <i
                     className="fa fa-bell"
@@ -120,18 +125,21 @@ class Note extends Component {
                 <div className="icon-div-content">
                   <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                 </div>
-              </div>
+              </div> */}
               {/* :<div></div>} */}
             </Card.Body>
             <div>
               {condition === true ? <Reminder noteId={noteId} /> : <div />}
+            </div>
+            <div>
+              {moreOption === true ? <AddLabel noteId={noteId} /> : <div />}
             </div>
           </Card>
           <div>
             {modelOpen === true ? <Collaborator noteId={noteId} /> : <div />}
           </div>
         </div>
-        <ModalBox show={this.state.show} onHide={this.handleClose} note={this.props.fnote} handClick={this.handleClick}/>
+        <ModalBox show={this.state.show} onHide={this.handleClose} note={this.props.fnote}/>
       </div>
     );
   }
