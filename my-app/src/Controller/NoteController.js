@@ -11,7 +11,19 @@ class NoteController{
             headers:headers
         })
     }
+    updateNote(noteInfo){
+        console.log('updated data :'+noteInfo.noteId+" ,"+noteInfo.title+" ,"+noteInfo.description);
+        return Axios.put('notes/update?noteId='+noteInfo.noteId,noteInfo,{
+            headers:headers
+        })
+    }
 
+    deleteNote(noteId){
+        console.log("NOTE ID :"+noteId);
+        return Axios.delete('notes/delete/?noteId='+noteId,null,{
+            headers:headers
+        })
+    }
     allNotes(){
         console.log("Inside allNotes method...");
         return Axios.get('notes',{
