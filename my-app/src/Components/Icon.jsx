@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function Icon() {
+export default function Icon(props) {
+  const [show, setShow] = useState(false);
+
+  
   return (
     <div className="d-flex icon-div" style={{ cursor: "pointer" }}>
       <div className="icon-div-content">
@@ -8,7 +11,7 @@ export default function Icon() {
           className="fa fa-bell"
           title="Remind me"
           aria-hidden="true"
-          //onClick={this.handleClick}
+          onClick={props.handleClick}
         ></i>
       </div>
       <div className="icon-div-content">
@@ -38,7 +41,11 @@ export default function Icon() {
         ></i>
       </div>
       <div className="icon-div-content">
-        <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+        <i 
+          className="fa fa-ellipsis-v" 
+          aria-hidden="true"
+          onClick={props.handleMoreOption}
+          ></i>
       </div>
     </div>
   );
