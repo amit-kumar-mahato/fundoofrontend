@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 import Note from "../Components/Note";
 import Reminder from "../Components/Reminder";
+import SideDrawer from '../Components/SideDrawer';
 class NoteList extends Component {
   constructor(props) {
     super(props);
@@ -55,7 +56,6 @@ class NoteList extends Component {
           <strong style={{ paddingLeft: "18px" }}>PINNED</strong>
           <div className="note-list row">
             {this.state.pinnedNote.map(note => {
-              // console.log("Inside MAP :" + note.pin);
               return (
                 <Note
                   noteId={note.noteId}
@@ -71,7 +71,6 @@ class NoteList extends Component {
           <strong style={{ paddingLeft: "18px" }}>OTHERS</strong>
           <div className="note-list row">
             {this.state.unPinnedNote.map(note => {
-              //  console.log("Inside MAP :" + note.pin);
               return (
                 <Note
                   noteId={note.noteId}
@@ -81,6 +80,13 @@ class NoteList extends Component {
                   fnote={note}
                   onPinClick={() => this.updatepinnedNote(note.noteId)}
                 />
+              );
+            })}
+          </div>
+          <div>
+            {this.state.archiveNote.map(note => {
+              return (
+                <SideDrawer noteList={note}/>
               );
             })}
           </div>
