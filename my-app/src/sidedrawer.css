@@ -1,11 +1,20 @@
-.side-drawer{
-    margin-top: 5%;
-    padding-top: 1%;
-    height: 100%;
-    box-shadow: 2px 8px 5px rgba(0, 0, 0, 0.5) ;
+.side-main{
+    /* background-color: green;
+    border: 2px solid blue; */
+    margin-top: 7%;
+    display: flex;
+  }
+  .side-bar{
     position: fixed;
-    width: 250px;
-}
+    top:58px;
+    bottom: 10px;
+    width: 26%;
+    background-color: #fff;
+    overflow-y: scroll;
+  }
+  .side-bar-content{
+    padding: 5%;
+  }
 .side-drawer ul{
     list-style: none;
     margin-left: 7%;
