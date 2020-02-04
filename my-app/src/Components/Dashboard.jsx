@@ -87,35 +87,69 @@ export default class Dashboard extends Component {
       marginTop: "9%"
     };
     return (
-      <div className="App">
-        <div style={{backgroundColor:''}}>
-          <Header />
-        </div>
+      // <div className="App">
+      //   <div style={{backgroundColor:''}}>
+      //     <Header />
+      //   </div>
         
-        <div style={{backgroundColor:''}}>
-        <div className="Side_Drawer d-flex justify-content-start" style={{backgroundColor:''}}>
-          <SideDrawer />
-        </div>
-        <div style={{backgroundColor:''}}>
-        <div className="Main_Content d-flex justify-content-center" style={{mainContent}}>
-        <CreateNote
-          title={this.state.title}
-          description={this.state.description}
-          openNote={this.state.openNote}
-          handleClickOpen={this.handleClickOpen}
-          onChangeTitle={this.onChangeTitle}
-          onChangeDescription={this.onChangeDescription}
-          onClose={this.onClose}
-        />
-        </div>
-        <div className="Main_Content" style={{marginLeft:'16rem'}}>
-           <NoteList 
-            titles={this.state.listOfNotes}
-            />
-        </div>
-        </div>
-        </div>
+      //   <div style={{backgroundColor:''}}>
+      //   <div className="Side_Drawer d-flex justify-content-start" style={{backgroundColor:''}}>
+      //     <SideDrawer />
+      //   </div>
+      //   <div style={{backgroundColor:''}}>
+      //   <div className="Main_Content d-flex justify-content-center" style={{mainContent}}>
+      //   <CreateNote
+      //     title={this.state.title}
+      //     description={this.state.description}
+      //     openNote={this.state.openNote}
+      //     handleClickOpen={this.handleClickOpen}
+      //     onChangeTitle={this.onChangeTitle}
+      //     onChangeDescription={this.onChangeDescription}
+      //     onClose={this.onClose}
+      //   />
+      //   </div>
+      //   <div className="Main_Content" style={{marginLeft:'16rem'}}>
+      //      <NoteList 
+      //       titles={this.state.listOfNotes}
+      //       />
+      //   </div>
+      //   </div>
+      //   </div>
+      // </div>
+      <div className="App">
+      <div className="">
+          <div className="new-nav">
+              <Header/>
+          </div>
       </div>
+      <div className="side-main">
+         <div className="side-bar">
+              <div className="side-bar-content">
+                  <SideDrawer />
+              </div>
+         </div>
+         <div className="content-main">
+             {/* <div className="note-create"> */}
+                 <div className="note-create-content">
+                 <CreateNote
+                    title={this.state.title}
+                    description={this.state.description}
+                    openNote={this.state.openNote}
+                    handleClickOpen={this.handleClickOpen}
+                    onChangeTitle={this.onChangeTitle}
+                    onChangeDescription={this.onChangeDescription}
+                    onClose={this.onClose}
+                  />
+                 </div>
+             {/* </div> */}
+             <div className="notelist">
+                 <div className="notelist-content">
+                    <NoteList titles={this.state.listOfNotes} />
+                  </div>
+              </div>
+         </div>
+      </div>
+  </div>
     );
   }
 }
