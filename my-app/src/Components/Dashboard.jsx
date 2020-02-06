@@ -21,7 +21,8 @@ export default class Dashboard extends Component {
     editLabel: false,
     archive: false,
     trash: false,
-    active: true
+    active: true,
+    edit:false
   };
 
   handleActive = () => {
