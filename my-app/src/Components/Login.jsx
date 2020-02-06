@@ -64,38 +64,39 @@ onSubmit = () => {
       <div className="container">
         <div className="col-md-4 offset-md-4">
           <div className="form-group">
-            <div className="form-row ">
+            <div className="" style={{display:'flex'}}>
               <span>
                 <img src="../keep.png" alt="logo" className="logo"></img>
               </span>
-              <h1 className="header">fundoo</h1>
+              <h1 className="header" style={{alignItems:'center'}}>fundoo</h1>
             </div>
           </div>
           <hr />
 
-          <div className="input-icons">
+          <div className="" style={{display:'flex'}}>
             <i className="fa fa-envelope" aria-hidden="true"></i>
             <input
               type="email"
               name="email"
-              className="input-field col-md-10"
+              className="login-field"
               placeholder="E-mail"
               required
               onChange={this.onChangeEmail}
             />
           </div>
-
-          <div className="input-icons">
+          <div style={{height:'1px',backgroundColor:'whitesmoke'}}></div>
+          <div className="" style={{display:'flex'}}>
             <i className="fa fa-key" aria-hidden="true"></i>
             <input
               type="password"
               name="password"
-              className="input-field col-md-10"
+              className="login-field"
               placeholder="Password"
               required
               onChange={this.onChangePassword}
             />
           </div>
+          <div style={{height:'1px',backgroundColor:'whitesmoke'}}></div>
           <span className="text-danger font-weight-normal">
                 {this.state.message}
           </span>
@@ -103,17 +104,19 @@ onSubmit = () => {
             <button
               type="button"
               value="submit"
-              className="btn btn-outline-primary text-center"
+              className="btn btn-outline-light text-center"
               id="submit"
               onClick={this.onSubmit}
+              style={{color:'black'}}
             >
               Login
             </button>
             <button
               type="reset"
               value="reset"
-              className="btn btn-outline-info text-center"
+              className="btn btn-outline-light text-center"
               id="reset"
+              style={{color:'black'}}
             >
               Reset
             </button>
@@ -122,11 +125,11 @@ onSubmit = () => {
           <footer>
             <h5>
               New User?
-              <Link to="/registration" className="text-warning">
+              <Link to="/registration" className="" style={{color:'whitesmoke',fontWeight:'bold'}}>
                 SignUp
               </Link>
             </h5>
-            <Link to="/forgotPassword" className="text-warning">
+            <Link to="/forgotPassword" className="" style={{color:'whitesmoke',fontWeight:'bold'}}>
                 Forgot Password ?
             </Link>
           </footer>

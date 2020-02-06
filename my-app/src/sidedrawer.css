@@ -1,18 +1,27 @@
-.side-drawer{
-    margin-top: 5%;
-    padding-top: 1%;
-    height: 100%;
-    box-shadow: 2px 8px 5px rgba(0, 0, 0, 0.5) ;
+.side-main{
+    /* background-color: green;
+    border: 2px solid blue; */
+    margin-top: 7%;
+    display: flex;
+  }
+  .side-bar{
     position: fixed;
-    width: 250px;
-}
+    top:58px;
+    bottom: 10px;
+    width: 21%;
+    background-color: #fff;
+    overflow-y: scroll;
+  }
+  .side-bar-content{
+    padding-top: 3%;
+  }
 .side-drawer ul{
     list-style: none;
-    margin-left: 7%;
 }
-.side-drawer li .p-3{
-    text-decoration: none;
-    padding-top: 5px;
+
+.side-drawer li{
+  display: flex;
+  align-items: center;
 }
 .active{
     width:100%;
@@ -29,4 +38,16 @@
 }
 .side-drawer ul li.active:hover{
     background-color: #feefc3;
+}
+.side-drawer-header{
+  display:flex;
+  align-items:center;
+  padding:12px 0px;
+  margin-left: 32px;
+}
+.side-drawer-content{
+  font-size: 15px;
+  font-weight:bold;
+  cursor: pointer;
+  margin-left:28px;
 }

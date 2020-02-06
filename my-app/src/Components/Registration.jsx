@@ -153,12 +153,13 @@ class Registration extends Component {
           <div className="col-md-3"></div>
           <div className="col-md-5">
             <div className="row">
-              <div className="col-md-6">
-                <h3 className="text-left">Registration Form</h3>
+              <div className="col-md-12" style={{display:'flex'}}>
+                <h3 className="" style={{flex:1}}>Registration Form</h3>
+                <span><i className="fa fa-pencil-square-o" aria-hidden="true"></i></span>
               </div>
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-              </div>
+              </div> */}
             </div>
             <hr />
             <div className="row">

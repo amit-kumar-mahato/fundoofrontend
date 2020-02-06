@@ -9,10 +9,13 @@
 .header{
     margin-left: 23%;
     font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: bold;
 }
 .col-md-4 {
-  background: rgba(0, 0, 0, 0.4);
-  box-shadow: -1px 1px 60px 10px black;
+  box-shadow: 0px 3px 5px 2px grey;
+  background: #757F9A;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #D7DDE8, #757F9A);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #D7DDE8, #757F9A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   margin-top: 2%;
   padding-top: 10px;
   color: whitesmoke;
@@ -20,12 +23,12 @@
   position: relative;
 }
 .fa-envelope {
-  margin-top: 21px;
+  margin-top: 5px;
   margin-left: 5px;
   color: black;
 }
 .fa-key {
-  margin-top: 21px;
+  margin-top: 5px;
   margin-left: 5px;
   color: black;
 }
@@ -71,6 +74,13 @@ footer {
 }
 h5 {
   padding-left: 15px;
+  color: black;
+}
+.login-field{
+  border: none;
+  background: none;
+  outline: none;
+  margin-left: 35%;
 }
 
 /* /////////////////RESPONSIVE//////////// */
@@ -160,9 +170,9 @@ h5 {
    
 }
 @media(max-width:479px){
-    .header{
+    /* .header{
         margin-left: 30%;
-    }
+    } */
     #submit{
         margin-left: 10px !important;
         padding-left: 15px !important;
@@ -173,4 +183,7 @@ h5 {
         padding-left: 18px !important;
         padding-right: 18px !important;
     }
+}
+@media only screen and (min-width: 360px) {
+  
 }
