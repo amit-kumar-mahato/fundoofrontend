@@ -64,7 +64,7 @@ class SideDrawer extends Component {
                     </div>
               </li>
           </ul>
-          {this.state.show === true ? <EditModal show={this.state.show} oHide={this.handleClose} /> : <div />}
+          {this.state.show ? <EditModal show={this.state.show} oHide={this.handleClose} /> : <div />}
         </nav>
     );
   }
