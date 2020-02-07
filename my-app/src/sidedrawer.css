@@ -42,12 +42,12 @@
 .side-drawer-header{
   display:flex;
   align-items:center;
-  padding:12px 0px;
+  padding:15px 0px;
   margin-left: 32px;
 }
 .side-drawer-content{
   font-size: 15px;
-  font-weight:bold;
+  /* font-weight:bold; */
   cursor: pointer;
-  margin-left:28px;
+  /* margin-left:28px; */
 }
