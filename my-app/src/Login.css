@@ -154,7 +154,13 @@ h5 {
 }
 
 @media only screen and (min-width: 360px) {
+<<<<<<< HEAD
   .login-div{
     margin-left: 10.5px;
   }
+=======
+  .col-md-4 {
+    margin-left: 22px !important; 
+}
+>>>>>>> 0da234bfc6c2c577c773c54384d4929a1030c5ac
 }
