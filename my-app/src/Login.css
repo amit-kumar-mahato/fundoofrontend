@@ -1,6 +1,3 @@
-.container{
-    margin-top: 7%;
-}
 .logo{
     width: 40px;
     height: 40px;
@@ -10,6 +7,7 @@
     margin-left: 23%;
     font-family: 'M PLUS Rounded 1c', sans-serif;
     font-weight: bold;
+    align-items: center;
 }
 .col-md-4 {
   box-shadow: 0px 3px 5px 2px grey;
@@ -48,10 +46,7 @@
 .input-icons input:focus {
   background: none;
 }
-.buttons {
-  margin-top: 30px;
-  margin-left: 30%;
-}
+
 button {
   display: inline-block;
 }
@@ -73,19 +68,39 @@ footer {
   padding-bottom: 10px;
 }
 h5 {
-  padding-left: 15px;
+  padding-left: 7px;
   color: black;
+}
+.login-div{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.login-header{
+  display:flex;
+  margin-top:5%;
+}
+.login-content{
+  display:flex;
 }
 .login-field{
   border: none;
   background: none;
   outline: none;
-  margin-left: 35%;
+  margin-left: 33%;
 }
-
+.button-content{
+  display:flex;
+  justify-content:center;
+  margin-top:7%;
+}
+.footer-content{
+  color:whitesmoke;
+  font-weight:bold;
+}
 /* /////////////////RESPONSIVE//////////// */
 
-@media(min-width:768px) and (max-width:992px){
+@media(min-width:768px) and (max-width:994px){
     .header{
         margin-left: 20%;
         font-family: 'M PLUS Rounded 1c', sans-serif;
@@ -116,74 +131,30 @@ h5 {
 }
 @media(min-width:575px) and (max-width:767px){
     .header{
-        margin-left: 30%;
+        margin-left: 33%;
         font-family: 'M PLUS Rounded 1c', sans-serif;
+    }
+    .login-field{
+      margin-left: 40%;
     }
     .col-md-4 {
         margin-top: 50px !important; 
     }
-    .buttons {
-        margin-top: 30px;
-        margin-left: 7%;
-      }
-    #submit{
-        margin-left: 130px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-    }
-    #reset{
-        margin-left: 16px !important;
-        padding-left: 18px !important;
-        padding-right: 18px !important;
-    }
-    footer{
-        padding-top: 20px;
-        padding-bottom: 6px !important;
-    } 
 }
 @media(min-width:480px) and (max-width:574px){
     .header{
-        margin-left: 30%;
+        margin-left: 32%;
     }
     .col-md-4 {
         margin-top: 38px !important; 
     }
-    .buttons {
-        margin-top: 30px;
-        margin-left: 7% !important;
-      }
-    #submit{
-        margin-left: 110px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-    }
-    #reset{
-        margin-left: 16px !important;
-        padding-left: 18px !important;
-        padding-right: 18px !important;
-    }
-    footer{
-       
-        padding-top: 20px;
-        padding-bottom: 6px !important;
-    }
-   
-}
-@media(max-width:479px){
-    /* .header{
-        margin-left: 30%;
-    } */
-    #submit{
-        margin-left: 10px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-    }
-    #reset{
-        margin-left: 16px !important;
-        padding-left: 18px !important;
-        padding-right: 18px !important;
+    .login-field{
+      margin-left: 40%;
     }
 }
+
 @media only screen and (min-width: 360px) {
-  
+  .login-div{
+    margin-left: 10.5px;
+  }
 }
