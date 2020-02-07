@@ -144,7 +144,7 @@ padding: 5px;
 background-color: gainsboro;
 }
 .icon-div-content{
-padding:5px 9.2px 0px 9.2px
+padding:5px 9.2px 0px 7px
 }
 /* ModalBox*/
 .modal-main-div{
@@ -194,4 +194,27 @@ border-radius: 8px;
 .notelist-content{
 /* border: 2px solid black; */
 padding: 1%;
+}
+.reminder-div{
+  padding:5px 12px;
+  width:208px;
+}
+.reminder-save-btn{
+  border: none;
+  background: none;
+  outline: none;
+  padding-right: 11px;
+  margin-top: 3px;
+  font-weight: bold;
+}
+.reminder-input{
+  background-color: transparent;
+  border: none;
+  height: 25px;
+  outline: none;
+  padding: 0;
+}
+.icon-list{
+  display: flex;
+  cursor: pointer;
 }
