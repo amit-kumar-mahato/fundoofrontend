@@ -21,7 +21,8 @@ export default class Dashboard extends Component {
     editLabel: false,
     archive: false,
     trash: false,
-    active: true
+    active: true,
+    edit:false
   };
 
   handleActive = () => {
@@ -82,16 +83,6 @@ export default class Dashboard extends Component {
         });
     }
   };
-  componentDidMount() {
-    this.getAllNotes();
-  }
-
-  getAllNotes = () => {
-    NoteController.allNotes().then(response => {
-      console.log("Notes List", response.data.obj);
-      this.setState({ listOfNotes: response.data.obj });
-    });
-  };
 
   render() {
     let mainContent = {
@@ -140,7 +131,8 @@ export default class Dashboard extends Component {
                     archive: this.state.archive,
                     trash: this.state.trash
                   }}
-                  titles={this.state.listOfNotes}
+                  addReminder={this.state.addReminder}
+                  onClickReminderIcon={this.onClickReminderIcon}
                 />
               </div>
             </div>
