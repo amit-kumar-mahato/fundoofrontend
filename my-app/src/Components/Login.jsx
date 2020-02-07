@@ -61,19 +61,19 @@ onSubmit = () => {
   render() {
   
     return (
-      <div className="container">
-        <div className="col-md-4 offset-md-4">
+      <div className="login-div">
+        <div className="col-md-4">
           <div className="form-group">
-            <div className="" style={{display:'flex'}}>
+            <div className="login-header">
               <span>
                 <img src="../keep.png" alt="logo" className="logo"></img>
               </span>
-              <h1 className="header" style={{alignItems:'center'}}>fundoo</h1>
+              <h1 className="header">fundoo</h1>
             </div>
           </div>
           <hr />
 
-          <div className="" style={{display:'flex'}}>
+          <div className="login-content">
             <i className="fa fa-envelope" aria-hidden="true"></i>
             <input
               type="email"
@@ -85,7 +85,7 @@ onSubmit = () => {
             />
           </div>
           <div style={{height:'1px',backgroundColor:'whitesmoke'}}></div>
-          <div className="" style={{display:'flex'}}>
+          <div className="" style={{display:'flex',marginTop:'10%'}}>
             <i className="fa fa-key" aria-hidden="true"></i>
             <input
               type="password"
@@ -100,7 +100,7 @@ onSubmit = () => {
           <span className="text-danger font-weight-normal">
                 {this.state.message}
           </span>
-          <div className="buttons">
+          <div className="button-content">
             <button
               type="button"
               value="submit"
@@ -125,11 +125,11 @@ onSubmit = () => {
           <footer>
             <h5>
               New User?
-              <Link to="/registration" className="" style={{color:'whitesmoke',fontWeight:'bold'}}>
+              <Link to="/registration" className="footer-content">
                 SignUp
               </Link>
             </h5>
-            <Link to="/forgotPassword" className="" style={{color:'whitesmoke',fontWeight:'bold'}}>
+            <Link to="/forgotPassword" className="footer-content">
                 Forgot Password ?
             </Link>
           </footer>
