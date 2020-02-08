@@ -1,8 +1,8 @@
 .colab-wrapper{
     background-color: #fff;
     opacity:1;
-    position:absolute;
-    z-index: 5003;
+    /* position:absolute;
+    z-index: 5003; */
     box-shadow:#adb5bda1 0px 0px 5px 0.5px;
     border-radius:10px;
 }
@@ -60,4 +60,5 @@
     outline: none;
     padding: 0;
     margin-top: 10px;
+    width: 100%;
 }

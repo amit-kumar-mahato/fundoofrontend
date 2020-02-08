@@ -62,6 +62,7 @@ function NoteList(props) {
   };
 
   const updateNoteListStatus = (id, status) => {
+    console.log("NoteList :"+status+","+id);
     setNoteList(
       notelist.map(note => {
         if (note.noteId === id) {
@@ -77,10 +78,12 @@ function NoteList(props) {
             note.pin = false;
             note.trash = false;
           } else if (status === "Active") {
+            console.log("Active");
             note.archiev = false;
             note.trash = false;
           } else if (status === "Trash") {
-            NoteController.deleteNote(this.props.noteId)
+            console.log("Trash");
+            NoteController.deleteNote(note.noteId)
               .then(response => {
                 console.log(response.data.message);
               })
@@ -113,6 +116,7 @@ function NoteList(props) {
                   pin={note.pin}
                   fnote={note}
                   onPinClick={() => updateNoteListPin(note.noteId)}
+                  handleTrash={() =>    updateNoteListStatus(note.noteId, "Trash") }
                   handleArchive={() =>
                     updateNoteListStatus(note.noteId, "Archive")
                   }
@@ -131,6 +135,7 @@ function NoteList(props) {
                   pin={note.pin}
                   fnote={note}
                   onPinClick={() => updateNoteListPin(note.noteId)}
+                  handleTrash={() =>    updateNoteListStatus(note.noteId, "Trash") }
                   handleArchive={() =>
                     updateNoteListStatus(note.noteId, "Archive")
                   }
@@ -150,6 +155,7 @@ function NoteList(props) {
                   description={note.description}
                   pin={note.pin}
                   fnote={note}
+                  handleTrash={() =>    updateNoteListStatus(note.noteId, "Trash") }
                   onPinClick={() => updateNoteListPin(note.noteId)}
                   handleArchive={() =>
                     updateNoteListStatus(note.noteId, "Active")
@@ -170,9 +176,7 @@ function NoteList(props) {
                   description={note.description}
                   pin={note.pin}
                   fnote={note}
-                  handleTrash={() =>
-                    updateNoteListStatus(note.noteId, "Trash")
-                  }
+                  handleTrash={() =>    updateNoteListStatus(note.noteId, "Trash") }
                 />
               );
             })}

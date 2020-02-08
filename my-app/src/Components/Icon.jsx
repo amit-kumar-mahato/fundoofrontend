@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Dropdown, FormControl, Button } from "react-bootstrap";
 import NoteController from "../Controller/NoteController";
+import CollaboratorModal from "./collaboratorModal";
+import {AiOutlineBell} from 'react-icons/fa';
 
 export default function Icon(props) {
  
+  const [show, setShow] = useState(false);
   const [date,setDate]= useState("");
   const [time,setTime]= useState("");
   const [dateError, setDateError] = useState("");
@@ -18,6 +21,12 @@ export default function Icon(props) {
   //     });
   // };
   
+const handleClose = () => {
+  setShow(false);
+}
+const handleShow = () => {
+  setShow(true);
+}
 const handleDateChange = (e) =>{
   setDate(e.target.value);
 }
@@ -96,19 +105,19 @@ NoteController.setReminder(reminder).then(response => {
           className="fa fa-user-plus"
           title="Collaborator"
           aria-hidden="true"
-          //onClick={this.handleCollaborator}
+          onClick={handleShow}
         ></i>
       </div>
       <div className="icon-div-content">
         <i className="fa fa-print" title="Change Color" aria-hidden="true"></i>
       </div>
-      <div className="icon-div-content">
+      {/* <div className="icon-div-content">
         <i
           className="fa fa-file-image-o"
           title="Add image"
           aria-hidden="true"
         ></i>
-      </div>
+      </div> */}
       <div className="icon-div-content">
         <i
           className="fa fa-archive"
@@ -135,6 +144,15 @@ NoteController.setReminder(reminder).then(response => {
           <Dropdown.Item onClick={props.handleTrash}>Delete Label</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+      {
+        // console.log("SHOW :",show)
+      show ? <CollaboratorModal 
+        show={show} 
+        onHide={handleClose} 
+        collaboratorList={props.collaboratorList}
+        addCollaborator={props.addCollaborator}
+        removeCollaborator={props.removeCollaborator}/> : ""
+    }
     </div>
   );
 }

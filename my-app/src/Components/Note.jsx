@@ -6,7 +6,7 @@ import NoteController from "../Controller/NoteController";
 import ModalBox from "./ModalBox";
 import Icon from "./Icon";
 import AddLabel from "./AddLabel";
-
+import {getCollaboratorList} from '../Controller/collaborator';
 
 class Note extends Component {
   constructor(props) {
@@ -17,11 +17,22 @@ class Note extends Component {
       //iconShow: false,
       isPinned: false,
       show:false,
-      note: props.fnote
+      note: props.fnote,
+      collaboratorList: []
     };
     this.handleClick = this.handleClick.bind(this);
     //this.handleCollaborator = this.handleCollaborator.bind(this);
     //this.handleIcon = this.handleIcon.bind(this);
+  }
+
+  componentDidMount(){
+    getCollaboratorList(this.props.noteId).then(response =>{
+      console.log("MESSAGE :",response.data.obj);
+      this.setState({collaboratorList: response.data.obj});
+    })
+    .catch(error => {
+      console.log("ERROR :",error.response.data.message);
+    })
   }
 
   handleClose = () => this.setState({show:false});
@@ -31,28 +42,15 @@ class Note extends Component {
     this.setState(oldState => ({ condition: !oldState.condition }));
   }
 
-  // handleCollaborator() {
-  //   this.setState(collaborator => ({ modelOpen: !collaborator.modelOpen }));
-  // }
-  // handleIcon() {
-  //   this.setState(icons => ({ iconShow: !icons.iconShow }));
-  // }
-  // handlePinned = (noteid) =>{
-  //   NoteController.pinNote(this.props.noteId).then(response => {
-  //     console.log("Message :",response.data.message);
-  //   })
-  //   .catch(error => {
-  //     console.log("Message :",error.data.message);
-  //   })
-  // }
-  // handleArchive = (event) => {
-  //   NoteController.archiveNote(this.props.noteId).then(response => {
-  //     console.log("Message :",response.data.message);
-  //   })
-  //   .catch(error => {
-  //     console.log("Message :",error.data.message);
-  //   })
-  // }
+  addCollaborator = (colab) => {
+    console.log(colab);
+    this.setState({collaboratorList:[...this.state.collaboratorList,colab]})
+  }
+  removeCollaborator = (colab) => {
+    this.setState({collaboratorList:this.state.collaboratorList.filter(emailId => {
+      return emailId!=colab;
+    })})
+  }
   handleTrash = () => {
     NoteController.deleteNote(this.props.noteId)
       .then(response => {
@@ -91,6 +89,9 @@ class Note extends Component {
                   handleArchive={this.props.handleArchive}
                   handleTrash={this.props.handleTrash}
                   noteId={noteId}
+                  collaboratorList={this.state.collaboratorList}
+                  addCollaborator={this.addCollaborator}
+                  removeCollaborator={this.removeCollaborator}
                   />
               </div>
             </Card.Body>

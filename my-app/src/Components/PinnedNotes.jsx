@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import NoteController from "../Controller/NoteController";
 import { Card } from "react-bootstrap";
 import Reminder from "./Reminder";
 import Collaborator from "./Collaborators/Collaborator";

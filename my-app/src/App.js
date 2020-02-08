@@ -3,7 +3,7 @@ import './App.css';
 import Login from './Components/Login';
 import Registration from './Components/Registration';
 import ForgotPassword from './Components/ForgotPassword';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import UpdatePassword from './Components/UpdatePassword';
 import Dashboard from './Components/Dashboard';
 import SideDrawer from './Components/SideDrawer';
@@ -12,12 +12,13 @@ import Newheader from './Components/Newheader';
 import CreateNote from './Components/CreateNote';
 import {Example} from './Components/CustomTogglerNote';
 import Reminder from './Components/Reminder';
+import IncorporationForm from './Components/IncorporationForm';
 
 class App extends Component {
   render() {
     return (
       <Router>
-
+        {/* <Switch> */}
         <Route path="/" exact component={Login}></Route>
         <Route path="/registration" component={Registration}></Route>
         <Route path="/forgotPassword" component={ForgotPassword}></Route>
@@ -29,6 +30,8 @@ class App extends Component {
         <Route path="/createnote" exact component={CreateNote}></Route>
         <Route path="/toggler" component={Example}></Route> 
         <Route path="/reminder" component={Reminder}></Route>
+        <Route path="/incorp" component={IncorporationForm}></Route>
+        {/* </Switch> */}
       </Router>
     );
   }

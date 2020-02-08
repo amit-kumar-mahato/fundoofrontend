@@ -20,7 +20,7 @@ class NoteController{
 
     deleteNote(noteId){
         console.log("NOTE ID :"+noteId);
-        return Axios.delete('notes/delete/?noteId='+noteId,null,{
+        return Axios.delete('notes/delete/'+noteId,{
             headers:headers
         })
     }
