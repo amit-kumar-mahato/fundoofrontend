@@ -30,9 +30,7 @@ class PinnedNotes extends Component {
   handleIcon() {
     this.setState(icons => ({ iconShow: !icons.iconShow }));
   }
-  // handlePinned() {
-  //   this.setState(pin => ({ isPinned: !pin.isPinned }));
-  // }
+ 
   render() {
     const { condition, modelOpen, iconShow, isPinned } = this.state;
     const {handlePinned} = this.props;
