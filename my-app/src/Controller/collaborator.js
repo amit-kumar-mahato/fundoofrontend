@@ -4,5 +4,6 @@ export function addCollaborator(){
 
 }
 export function getCollaboratorList(noteId){
-    return Axios.get('collaborator/collaboratorlist/'+noteId)
+    console.log(noteId)
+    return Axios.get('collaborator/collaboratorlist?noteId='+noteId);
 }
