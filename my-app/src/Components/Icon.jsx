@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Dropdown, FormControl, Button } from "react-bootstrap";
+import { Dropdown} from "react-bootstrap";
 import NoteController from "../Controller/NoteController";
 import CollaboratorModal from "./collaboratorModal";
-import {AiOutlineBell} from 'react-icons/fa';
+import {getCollaboratorList} from '../Controller/collaborator';
 
 export default function Icon(props) {
  
@@ -11,22 +11,7 @@ export default function Icon(props) {
   const [time,setTime]= useState("");
   const [dateError, setDateError] = useState("");
   const [timeError, setTimeError] = useState("");
-  // const handleDelete = () => {
-  //   NoteController.deleteNote(props.noteId)
-  //     .then(response => {
-  //       console.log(response.data.message);
-  //     })
-  //     .catch(error => {
-  //       console.log(error.data.message);
-  //     });
-  // };
   
-const handleClose = () => {
-  setShow(false);
-}
-const handleShow = () => {
-  setShow(true);
-}
 const handleDateChange = (e) =>{
   setDate(e.target.value);
 }
@@ -49,7 +34,7 @@ NoteController.setReminder(reminder).then(response => {
 }
   return (
     <div className="icon-list">
-      {/* <div className="icon-div-content"> */}
+  
         <Dropdown>
           <Dropdown.Toggle
             bsPrefix="dropdown"
@@ -105,19 +90,12 @@ NoteController.setReminder(reminder).then(response => {
           className="fa fa-user-plus"
           title="Collaborator"
           aria-hidden="true"
-          onClick={handleShow}
+          onClick={props.handleColabShow}
         ></i>
       </div>
       <div className="icon-div-content">
         <i className="fa fa-print" title="Change Color" aria-hidden="true"></i>
       </div>
-      {/* <div className="icon-div-content">
-        <i
-          className="fa fa-file-image-o"
-          title="Add image"
-          aria-hidden="true"
-        ></i>
-      </div> */}
       <div className="icon-div-content">
         <i
           className="fa fa-archive"
@@ -144,15 +122,7 @@ NoteController.setReminder(reminder).then(response => {
           <Dropdown.Item onClick={props.handleTrash}>Delete Label</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      {
-        // console.log("SHOW :",show)
-      show ? <CollaboratorModal 
-        show={show} 
-        onHide={handleClose} 
-        collaboratorList={props.collaboratorList}
-        addCollaborator={props.addCollaborator}
-        removeCollaborator={props.removeCollaborator}/> : ""
-    }
+      
     </div>
   );
 }
