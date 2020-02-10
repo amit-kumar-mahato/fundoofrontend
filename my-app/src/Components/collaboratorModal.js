@@ -1,23 +1,30 @@
 import React, { useState } from "react";
-import { Modal, Card } from "react-bootstrap";
-import '../Collaborator.css';
+import { Modal, Form, Button } from "react-bootstrap";
+import "../Collaborator.css";
 
 export default function CollaboratorModal(props) {
-    const [show, setShow] = useState(false);
-    const [emailId, setEmailId] = useState(localStorage.getItem('emailId'));
-    const [email, setEmail] = useState("");
-   
-    const handleEmailChange = (e) =>{
-        setEmail(e.target.value);
-    }
+
+  const [emailId] = useState(localStorage.getItem("emailId"));
+  const [email, setEmail] = useState("");
+  const [cList, setCList] = useState(props.collaboratorList.map(clb=>{return clb.email}));
+ const addCollaborator = () => {
+    console.log(email);
+    setCList([...cList, email]);
+    setEmail("");
+  };
+ const removeCollaborator = colab => {
+  setCList(cList.filter(emailId => {
+        return emailId !== colab;
+      })
+    );
+  };
   return (
     <Modal show={props.show} onHide={props.onHide} centered>
       <div className="colab-wrapper">
         <div className="colab-header">
           <div className="colab-header-item">Collaborators</div>
           <div className="colab-content">
-            {props.collaboratorList.map(email => 
-              <div className="colab-content-header">
+            <div className="colab-content-header">
               <div style={{ fontSize: "13px" }}>
                 <div style={{ display: "flex", padding: "5px" }}>
                   <div className="colab-owner">
@@ -37,47 +44,92 @@ export default function CollaboratorModal(props) {
                         (Owner)
                       </span>
                     </div>
-                    <div style={{ color: "#5f6368" }}>{email}</div>
+                    <div style={{ color: "#5f6368" }}>{emailId}</div>
                   </div>
                 </div>
               </div>
-              <div>
-                <button
-                  onClick={() => props.removeCollaborator(email)}
-                >
-                  <i class="fa fa-times" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>)}
-            <div className="colab-input-email">
-                <div style={{ display: "flex"}}> 
-                  <div className="colab-owner">
-                    <div className="colab-owner-content" style={{opacity:.5}}>
-                      <i className="fa fa-user-plus" aria-hidden="true" style={{fontSize:'22px',padding:'6.8px'}}></i>
+              {cList.map(colabEmail => (
+                <div style={{ fontSize: "13px" }}>
+                  <div style={{ display: "flex", padding: "5px" }}>
+                    <div className="colab-owner">
+                      <div className="colab-owner-content">
+                        <img
+                          src="../keep.png"
+                          alt="logo"
+                          width="40px"
+                          height="40px"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div style={{ margin: "0 13px",width:'100%'}}>
-                    <div style={{ color: "#5f6368" }}>
-                        <input 
-                            className="colab-input" 
-                            type="text" 
-                            placeholder="Person or email to share with" 
-                            maxLength="320" 
-                            value={email}
-                            onChange={handleEmailChange}
-                            />
-                    </div>
-                    <button
-                      onClick={() => props.addCollaborator(email)}
+                    <div className="w-75"
+                      style={{
+                        margin: "0 13px",
+                        display: "flex",
+                        fontSize: "16px"
+                      }}
                     >
-                      <i className="fa fa-check" aria-hidden="true"></i>
-                    </button>
+                      <div
+                        style={{ color: "#5f6368", flex: 1, marginTop: "10px" }}
+                      >
+                        {colabEmail}
+                      </div>
+                      <div className="float-right" style={{ marginTop: "10px" }}>
+                        <i
+                          className="fa fa-times"
+                          aria-hidden="true"
+                          onClick={() =>
+                            removeCollaborator(colabEmail)
+                          }
+                          style={{ cursor: "pointer" }}
+                        ></i>
+                      </div>
+                    </div>
                   </div>
                 </div>
+              ))}
+              <Form onSubmit={e=>e.preventDefault()}>
+              <div style={{ fontSize: "13px" }}>
+                <div style={{ display: "flex", padding: "5px" }}>
+                  <div className="colab-owner">
+                    <div className="colab-owner-content">
+                      <i
+                        className="fa fa-user-plus colab-user-plus"
+                        aria-hidden="true"
+                      ></i>
+                    </div>
+                  </div>
+                  <div className="w-75" style={{ margin: "0 13px", display: "flex" }}>
+                    <div style={{ color: "#5f6368", flex: 1 }}>
+                      <input
+                        className="colab-input"
+                        type="email"
+                        placeholder="Person or email to share with"
+                        maxLength="320"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <i
+                        className="fa fa-check"
+                        aria-hidden="true"
+                        onClick={addCollaborator}
+                        style={{ cursor: "pointer", marginTop: "10px" }}
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </Form>
             </div>
           </div>
         </div>
-        <div></div>
+      </div>
+      <div className="colab-footer" style={{background:'lightgray', display:'flex',flexDirection:'row-reverse'}}>
+        <div className="colab-footer-content" style={{padding:'10px'}}>
+          <Button variant="light" style={{marginRight:'15px'}}>Cancel</Button>
+          <Button variant="light">Save</Button>
+        </div>
       </div>
     </Modal>
   );
