@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Modal, FormControl } from "react-bootstrap";
+import { Card, Modal} from "react-bootstrap";
 import Icon from "./Icon";
 import NoteController from "../Controller/NoteController";
 
