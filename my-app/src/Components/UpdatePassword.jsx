@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import UserController from "../Controller/UserController";
-import { BrowserRouter } from "react-router-dom";
 class UpdatePassword extends Component {
   constructor(props) {
     super(props);
@@ -79,7 +78,7 @@ class UpdatePassword extends Component {
           <div className="form-group">
             <div className="form-row ">
               <span>
-                <img src="../keep.png" className="logo"></img>
+                <img src="../keep.png" className="logo" alt=""></img>
               </span>
               <h1 className="header">fundoo</h1>
             </div>
