@@ -12,13 +12,12 @@ import Newheader from './Components/Newheader';
 import CreateNote from './Components/CreateNote';
 import {Example} from './Components/CustomTogglerNote';
 import Reminder from './Components/Reminder';
-import IncorporationForm from './Components/IncorporationForm';
 
 class App extends Component {
   render() {
     return (
       <Router>
-        {/* <Switch> */}
+        <Switch>
         <Route path="/" exact component={Login}></Route>
         <Route path="/registration" component={Registration}></Route>
         <Route path="/forgotPassword" component={ForgotPassword}></Route>
@@ -30,8 +29,7 @@ class App extends Component {
         <Route path="/createnote" exact component={CreateNote}></Route>
         <Route path="/toggler" component={Example}></Route> 
         <Route path="/reminder" component={Reminder}></Route>
-        <Route path="/incorp" component={IncorporationForm}></Route>
-        {/* </Switch> */}
+        </Switch>
       </Router>
     );
   }
