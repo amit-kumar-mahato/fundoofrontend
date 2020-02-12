@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import Newheader from "../Components/Newheader";
 import NoteController from "../Controller/NoteController";
 import Header from "../Components/Header";
 import SideDrawer from "../Components/SideDrawer";
 import CreateNote from "./CreateNote";
 import NoteList from "../Components/NoteList";
 import "../App.css";
-import Reminder from "../Components/Reminder";
-import PinnedNotes from "../Components/PinnedNotes";
-import Note from "../Components/Note";
+
 export default class Dashboard extends Component {
   state = {
     titles: [],
@@ -67,8 +64,6 @@ export default class Dashboard extends Component {
       };
       NoteController.createNote(notes)
         .then(response => {
-          // console.log(response.data.obj);
-          // console.log(response.data.obj.title);
           this.setState({
             listOfNotes: [...this.state.listOfNotes, notes],
             title: "",
@@ -76,7 +71,7 @@ export default class Dashboard extends Component {
             createNote: true,
             openNote: false
           });
-          //this.props.response(this.state.createNote);
+    
         })
         .catch(err => {
           console.log("error", err.response.data);
@@ -85,9 +80,7 @@ export default class Dashboard extends Component {
   };
 
   render() {
-    let mainContent = {
-      marginTop: "9%"
-    };
+    
     return (
       <div className="App">
         <div className="">

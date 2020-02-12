@@ -1,46 +1,37 @@
 import React, { Component } from "react";
 import { Card } from "react-bootstrap";
-import Reminder from "../Components/Reminder";
-import Collaborator from "./Collaborators/Collaborator";
 import NoteController from "../Controller/NoteController";
 import ModalBox from "./ModalBox";
 import Icon from "./Icon";
-import AddLabel from "./AddLabel";
-import CollaboratorModal from "./collaboratorModal";
-import { getCollaboratorList } from "../Controller/collaborator";
+import MyTag from "./myTag";
+import {IoMdTime} from "react-icons/io";
 
 class Note extends Component {
   constructor(props) {
     super(props);
     this.state = {
       condition: false,
-      modelOpen: false,
       //iconShow: false,
       isPinned: false,
       show: false,
       note: props.fnote,
-      colabShow: false,
-      collaboratorList: []
+      colors: [
+        "white",
+        "#ffcdd2",
+        "#ffe0b2",
+        "#fff59d",
+        "#e6ee9c",
+        "#e1f5fe",
+        "#d7ccc8",
+        "#e1bee7",
+        "#f1f8e9"
+      ]
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
-
-  handleColabShow = id => {
-    this.setState({ colabShow: !this.state.colabShow });
-    getCollaboratorList(id)
-      .then(response => {
-        console.log("MESSAGE :", response.data.obj);
-        if (response.data.obj === "")  this.setState({collaboratorList:response.data.obj});
-        this.setState({collaboratorList:response.data.obj});
-      })
-      .catch(error => {
-        console.log("ERROR :", error.response.data.message);
-      });
-  };
-  handleColabClose = () => this.setState({ colabShow: false });
 
   handleClick() {
     this.setState(oldState => ({ condition: !oldState.condition }));
@@ -55,7 +46,6 @@ class Note extends Component {
       });
   };
   render() {
-    const { condition, modelOpen, moreOption } = this.state;
     const { title, description, noteId } = this.props;
     return (
       <div>
@@ -63,7 +53,6 @@ class Note extends Component {
           <Card
             className="my-2 mr-2"
             style={{ width: "15rem", borderRadius: "7px" }}
-            //onClick={this.handleShow}
           >
             <Card.Body>
               <div style={{ display: "flex" }}>
@@ -79,44 +68,31 @@ class Note extends Component {
                 </div>
               </div>
               <div onClick={this.handleShow}>{description}</div>
+              <div className="row ml-1 p-2 w-100">
+                {
+                  (this.props.fnote.reminder !== null && this.props.fnote.reminder !== "") ?
+                  <MyTag icon={<IoMdTime/>} id={"reminder"}
+                  data={(this.props.fnote.reminder !== null ? this.props.fnote.reminder : "")}
+                  onCloseIconClick={this.removeReminder}
+                  />
+                  : <div />
+                }</div>
               <div style={{ marginTop: "30px" }}>
                 <Icon
                   handleClick={this.handleClick}
                   handleArchive={this.props.handleArchive}
                   handleTrash={this.props.handleTrash}
                   noteId={noteId}
-                  handleColabShow={() => this.handleColabShow(noteId)}
                 />
               </div>
             </Card.Body>
-            <div>
-              {condition === true ? <Reminder noteId={noteId} /> : <div />}
-            </div>
-            <div>
-              {moreOption === true ? <AddLabel noteId={noteId} /> : <div />}
-            </div>
           </Card>
-          <div>
-            {modelOpen === true ? <Collaborator noteId={noteId} /> : <div />}
-          </div>
         </div>
         <ModalBox
           show={this.state.show}
           onHide={this.handleClose}
           note={this.props.fnote}
         />
-        {
-        this.state.colabShow ? (
-          <CollaboratorModal
-            show={this.state.colabShow}
-            onHide={this.handleColabClose}
-            collaboratorList={this.state.collaboratorList}
-            // addCollaborator={this.addCollaborator}
-            // removeCollaborator={this.removeCollaborator}
-          />
-        ) : (
-          ""
-        )}
       </div>
     );
   }

@@ -1,7 +1,8 @@
 import Axios from "axios";
 
-export function addCollaborator(){
-
+export function updateCollaborator(updateColab){
+    console.log(updateColab);
+    return Axios.put('collaborator',updateColab);
 }
 export function getCollaboratorList(noteId){
     console.log(noteId)

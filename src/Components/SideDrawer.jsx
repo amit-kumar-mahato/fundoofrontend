@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import '../sidedrawer.css';
-import { Link } from "react-router-dom";
 import EditModal from './EditModal';
 class SideDrawer extends Component {
     constructor(props){

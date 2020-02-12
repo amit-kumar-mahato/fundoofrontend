@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "react-bootstrap";
 import Note from "../Components/Note";
-import Reminder from "../Components/Reminder";
-import SideDrawer from "../Components/SideDrawer";
-import Axios from "axios";
 import NoteController from "../Controller/NoteController";
 function NoteList(props) {
   const [notelist, setNoteList] = useState([]);
@@ -11,6 +7,7 @@ function NoteList(props) {
   const [pinnedNote, setPinnedNote] = useState([]);
   const [unPinnedNote, setUnPinnedNote] = useState([]);
   const [archiveNote, setArchiveNote] = useState([]);
+  const [reminderNote, setReminderNote] = useState([]);
   useEffect(() => {
     NoteController.allNotes().then(response => {
       setNoteList(response.data.obj);
@@ -36,6 +33,11 @@ function NoteList(props) {
     setTrashNote(
       notelist.filter(note => {
         return note.trash;
+      })
+    );
+    setReminderNote(
+      notelist.filter(note => {
+        return note.reminder;
       })
     );
   }, [notelist]);
@@ -176,7 +178,7 @@ function NoteList(props) {
                   description={note.description}
                   pin={note.pin}
                   fnote={note}
-                  handleTrash={() =>    updateNoteListStatus(note.noteId, "Trash") }
+                  handleTrash={() => updateNoteListStatus(note.noteId, "Trash") }
                 />
               );
             })}
