@@ -43,7 +43,7 @@ onSubmit = () => {
        // console.log(loginDetails);
         UserController.authentication(loginDetails).then(response => {
           
-            console.log('response---', response.data.token);
+            console.log('response---', response);
             if (response.data.statuscode === 200) {
 
                 localStorage.setItem('token', response.data.token);

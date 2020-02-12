@@ -87,7 +87,8 @@ h5 {
   border: none;
   background: none;
   outline: none;
-  margin-left: 33%;
+  text-align: center;
+  width: 84%;
 }
 .button-content{
   display:flex;

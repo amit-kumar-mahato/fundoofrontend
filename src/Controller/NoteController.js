@@ -9,26 +9,26 @@ class NoteController{
         console.log("Inside NoteController :"+noteDetails.title+", "+noteDetails.description);
         return Axios.post('notes/create',noteDetails,{
             headers:headers
-        })
+        });
     }
     updateNote(noteInfo){
         console.log('updated data :'+noteInfo.noteId+" ,"+noteInfo.title+" ,"+noteInfo.description);
         return Axios.put('notes/update?noteId='+noteInfo.noteId,noteInfo,{
             headers:headers
-        })
+        });
     }
 
     deleteNote(noteId){
         console.log("NOTE ID :"+noteId);
         return Axios.delete('notes/delete/'+noteId,{
             headers:headers
-        })
+        });
     }
     allNotes(){
         console.log("Inside allNotes method...");
         return Axios.get('notes',{
             headers:headers
-        })
+        });
     }
    
     pinNote(noteId){

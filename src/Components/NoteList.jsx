@@ -95,19 +95,25 @@ function NoteList(props) {
             note.archiev = false;
             note.trash = true;
           }
+          else if (status ==="Reminder"){
+            console.log("Reminder");
+            note.pin=false;
+            note.trash=false;
+            note.archiev=false;
+          }
         }
         return note;
       })
     );
   };
   return (
-    <div>
+    <div style={{marginLeft:'27px'}}>
       {pinnedNote.map(n => {
         return <div>{n.noteID}</div>;
       })}
       {props.status.active ? (
         <div>
-          <strong style={{ paddingLeft: "18px" }}>PINNED</strong>
+          <strong>PINNED</strong>
           <div className="note-list row">
             {pinnedNote.map(note => {
               return (
@@ -126,7 +132,7 @@ function NoteList(props) {
               );
             })}
           </div>
-          <strong style={{ paddingLeft: "18px" }}>OTHERS</strong>
+          <strong>OTHERS</strong>
           <div className="note-list row">
             {unPinnedNote.map(note => {
               return (
@@ -167,7 +173,7 @@ function NoteList(props) {
             })}
           </div>
         </div>
-      ) : (
+      ) : props.status.trash ?(
         <div>
           <div className="note-list row">
             {trashNote.map(note => {
@@ -184,7 +190,22 @@ function NoteList(props) {
             })}
           </div>
         </div>
-      )}
+      ) : <div>
+      <div className="note-list row">
+        {reminderNote.map(note => {
+          return (
+            <Note
+              noteId={note.noteId}
+              title={note.title}
+              description={note.description}
+              pin={note.pin}
+              fnote={note}
+              handleTrash={() => updateNoteListStatus(note.noteId, "Reminder") }
+            />
+          );
+        })}
+      </div>
+    </div>}
     </div>
   );
 }

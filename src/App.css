@@ -123,7 +123,7 @@ border: 1px solid whitesmoke;
 font-size: 25px;
 }
 .note-list{
-padding-left:32px;
+/* padding-left:32px; */
 }
 /* Note */
 .pin-icon{
@@ -176,9 +176,9 @@ background-color: #fff;
 
 .content-main{
 width:100%;
-margin-left: 22%;
-/* background-color: yellow;
-border: 2px solid violet; */
+padding-left: 22%;
+display: flex;
+flex-direction: column;
 }
 .note-create{
 /* background-color: violet; */
@@ -192,8 +192,7 @@ border-radius: 8px;
 /* background-color: tomato; */
 }
 .notelist-content{
-/* border: 2px solid black; */
-padding: 1%;
+  padding: 0 12%;
 }
 .reminder-div{
   padding:5px 12px;

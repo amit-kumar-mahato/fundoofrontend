@@ -3,14 +3,15 @@
     border: 2px solid blue; */
     margin-top: 7%;
     display: flex;
+    overflow-x: hidden;
   }
   .side-bar{
     position: fixed;
     top:58px;
     bottom: 10px;
-    width: 21%;
+    width: 20%;
     background-color: #fff;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
   .side-bar-content{
     padding-top: 3%;

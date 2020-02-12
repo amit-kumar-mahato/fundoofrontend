@@ -29,7 +29,7 @@ class Note extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
-
+  
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
 
@@ -71,7 +71,7 @@ class Note extends Component {
               <div className="row ml-1 p-2 w-100">
                 {
                   (this.props.fnote.reminder !== null && this.props.fnote.reminder !== "") ?
-                  <MyTag icon={<IoMdTime/>} id={"reminder"}
+                  <MyTag icon={<IoMdTime/>} id={"reminder"+this.props.noteId}
                   data={(this.props.fnote.reminder !== null ? this.props.fnote.reminder : "")}
                   onCloseIconClick={this.removeReminder}
                   />

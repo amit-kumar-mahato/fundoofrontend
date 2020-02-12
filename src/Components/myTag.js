@@ -24,7 +24,7 @@ export default function MyTag(props) {
           <label
             className="m-0 overflow-hidden"
             style={{
-              maxWidth: "50px",
+              maxWidth: "51px",
               fontSize: "x-small",
               whiteSpace: "nowrap"
             }}

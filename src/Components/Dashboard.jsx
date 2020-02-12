@@ -5,6 +5,7 @@ import SideDrawer from "../Components/SideDrawer";
 import CreateNote from "./CreateNote";
 import NoteList from "../Components/NoteList";
 import "../App.css";
+import {getUserLabel} from '../Controller/labelController';
 
 export default class Dashboard extends Component {
   state = {
@@ -19,12 +20,23 @@ export default class Dashboard extends Component {
     archive: false,
     trash: false,
     active: true,
+    reminder:false,
+    labels:[],
+    sidenav:false,
     edit:false
   };
+
+  handleSideNav = () => {
+    this.setState({sidenav: !this.state.sidenav});
+  }
 
   handleActive = () => {
     this.setState({ active: true, archive: false, trash: false });
   };
+  /*-------Reminder--------*/
+  handleReminder = () => {
+    this.setState({active: false, archive: false, trash: false,reminder:false})
+  }
   /*-------Archive---------*/
   handleArchive = () => {
     this.setState({ active: false, archive: true, trash: false });
@@ -78,6 +90,16 @@ export default class Dashboard extends Component {
         });
     }
   };
+ 
+  componentDidMount(){
+    getUserLabel().then(response => {
+      console.log("LABEl :",response);
+      //this.setState({labels: response.data.obj});
+    })
+    .catch(error =>{
+      console.log('No Data Found',error.response.data.message);
+    })
+  }
 
   render() {
     
@@ -95,6 +117,9 @@ export default class Dashboard extends Component {
                 onClickArchive={this.handleArchive}
                 onClickTrash={this.handleTrash}
                 onClickActive={this.handleActive}
+                onClickReminder={this.handleReminder}
+                labels={this.state.labels}
+                hidden={this.state.sidenav}
               />
             </div>
           </div>
@@ -122,7 +147,8 @@ export default class Dashboard extends Component {
                   status={{
                     active: this.state.active,
                     archive: this.state.archive,
-                    trash: this.state.trash
+                    trash: this.state.trash,
+                    reminder: this.state.reminder
                   }}
                   addReminder={this.state.addReminder}
                   onClickReminderIcon={this.onClickReminderIcon}
