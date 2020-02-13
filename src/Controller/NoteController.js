@@ -50,5 +50,11 @@ class NoteController{
             headers:headers
         });
     }
+
+    deleteReminder(noteId){
+        return Axios.delete('reminder/delete?noteId='+noteId,{
+            headers:headers
+        });
+    }
 }
 export default new  NoteController();

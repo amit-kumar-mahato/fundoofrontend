@@ -36,6 +36,14 @@ class Note extends Component {
   handleClick() {
     this.setState(oldState => ({ condition: !oldState.condition }));
   }
+  removeReminder = (noteId) => {
+    NoteController.deleteReminder(noteId).then(response => {
+      console.log("Reminder Deleted...");
+    })
+    .catch(error => {
+      console.log("error...");
+    })
+  }
   handleTrash = () => {
     NoteController.deleteNote(this.props.noteId)
       .then(response => {
@@ -73,7 +81,7 @@ class Note extends Component {
                   (this.props.fnote.reminder !== null && this.props.fnote.reminder !== "") ?
                   <MyTag icon={<IoMdTime/>} id={"reminder"+this.props.noteId}
                   data={(this.props.fnote.reminder !== null ? this.props.fnote.reminder : "")}
-                  onCloseIconClick={this.removeReminder}
+                  onCloseIconClick={() => this.removeReminder(this.props.noteId)}
                   />
                   : <div />
                 }</div>

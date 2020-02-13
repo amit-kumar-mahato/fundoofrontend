@@ -12,7 +12,7 @@ export function getUserLabel(){
 }
 export function addUserLabel(labelName){
     console.log(labelName);
-    return Axios.post('labels/create/'+labelName,null,{
+    return Axios.post('labels/create?labelName='+labelName,{
         headers:headers
     })
 }

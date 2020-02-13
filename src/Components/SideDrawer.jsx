@@ -7,7 +7,6 @@ class SideDrawer extends Component {
     super(props);
     this.state = {
       show: false,
-      labels: props.labels
     };
   }
   handleEditLabel = () => {
@@ -17,7 +16,7 @@ class SideDrawer extends Component {
   handleShow = () => this.setState({ show: !this.state.show });
   render() {
     return (
-      <nav className="side-drawer">
+      <nav className="side-drawer" hidden={this.props.hidden} style={{transitionDelay:'2s'}}>
         <ul>
           <li className="active">
             <div className="side-drawer-header">
@@ -60,7 +59,7 @@ class SideDrawer extends Component {
                     style={{marginLeft:'25px'}}
                     onClick={this.handleShow}
                   >
-                    {lbl}
+                    {lbl.name}
                   </div>
                 </div>
               </li>
@@ -115,6 +114,7 @@ class SideDrawer extends Component {
             hide={this.handleShow}
             show={this.state.show}
             labelList={this.props.labels}
+            setLabels={this.props.addLabelList}
           />
         ) : (
           <div />

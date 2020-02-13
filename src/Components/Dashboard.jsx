@@ -5,7 +5,7 @@ import SideDrawer from "../Components/SideDrawer";
 import CreateNote from "./CreateNote";
 import NoteList from "../Components/NoteList";
 import "../App.css";
-import {getUserLabel} from '../Controller/labelController';
+import { getUserLabel, addUserLabel } from "../Controller/labelController";
 
 export default class Dashboard extends Component {
   state = {
@@ -20,23 +20,30 @@ export default class Dashboard extends Component {
     archive: false,
     trash: false,
     active: true,
-    reminder:false,
-    labels:[],
-    sidenav:false,
-    edit:false
+    reminder: false,
+    labels: [],
+    sidenav: false,
+    edit: false,
+    addLabel:''
   };
 
   handleSideNav = () => {
-    this.setState({sidenav: !this.state.sidenav});
-  }
+    console.log('hidden');
+    this.setState({ sidenav: !this.state.sidenav });
+  };
 
   handleActive = () => {
     this.setState({ active: true, archive: false, trash: false });
   };
   /*-------Reminder--------*/
   handleReminder = () => {
-    this.setState({active: false, archive: false, trash: false,reminder:false})
-  }
+    this.setState({
+      active: false,
+      archive: false,
+      trash: false,
+      reminder: false
+    });
+  };
   /*-------Archive---------*/
   handleArchive = () => {
     this.setState({ active: false, archive: true, trash: false });
@@ -83,31 +90,41 @@ export default class Dashboard extends Component {
             createNote: true,
             openNote: false
           });
-    
         })
         .catch(err => {
           console.log("error", err.response.data);
         });
     }
   };
- 
-  componentDidMount(){
-    getUserLabel().then(response => {
-      console.log("LABEl :",response);
-      //this.setState({labels: response.data.obj});
-    })
-    .catch(error =>{
-      console.log('No Data Found',error.response.data.message);
-    })
-  }
 
+  componentDidMount() {
+    getUserLabel()
+      .then(response => {
+        console.log("LABEl :", response.data.obj);
+        this.setState({ labels: response.data.obj });
+      })
+      .catch(error => {
+        console.log("No Data Found", error.response.data.message);
+      });
+  }
+  addLabelList = labelName => {
+    console.log(labelName);
+    addUserLabel(labelName)
+      .then(response => {
+        console.log("Message :", response.data.message);
+        this.setState({...this.state.labels,labelName});
+      })
+      .catch(error => {
+        console.log("Error :", error.response);
+      });
+  };
+ 
   render() {
-    
     return (
       <div className="App">
         <div className="">
           <div className="new-nav">
-            <Header />
+            <Header handleSideNav={this.handleSideNav} />
           </div>
         </div>
         <div className="side-main">
@@ -120,6 +137,7 @@ export default class Dashboard extends Component {
                 onClickReminder={this.handleReminder}
                 labels={this.state.labels}
                 hidden={this.state.sidenav}
+                addLabelList={() => this.addLabelList}
               />
             </div>
           </div>

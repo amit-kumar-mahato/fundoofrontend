@@ -14,6 +14,8 @@ class Header extends Component {
                 className="fa fa-bars"
                 aria-hidden="true"
                 style={{ fontSize: "20px" }}
+                onClick={this.props.handleSideNav}
+                style={{cursor:'pointer'}}
               ></i>
             </div>
             <div className="col-sm-2">

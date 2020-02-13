@@ -81,6 +81,13 @@ function NoteList(props) {
             note.trash = false;
           } else if (status === "Active") {
             console.log("Active");
+            NoteController.archiveNote(note.noteId)
+              .then(response => {
+                console.log("Message :", response.data.message);
+              })
+              .catch(error => {
+                console.log("Message :", error.data.message);
+              });
             note.archiev = false;
             note.trash = false;
           } else if (status === "Trash") {
@@ -106,6 +113,15 @@ function NoteList(props) {
       })
     );
   };
+
+  const removeReminder = (noteId) => {
+    NoteController.deleteReminder(noteId).then(response => {
+      console.log("Reminder Deleted...");
+    })
+    .catch(error => {
+      console.log("error...");
+    })
+  }
   return (
     <div style={{marginLeft:'27px'}}>
       {pinnedNote.map(n => {
