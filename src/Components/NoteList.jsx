@@ -14,7 +14,7 @@ function NoteList(props) {
     });
   }, []);
   useEffect(() => {
-    console.log("noteList", notelist);
+    // console.log("noteList", notelist);
     setPinnedNote(
       notelist.filter(note => {
         return note.pin;
@@ -42,10 +42,12 @@ function NoteList(props) {
     );
   }, [notelist]);
 
-  const updateNoteListPin = id => {
+  const updateNoteListPin = (id, status) => {
+    console.log(id+", "+status);
     setNoteList(
       notelist.map(nt => {
         if (nt.noteId === id) {
+          if(status === "pinned"){
           NoteController.pinNote(id)
             .then(response => {
               console.log("Message :", response.data.message);
@@ -53,10 +55,20 @@ function NoteList(props) {
             .catch(error => {
               console.log("Message :", error.data.message);
             });
-          console.log("bla bla");
           nt.archiev = false;
           nt.trash = false;
           nt.pin = !nt.pin;
+          }
+          else if(status === "Trash") {
+            console.log("Trash");
+            NoteController.deleteNote(id)
+              .then(response => {
+                console.log(response.data.message);
+              })
+              .catch(error => {
+                console.log(error.data.message);
+              });
+          }
         }
         return nt;
       })
@@ -67,7 +79,7 @@ function NoteList(props) {
     console.log("NoteList :"+status+","+id);
     setNoteList(
       notelist.map(note => {
-        if (note.noteId === id) {
+        if (note.noteId === id) { 
           if (status === "Archive") {
             NoteController.archiveNote(note.noteId)
               .then(response => {
@@ -101,6 +113,7 @@ function NoteList(props) {
               });
             note.archiev = false;
             note.trash = true;
+            note.active = false;
           }
           else if (status ==="Reminder"){
             console.log("Reminder");
@@ -117,52 +130,55 @@ function NoteList(props) {
   const removeReminder = (noteId) => {
     NoteController.deleteReminder(noteId).then(response => {
       console.log("Reminder Deleted...");
+      setNoteList( notelist.filter(n => noteId!==n.noteId));
     })
     .catch(error => {
       console.log("error...");
-    })
+    });
+    
   }
   return (
     <div style={{marginLeft:'27px'}}>
-      {pinnedNote.map(n => {
+      {/* {pinnedNote.map(n => {
         return <div>{n.noteID}</div>;
-      })}
+      })} */}
       {props.status.active ? (
         <div>
           <strong>PINNED</strong>
-          <div className="note-list row">
+          <div className="row">
             {pinnedNote.map(note => {
               return (
-                <Note
+                <Note key={note.noteId}
+                  list={props.list}
                   noteId={note.noteId}
                   title={note.title}
                   description={note.description}
                   pin={note.pin}
                   fnote={note}
-                  onPinClick={() => updateNoteListPin(note.noteId)}
-                  handleTrash={() =>    updateNoteListStatus(note.noteId, "Trash") }
-                  handleArchive={() =>
-                    updateNoteListStatus(note.noteId, "Archive")
-                  }
+                  onPinClick={() => updateNoteListPin(note.noteId,"pinned")}
+                  handleTrash={() => updateNoteListStatus(note.noteId, "Trash")}
+                  handleArchive={() => updateNoteListStatus(note.noteId, "Archive")}
                 />
               );
             })}
           </div>
           <strong>OTHERS</strong>
-          <div className="note-list row">
+          <div className="row">
             {unPinnedNote.map(note => {
               return (
-                <Note
+                <Note key={note.noteId}
+                  list={props.list}
                   noteId={note.noteId}
                   title={note.title}
                   description={note.description}
                   pin={note.pin}
                   fnote={note}
-                  onPinClick={() => updateNoteListPin(note.noteId)}
+                  onPinClick={() => updateNoteListPin(note.noteId,"pinned")}
                   handleTrash={() =>    updateNoteListStatus(note.noteId, "Trash") }
                   handleArchive={() =>
                     updateNoteListStatus(note.noteId, "Archive")
                   }
+                  handleReminder={() => removeReminder(note.noteId)}
                 />
               );
             })}
@@ -173,7 +189,8 @@ function NoteList(props) {
           <div className="note-list row">
             {archiveNote.map(note => {
               return (
-                <Note
+                <Note  key={note.noteId}
+                  list={props.list}
                   noteId={note.noteId}
                   title={note.title}
                   description={note.description}
@@ -194,7 +211,8 @@ function NoteList(props) {
           <div className="note-list row">
             {trashNote.map(note => {
               return (
-                <Note
+                <Note key={note.noteId}
+                  list={props.list}
                   noteId={note.noteId}
                   title={note.title}
                   description={note.description}
@@ -210,7 +228,8 @@ function NoteList(props) {
       <div className="note-list row">
         {reminderNote.map(note => {
           return (
-            <Note
+            <Note  key={note.noteId}
+              list={props.list}
               noteId={note.noteId}
               title={note.title}
               description={note.description}

@@ -25,7 +25,7 @@ class NoteController{
         });
     }
     allNotes(){
-        console.log("Inside allNotes method...");
+        // console.log("Inside allNotes method...");
         return Axios.get('notes',{
             headers:headers
         });

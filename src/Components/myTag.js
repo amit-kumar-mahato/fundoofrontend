@@ -34,7 +34,7 @@ export default function MyTag(props) {
           <IoMdClose
             id={props.id}
             size={"15"}
-            onClick={props.onCloseIconClick}
+            onClick={props.handleCloseIcon}
             hidden={true}
           />
         </InputGroup>

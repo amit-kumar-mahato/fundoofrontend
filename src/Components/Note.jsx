@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Card } from "react-bootstrap";
 import NoteController from "../Controller/NoteController";
 import ModalBox from "./ModalBox";
@@ -36,14 +36,14 @@ class Note extends Component {
   handleClick() {
     this.setState(oldState => ({ condition: !oldState.condition }));
   }
-  removeReminder = (noteId) => {
-    NoteController.deleteReminder(noteId).then(response => {
-      console.log("Reminder Deleted...");
-    })
-    .catch(error => {
-      console.log("error...");
-    })
-  }
+  // removeReminder = (noteId) => {
+  //   NoteController.deleteReminder(noteId).then(response => {
+  //     console.log("Reminder Deleted...");
+  //   })
+  //   .catch(error => {
+  //     console.log("error...");
+  //   })
+  // }
   handleTrash = () => {
     NoteController.deleteNote(this.props.noteId)
       .then(response => {
@@ -56,10 +56,10 @@ class Note extends Component {
   render() {
     const { title, description, noteId } = this.props;
     return (
-      <div>
-        <div>
+      <Fragment>
+        <Fragment>
           <Card
-            className="my-2 mr-2"
+            className={"shadow-sm mr-2 mb-2 " + this.props.list}
             style={{ width: "15rem", borderRadius: "7px" }}
           >
             <Card.Body>
@@ -81,10 +81,14 @@ class Note extends Component {
                   (this.props.fnote.reminder !== null && this.props.fnote.reminder !== "") ?
                   <MyTag icon={<IoMdTime/>} id={"reminder"+this.props.noteId}
                   data={(this.props.fnote.reminder !== null ? this.props.fnote.reminder : "")}
-                  onCloseIconClick={() => this.removeReminder(this.props.noteId)}
+                  handleCloseIcon={this.props.handleReminder}
                   />
-                  : <div />
-                }</div>
+                  : ""
+                }
+                {
+                  
+                }
+                </div>
               <div style={{ marginTop: "30px" }}>
                 <Icon
                   handleClick={this.handleClick}
@@ -95,13 +99,13 @@ class Note extends Component {
               </div>
             </Card.Body>
           </Card>
-        </div>
+        </Fragment>
         <ModalBox
           show={this.state.show}
           onHide={this.handleClose}
           note={this.props.fnote}
         />
-      </div>
+      </Fragment>
     );
   }
 }

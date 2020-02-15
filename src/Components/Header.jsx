@@ -1,6 +1,22 @@
 import React, { Component } from "react";
 import "../App.css";
+import { getProfilePic } from "../Controller/labelController";
+import MyToolTip from "./myToolTip";
+import MaterialIcon from "react-google-material-icons";
+import { Button } from "react-bootstrap";
 class Header extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      profilePic:''
+    }
+  }
+  // componentDidMount(){
+  //   getProfilePic().then(response => {
+  //     console.log("Header :",response.data.obj);
+  //     //this.setState(profilePic:response.data.uri);
+  //   })
+  // }
   render() {
     return (
       <div className="container-fluid nav-bar">
@@ -14,7 +30,7 @@ class Header extends Component {
                 className="fa fa-bars"
                 aria-hidden="true"
                 style={{ fontSize: "20px" }}
-                onClick={this.props.handleSideNav}
+                onClick={this.props.handleSideBar}
                 style={{cursor:'pointer'}}
               ></i>
             </div>
@@ -47,14 +63,23 @@ class Header extends Component {
               ></i>
             </div>
             <div className="col-sm-3" style={{ color: "gray" }}>
-            <i
-                className="fa fa-th-list"
-                title="List View"
-                aria-hidden="true"
-              ></i>
+              <MyToolTip text={this.props.text}>
+                {/* <button
+                  style={{borderRadius: "75%"}}
+                  onClick={this.props.handleView}
+                  > */}
+                  <i
+                    className="fa fa-th-list"
+                    aria-hidden="true"
+                    style={{cursor:'pointer'}}
+                    onClick={this.props.handleView}
+                  >
+                  <MaterialIcon icon={this.props.viewIcon}/>
+                  </i>
+              </MyToolTip>
             </div>
             <div className="col-sm-3">
-              <img src="../keep.png" alt="logo" width="40px" height="40px" />
+              <img src="https://akprofilepic.s3.ap-south-1.amazonaws.com/ak.jpg" alt="Profile" style={{borderRadius:'50%',width:'40px',height:'40px'}}/>
             </div>
           </div>
         </div>

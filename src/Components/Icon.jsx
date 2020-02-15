@@ -14,7 +14,6 @@ export default function Icon(props) {
   const [collaboratorList, setCollaboratorList] = useState([]);
 
   useEffect(() => {
- //   if (!colabShow) {
       getCollaboratorList(props.noteId)
         .then(response => {
           console.log("MESSAGE :", response.data.obj);
@@ -23,7 +22,6 @@ export default function Icon(props) {
         .catch(error => {
           console.log("ERROR :", error.response.data.message);
         });
-//    }
   }, [colabShow]);
 
   const handleColabShow = id => {

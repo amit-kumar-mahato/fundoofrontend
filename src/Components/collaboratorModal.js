@@ -56,10 +56,9 @@ export default function CollaboratorModal(props) {
                   <div className="colab-owner">
                     <div className="colab-owner-content">
                       <img
-                        src="../keep.png"
+                        src="https://akprofilepic.s3.ap-south-1.amazonaws.com/ak.jpg"
                         alt="logo"
-                        width="40px"
-                        height="40px"
+                        style={{borderRadius:'50%',width:'40px',height:'40px'}}
                       />
                     </div>
                   </div>

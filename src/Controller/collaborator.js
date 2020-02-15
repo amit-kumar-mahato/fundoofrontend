@@ -5,6 +5,6 @@ export function updateCollaborator(updateColab){
     return Axios.put('collaborator',updateColab);
 }
 export function getCollaboratorList(noteId){
-    console.log(noteId)
+    // console.log(noteId)
     return Axios.get('collaborator/collaboratorlist?noteId='+noteId);
 }

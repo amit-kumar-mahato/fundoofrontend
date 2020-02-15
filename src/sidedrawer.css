@@ -48,7 +48,25 @@
 }
 .side-drawer-content{
   font-size: 15px;
-  /* font-weight:bold; */
   cursor: pointer;
-  /* margin-left:28px; */
+}
+/*----------*/
+#my-navbar{
+  position: fixed;
+  top:58px;
+  transform: translateX(-242px);
+  transition: transform 400ms ease-in;
+  width: 20%;
+  bottom: 0;
+  /* background-color: black; */
+  /* padding: 20px; */
+  font-family: sans-serif;
+  overflow-y:auto;
+}
+#my-navbar.slideIn {
+  transform: translateX(0);
+}
+
+#my-navbar.slideOut {
+  transform: translateX(-100%);
 }

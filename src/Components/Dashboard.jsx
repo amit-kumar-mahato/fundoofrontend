@@ -8,24 +8,35 @@ import "../App.css";
 import { getUserLabel, addUserLabel } from "../Controller/labelController";
 
 export default class Dashboard extends Component {
-  state = {
-    titles: [],
-    descriptions: [],
-    title: "",
-    description: "",
-    listOfNotes: [],
-    openNote: false,
-    addReminder: false,
-    editLabel: false,
-    archive: false,
-    trash: false,
-    active: true,
-    reminder: false,
-    labels: [],
-    sidenav: false,
-    edit: false,
-    addLabel:''
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      titles: [],
+      descriptions: [],
+      title: "",
+      description: "",
+      listOfNotes: [],
+      openNote: false,
+      addReminder: false,
+      editLabel: false,
+      archive: false,
+      trash: false,
+      active: true,
+      reminder: false,
+      labels: [],
+      sidenav: false,
+      edit: false,
+      addLabel:'',
+      listView:'col-',
+      viewText: "List View",
+      viewIcon: "list",
+      visible : true
+    };
+    this.handleSideBar = this.handleSideBar.bind(this)
+  }
+  handleSideBar() {
+    this.setState(prev => ({ visible: !prev.visible }))
+  }
 
   handleSideNav = () => {
     console.log('hidden');
@@ -100,35 +111,54 @@ export default class Dashboard extends Component {
   componentDidMount() {
     getUserLabel()
       .then(response => {
-        console.log("LABEl :", response.data.obj);
+        // console.log("LABEl :", response.data.obj);
         this.setState({ labels: response.data.obj });
       })
       .catch(error => {
         console.log("No Data Found", error.response.data.message);
       });
   }
+  /* Add Label to the user*/
   addLabelList = labelName => {
     console.log(labelName);
+    console.log(this.state.labels);
     addUserLabel(labelName)
       .then(response => {
         console.log("Message :", response.data.message);
-        this.setState({...this.state.labels,labelName});
+        this.setState([{...this.state.labels,labelName}]);
       })
       .catch(error => {
-        console.log("Error :", error.response);
+        console.log("Error :", error.response.data.message);
       });
   };
  
+  /* Change View (List or Grid) */
+  changeView = () => {
+    console.log("View",this.state.viewIcon);
+    if (this.state.viewIcon !== "grid_on") {
+        this.setState({viewIcon: "grid_on", viewText: "Grid View"});
+        this.setState({listView:'col-12'});
+    } else {
+        this.setState({viewIcon: "list", viewText: "List View"});
+        this.setState({listView:"col-"});
+    }
+};
   render() {
     return (
       <div className="App">
         <div className="">
           <div className="new-nav">
-            <Header handleSideNav={this.handleSideNav} />
+            <Header 
+              handleSideNav={this.handleSideNav} 
+              text={this.state.viewText}
+              handleView={this.changeView}
+              icon={this.state.viewIcon}
+              handleSideBar={this.handleSideBar}
+              />
           </div>
         </div>
         <div className="side-main">
-          <div className="side-bar">
+          <div id="my-navbar" className={this.state.visible ? 'slideIn' : 'slideOut'}>
             <div className="side-bar-content">
               <SideDrawer
                 onClickArchive={this.handleArchive}
@@ -137,7 +167,8 @@ export default class Dashboard extends Component {
                 onClickReminder={this.handleReminder}
                 labels={this.state.labels}
                 hidden={this.state.sidenav}
-                addLabelList={() => this.addLabelList}
+                addLabelList={this.addLabelList}
+                visible={this.state.visible}
               />
             </div>
           </div>
@@ -170,6 +201,7 @@ export default class Dashboard extends Component {
                   }}
                   addReminder={this.state.addReminder}
                   onClickReminderIcon={this.onClickReminderIcon}
+                  list={this.state.listView}
                 />
               </div>
             </div>

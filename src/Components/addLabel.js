@@ -8,6 +8,10 @@ export default function AddLabel(props) {
   const [labels, setLables] = useState(props.labelList);
   const [error, setError] = useState("");
 
+  useEffect(()=>{
+    setLables(props.labelList);
+  },[props]);
+
   const focusInput = () => {
     if (ic === "add") {
       inRef.current.focus();
@@ -16,14 +20,6 @@ export default function AddLabel(props) {
     } else {
       inRef.current.classList.add("border-bottom-0");
       setIc("add");
-    }
-  };
-
-  const addLabel = () => {
-    if (inRef.current.value !== "") {
-      console.log("REF :", inRef.current.value);
-      props.setLabels(inRef.current.value);
-      inRef.current.value = "";
     }
   };
 
@@ -77,14 +73,14 @@ export default function AddLabel(props) {
           className="navBtn"
           size="sm"
           variant={"light"}
-          onClick={props.setLabels}
+          onClick={()=>props.setLabels(inRef.current.value)}
         >
           <MaterialIcon icon={"check"} size={20} />
         </Button>
       </InputGroup>
       {labels.map(label => (
         <div
-          key={label}
+          key={label.labelId}
           onMouseOver={() => showDelete(label + "icon")}
           onMouseLeave={() => hideDelete(label + "icon")}
         >
