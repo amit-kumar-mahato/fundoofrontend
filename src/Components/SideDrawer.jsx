@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component,Fragment } from "react";
 import "../sidedrawer.css";
 import AddLabel from "./addLabel";
 import MaterialIcon from "react-google-material-icons";
@@ -16,6 +16,7 @@ class SideDrawer extends Component {
   handleShow = () => this.setState({ show: !this.state.show });
   render() {
     return (
+      <Fragment>
       <nav className="side-drawer">
         <ul>
           <li className="active">
@@ -108,17 +109,21 @@ class SideDrawer extends Component {
             </div>
           </li>
         </ul>
-        {this.state.show ? (
+      </nav>
+      <div>
+      {this.state.show ? (
           <AddLabel
             hide={this.handleShow}
             show={this.state.show}
             labelList={this.props.labels}
             setLabels={this.props.addLabelList}
+            removeLabel={this.props.removeLabel}
           />
         ) : (
-          <div />
+         ""
         )}
-      </nav>
+      </div>
+      </Fragment>
     );
   }
 }

@@ -5,7 +5,7 @@ import SideDrawer from "../Components/SideDrawer";
 import CreateNote from "./CreateNote";
 import NoteList from "../Components/NoteList";
 import "../App.css";
-import { getUserLabel, addUserLabel } from "../Controller/labelController";
+import { getUserLabel, addUserLabel, deleteLabel } from "../Controller/labelController";
 
 export default class Dashboard extends Component {
   constructor(props){
@@ -119,19 +119,25 @@ export default class Dashboard extends Component {
       });
   }
   /* Add Label to the user*/
-  addLabelList = labelName => {
-    console.log(labelName);
-    console.log(this.state.labels);
+  addLabelList = (labelName) => {
+    // console.log(labelName);
+    // console.log(this.state.labels);
     addUserLabel(labelName)
       .then(response => {
-        console.log("Message :", response.data.message);
-        this.setState([{...this.state.labels,labelName}]);
+        this.setState({labels:[...this.state.labels,response.data.obj]});
       })
       .catch(error => {
         console.log("Error :", error.response.data.message);
       });
   };
  
+  removeLabel = (labelId) => {
+    if (window.confirm("Are you sure? label will be permanently deleted")) {
+      deleteLabel(labelId).then(response => {
+        this.setState({labels:[...this.state.labels.filter(l => labelId!==l.labelId)]})
+      }) 
+    }
+  }
   /* Change View (List or Grid) */
   changeView = () => {
     console.log("View",this.state.viewIcon);
@@ -168,6 +174,7 @@ export default class Dashboard extends Component {
                 labels={this.state.labels}
                 hidden={this.state.sidenav}
                 addLabelList={this.addLabelList}
+                removeLabel={this.removeLabel}
                 visible={this.state.visible}
               />
             </div>

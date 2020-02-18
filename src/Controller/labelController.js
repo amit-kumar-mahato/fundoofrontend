@@ -16,3 +16,9 @@ export function addUserLabel(labelName){
         headers:headers
     })
 }
+export function deleteLabel(labelId){
+    console.log(labelId);
+    return Axios.delete('labels/delete?labelId='+labelId,{
+        headers:headers
+    })
+}

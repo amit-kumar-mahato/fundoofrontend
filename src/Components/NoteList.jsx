@@ -14,7 +14,6 @@ function NoteList(props) {
     });
   }, []);
   useEffect(() => {
-    // console.log("noteList", notelist);
     setPinnedNote(
       notelist.filter(note => {
         return note.pin;
@@ -126,7 +125,7 @@ function NoteList(props) {
       })
     );
   };
-
+  
   const removeReminder = (noteId) => {
     NoteController.deleteReminder(noteId).then(response => {
       console.log("Reminder Deleted...");
@@ -136,6 +135,17 @@ function NoteList(props) {
       console.log("error...");
     });
     
+  }
+
+  const addReminder = (note) => {
+    setNoteList(
+        notelist.map(nt => {
+          if (nt.noteId === note.noteId) {
+            return note;
+          }
+          return nt;
+        })
+      );
   }
   return (
     <div style={{marginLeft:'27px'}}>
@@ -173,11 +183,10 @@ function NoteList(props) {
                   description={note.description}
                   pin={note.pin}
                   fnote={note}
+                  addReminder={addReminder}
                   onPinClick={() => updateNoteListPin(note.noteId,"pinned")}
-                  handleTrash={() =>    updateNoteListStatus(note.noteId, "Trash") }
-                  handleArchive={() =>
-                    updateNoteListStatus(note.noteId, "Archive")
-                  }
+                  handleTrash={() =>updateNoteListStatus(note.noteId, "Trash") }
+                  handleArchive={() =>updateNoteListStatus(note.noteId, "Archive")}
                   handleReminder={() => removeReminder(note.noteId)}
                 />
               );

@@ -3,7 +3,15 @@ import { Dropdown } from "react-bootstrap";
 import NoteController from "../Controller/NoteController";
 import CollaboratorModal from "./collaboratorModal";
 import { getCollaboratorList } from "../Controller/collaborator";
-import {MdAccountCircle, MdAdd, MdAddAlert, MdArchive, MdColorLens, MdDelete, MdDone, MdLabel} from "react-icons/md"
+import {
+  MdAccountCircle,
+  MdAdd,
+  MdAddAlert,
+  MdArchive,
+  MdColorLens,
+  MdDone,
+  MdLabel
+} from "react-icons/md";
 
 export default function Icon(props) {
   const [date, setDate] = useState("");
@@ -12,16 +20,17 @@ export default function Icon(props) {
   const [timeError, setTimeError] = useState("");
   const [colabShow, setColabShow] = useState(false);
   const [collaboratorList, setCollaboratorList] = useState([]);
+  const [noteList, setNoteList] = useState(props.noteList);
 
   useEffect(() => {
-      getCollaboratorList(props.noteId)
-        .then(response => {
-          console.log("MESSAGE :", response.data.obj);
-          setCollaboratorList(response.data.obj);
-        })
-        .catch(error => {
-          console.log("ERROR :", error.response.data.message);
-        });
+    getCollaboratorList(props.noteId)
+      .then(response => {
+        console.log("MESSAGE :", response.data.obj);
+        setCollaboratorList(response.data.obj);
+      })
+      .catch(error => {
+        console.log("ERROR :", error.response.data.message);
+      });
   }, [colabShow]);
 
   const handleColabShow = id => {
@@ -43,7 +52,7 @@ export default function Icon(props) {
   const handleTimeChange = e => {
     setTime(e.target.value);
   };
-  const onSubmit = () => {
+  const onSubmit = noteID => {
     var reminder = {
       datetime: date + " " + time,
       noteId: props.noteId
@@ -53,6 +62,8 @@ export default function Icon(props) {
     NoteController.setReminder(reminder)
       .then(response => {
         console.log("RESPONSE :", response.data.message);
+        console.log(response.data.obj);
+        props.addReminder(response.data.obj);
       })
       .catch(error => {
         console.log("ERROR" + error.data.message);
@@ -69,7 +80,7 @@ export default function Icon(props) {
             className="fa fa-bell"
             title="Remind me"
             aria-hidden="true"
-            onClick={props.onClickReminderIcon}
+            // onClick={props.onClickReminderIcon}
             style={{ color: "black" }}
           ></i>
         </Dropdown.Toggle>
@@ -100,7 +111,10 @@ export default function Icon(props) {
           </div>
           {/* <small style={{ color: "red" }}>{this.state.timeErr}</small> */}
 
-          <button className="float-right reminder-save-btn" onClick={onSubmit}>
+          <button
+            className="float-right reminder-save-btn"
+            onClick={() => onSubmit(props.noteId)}
+          >
             Save
           </button>
         </Dropdown.Menu>
@@ -115,15 +129,16 @@ export default function Icon(props) {
         ></i>
       </div>
       {/* <div className="icon-div-content"> */}
-        {/* <i className="fa fa-print" title="Change Color" aria-hidden="true"></i> */}
-        {/* <MdColorLens size={"20"}/> */}
+      {/* <i className="fa fa-print" title="Change Color" aria-hidden="true"></i> */}
+      {/* <MdColorLens size={"20"}/> */}
       {/* </div> */}
       <Dropdown>
-        <Dropdown.Toggle 
-          className="rounded-circle bg-transparent" variant={"light"}
+        <Dropdown.Toggle
+          className="rounded-circle bg-transparent"
+          variant={"light"}
           bsPrefix="dropdown"
-          >
-          <MdColorLens size={"20"}/>
+        >
+          <MdColorLens size={"20"} />
         </Dropdown.Toggle>
       </Dropdown>
       <div className="icon-div-content">

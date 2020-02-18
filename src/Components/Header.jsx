@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import "../App.css";
-import { getProfilePic } from "../Controller/labelController";
 import MyToolTip from "./myToolTip";
 import MaterialIcon from "react-google-material-icons";
-import { Button } from "react-bootstrap";
 class Header extends Component {
   constructor(props){
     super(props);
@@ -11,12 +9,7 @@ class Header extends Component {
       profilePic:''
     }
   }
-  // componentDidMount(){
-  //   getProfilePic().then(response => {
-  //     console.log("Header :",response.data.obj);
-  //     //this.setState(profilePic:response.data.uri);
-  //   })
-  // }
+
   render() {
     return (
       <div className="container-fluid nav-bar">

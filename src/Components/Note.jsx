@@ -36,14 +36,7 @@ class Note extends Component {
   handleClick() {
     this.setState(oldState => ({ condition: !oldState.condition }));
   }
-  // removeReminder = (noteId) => {
-  //   NoteController.deleteReminder(noteId).then(response => {
-  //     console.log("Reminder Deleted...");
-  //   })
-  //   .catch(error => {
-  //     console.log("error...");
-  //   })
-  // }
+
   handleTrash = () => {
     NoteController.deleteNote(this.props.noteId)
       .then(response => {
@@ -85,9 +78,7 @@ class Note extends Component {
                   />
                   : ""
                 }
-                {
-                  
-                }
+            
                 </div>
               <div style={{ marginTop: "30px" }}>
                 <Icon
@@ -95,6 +86,7 @@ class Note extends Component {
                   handleArchive={this.props.handleArchive}
                   handleTrash={this.props.handleTrash}
                   noteId={noteId}
+                  addReminder={this.props.addReminder}
                 />
               </div>
             </Card.Body>

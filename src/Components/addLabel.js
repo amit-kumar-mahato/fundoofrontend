@@ -1,16 +1,14 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef,useEffect,Fragment } from "react";
 import { Modal, InputGroup, Button, FormControl } from "react-bootstrap";
 import MaterialIcon from "react-google-material-icons";
 export default function AddLabel(props) {
-  const [show, setShow] = useState({ model: false, editIcon: "label" });
   const inRef = useRef(null);
   const [ic, setIc] = useState("add");
-  const [labels, setLables] = useState(props.labelList);
   const [error, setError] = useState("");
 
-  useEffect(()=>{
-    setLables(props.labelList);
-  },[props]);
+  // useEffect(()=>{
+  //   setLables(props.labelList);
+  // },[props]);
 
   const focusInput = () => {
     if (ic === "add") {
@@ -23,15 +21,15 @@ export default function AddLabel(props) {
     }
   };
 
-  const editLabel = labelName => {
-    const newLabelList = labels.map(label => {
-      if (label === labelName) {
-        return document.getElementById(labelName).value;
-      }
-      return label;
-    });
-    setLables(newLabelList);
-  };
+  // const editLabel = labelName => {
+  //   const newLabelList = labels.map(label => {
+  //     if (label === labelName) {
+  //       return document.getElementById(labelName).value;
+  //     }
+  //     return label;
+  //   });
+  //   // setLables(newLabelList);
+  // };
 
   const showDelete = id => {
     document.getElementById(id).getElementsByTagName("i")[0].innerText =
@@ -43,68 +41,43 @@ export default function AddLabel(props) {
       "label";
   };
 
-  const deleteLabel = id => {
-    if (window.confirm("Are you sure? label will be permanently deleted")) {
-      const newLabelList = labels.filter(label => {
-        return label !== id;
-      });
-      setLables(newLabelList);
-    }
-  };
+  // const deleteLabel = id => {
+  //   if (window.confirm("Are you sure? label will be permanently deleted")) {
+  //     const newLabelList = labels.filter(label => {
+  //       return label !== id;
+  //     });
+  //     // setLables(newLabelList);
+  //   }
+  // };
   return (
     <Modal size="sm" show={props.show} onHide={props.hide} centered>
       <InputGroup className="p-2">
-        <Button
-          className="navBtn"
-          size="sm"
-          variant={"light"}
-          onClick={focusInput}
-        >
+        <Button className="navBtn" size="sm" variant={"light"} onClick={focusInput}>
           <MaterialIcon icon={ic} size={20} />
         </Button>
-        <FormControl
-          className="border-top-0 border-left-0 border-right-0 border-bottom-0 mx-1"
-          ref={inRef}
-          placeholder={"Create new label"}
-          onFocus={focusInput}
+        <FormControl className="border-top-0 border-left-0 border-right-0 border-bottom-0 mx-1"
+          ref={inRef} placeholder={"Create new label"} onFocus={focusInput}
         />
-        <Button
-        id="lname"
-          className="navBtn"
-          size="sm"
-          variant={"light"}
-          onClick={()=>props.setLabels(inRef.current.value)}
-        >
+        <Button className="navBtn" size="sm" variant={"light"}
+          onClick={()=>props.setLabels(inRef.current.value)}>
           <MaterialIcon icon={"check"} size={20} />
         </Button>
       </InputGroup>
-      {labels.map(label => (
-        <div
-          key={label.labelId}
-          onMouseOver={() => showDelete(label + "icon")}
-          onMouseLeave={() => hideDelete(label + "icon")}
-        >
+      {props.labelList.map(label => (
+        <div key={label.lebelId} onMouseOver={() => showDelete(label + "icon")} 
+          onMouseLeave={() => hideDelete(label + "icon")}>
           <InputGroup className="p-2">
-            <Button
-              id={label + "icon"}
-              className="navBtn"
-              size="sm"
-              variant={"light"}
-              onClick={() => deleteLabel(label)}
+            <Button id={label + "icon"} className="navBtn" size="sm" variant={"light"}
+            onClick={() => console.log("Label Id :",label.lebelId)}
             >
               <MaterialIcon icon={"label"} size={20} />
             </Button>
-            <FormControl
-              id={label}
+            <FormControl id={label}
               className="border-top-0 border-left-0 border-right-0 border-bottom-0 mx-1"
               defaultValue={label.name}
             />
-            <Button
-              name={label}
-              className="navBtn"
-              size="sm"
-              variant={"light"}
-              onClick={() => editLabel(label)}
+            <Button name={label} className="navBtn" size="sm" variant={"light"}
+              // onClick={() => editLabel(label)}
             >
               <MaterialIcon icon={"edit"} size={20} />
             </Button>
