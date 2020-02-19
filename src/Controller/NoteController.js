@@ -56,5 +56,12 @@ class NoteController{
             headers:headers
         });
     }
+
+    addColour(colorInfo){
+        console.log("COLOR :",colorInfo.noteId+" , "+colorInfo.color);
+        return Axios.put('notes/color/'+colorInfo.noteId,colorInfo,{
+            headers:headers
+        })
+    }
 }
 export default new  NoteController();

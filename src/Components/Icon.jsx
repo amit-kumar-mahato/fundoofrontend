@@ -3,23 +3,15 @@ import { Dropdown, Form, Row, Button } from "react-bootstrap";
 import NoteController from "../Controller/NoteController";
 import CollaboratorModal from "./collaboratorModal";
 import { getCollaboratorList } from "../Controller/collaborator";
-import {
-  MdAccountCircle,
-  MdAdd,
-  MdAddAlert,
-  MdArchive,
-  MdColorLens,
-  MdDone,
-  MdLabel
-} from "react-icons/md";
+import {MdColorLens,MdDone} from "react-icons/md";
 
 export default function Icon(props) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [note, setNote] = useState(props.note);
   const [dateError, setDateError] = useState("");
   const [timeError, setTimeError] = useState("");
   const [colabShow, setColabShow] = useState(false);
-  const [note, setNote] = useState(props.note);
   const [collaboratorList, setCollaboratorList] = useState([]);
   const [labelShow, setLabelShow] = useState(false);
   const colors = ["white","#ffcdd2","#ffe0b2","#fff59d","#e6ee9c","#e1f5fe","#d7ccc8","#e1bee7","#f1f8e9"];
@@ -64,7 +56,6 @@ export default function Icon(props) {
     NoteController.setReminder(reminder)
       .then(response => {
         console.log("RESPONSE :", response.data.message);
-        console.log(response.data.obj);
         props.addReminder(response.data.obj);
       })
       .catch(error => {
@@ -73,7 +64,21 @@ export default function Icon(props) {
   };
 
   const colorChange = (clr) => {
-    console.log("Color :"+note.colour);
+    console.log("Color :"+clr);
+    console.log(note);
+    setNote({...note,colour:clr})
+    const colorInfo = {
+      color:clr,
+      noteId:props.noteId
+    };
+    NoteController.addColour(colorInfo).then(response => {
+      console.log("Response :",response.data.obj);
+      props.addColor(response.data.obj);
+    })
+    .catch(error => {
+      console.log("Error :",error.data.message);
+    })
+
   };
   return (
     <div className="icon-list">
@@ -133,7 +138,7 @@ export default function Icon(props) {
           onClick={() => handleColabShow(props.noteId)}
         ></i>
       </div>
-      {/* <Dropdown>
+      <Dropdown>
         <Dropdown.Toggle
           className="rounded-circle bg-transparent"
           variant={"light"}
@@ -149,18 +154,17 @@ export default function Icon(props) {
                   return id < 3;
                 })
                 .map((clr, id) => (
-                  <Button
-                    key={id}
-                    className="col-3 rounded-circle border p-0"
-                    style={{ backgroundColor: clr }}
-                    onClick={() => colorChange(clr)}
-                  >
-                    {clr === note.colour ? (
-                      <MdDone style={{ color: "black" }} />
+                  <div 
+                    className="colorBtn"
+                    style={{backgroundColor: clr
+                    }}
+                    onClick={() => colorChange(clr)}>
+                    {clr === props.note.colour ? (
+                      <MdDone />
                     ) : (
                       ""
                     )}
-                  </Button>
+                    </div>
                 ))}
             </Row>
             <Row className="justify-content-center" style={{ height: "40px" }}>
@@ -169,18 +173,18 @@ export default function Icon(props) {
                   return id >= 3 && id < 6;
                 })
                 .map((clr, id) => (
-                  <Button
-                    key={id}
-                    className="col-3 rounded-circle border p-0"
-                    style={{ backgroundColor: clr }}
-                    onClick={() => colorChange(clr)}
-                  >
-                    {clr === note.colour ? (
+                  <div 
+                  className="colorBtn"
+                    style={{backgroundColor: clr
+                    }}
+                    onClick={() => console.log(colorChange(clr))}
+                    >
+                    {clr === props.note.colour ? (
                       <MdDone style={{ color: "black" }} />
                     ) : (
                       ""
                     )}
-                  </Button>
+                    </div>
                 ))}
             </Row>
             <Row className="justify-content-center" style={{ height: "40px" }}>
@@ -189,23 +193,23 @@ export default function Icon(props) {
                   return id >= 6 && id < 9;
                 })
                 .map((clr, id) => (
-                  <Button
-                    key={id}
-                    className="col-3 rounded-circle border p-0"
-                    style={{ backgroundColor: clr }}
-                    onClick={() => colorChange(clr)}
-                  >
-                    {clr === note.colour ? (
+                  <div 
+                  className="colorBtn"
+                  style={{backgroundColor: clr
+                  }}
+                    onClick={() => console.log(colorChange(clr))}
+                    >
+                    {clr === props.note.colour ? (
                       <MdDone style={{ color: "black" }} />
                     ) : (
                       ""
                     )}
-                  </Button>
+                    </div>
                 ))}
             </Row>
           </Form>
         </Dropdown.Menu>
-      </Dropdown> */}
+      </Dropdown>
       <div className="icon-div-content">
         <i
           className="fa fa-archive"
@@ -228,7 +232,9 @@ export default function Icon(props) {
           ></i>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() =>setLabelShow(!labelShow)}>Add Label</Dropdown.Item>
+          <Dropdown>
+
+          </Dropdown>
           <Dropdown.Item onClick={props.handleTrash}>
             Delete note
           </Dropdown.Item>

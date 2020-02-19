@@ -146,8 +146,9 @@ export default class Dashboard extends Component {
     }
     editLabel(labelInfo).then(response => {
       console.log(response.data.obj);
-      // this.setState({labels:[...this.state.labels,labelInfo.name]})
-      //this.setState({labels:[...this.state.labels,]})
+      this.setState({
+        labels:this.state.labels.map(el => (el.labelId===labelId ? {...el,name:labelInfo.name} : el))
+      })
     })
     .catch(error => {
       console.log(error.data.message);

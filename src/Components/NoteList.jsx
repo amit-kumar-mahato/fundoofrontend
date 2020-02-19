@@ -137,7 +137,6 @@ function NoteList(props) {
     });
     
   }
-
   const addReminder = (note) => {
     setNoteList(
         notelist.map(nt => {
@@ -147,6 +146,12 @@ function NoteList(props) {
           return nt;
         })
       );
+  }
+
+  const addColor = (note) => {
+    setNoteList(
+      notelist.map(nt => (nt.noteId===note.noteId ? {...nt,colour:note.colour} : nt))
+    )
   }
   return (
     <div style={{marginLeft:'27px'}}>
@@ -185,6 +190,7 @@ function NoteList(props) {
                   pin={note.pin}
                   fnote={note}
                   addReminder={addReminder}
+                  addColor={addColor}
                   onPinClick={() => updateNoteListPin(note.noteId,"pinned")}
                   handleTrash={() =>updateNoteListStatus(note.noteId, "Trash") }
                   handleArchive={() =>updateNoteListStatus(note.noteId, "Archive")}

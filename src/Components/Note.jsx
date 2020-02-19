@@ -42,7 +42,7 @@ class Note extends Component {
         <Fragment>
           <Card
             className={"shadow-sm mr-2 mb-2 " + this.props.list}
-            style={{ width: "15rem", borderRadius: "7px" }}
+            style={{ width: "15rem", borderRadius: "7px",backgroundColor:this.state.note.colour}}
           >
             <Card.Body>
               <div style={{ display: "flex" }}>
@@ -67,6 +67,9 @@ class Note extends Component {
                   />
                   : ""
                 }
+                {
+
+                }
             
                 </div>
               <div style={{ marginTop: "30px" }}>
@@ -76,6 +79,7 @@ class Note extends Component {
                   handleTrash={this.props.handleTrash}
                   noteId={noteId}
                   addReminder={this.props.addReminder}
+                  addColor={this.props.addColor}
                   note={this.props.fnote}
                 />
               </div>
