@@ -118,6 +118,7 @@ class SideDrawer extends Component {
             labelList={this.props.labels}
             setLabels={this.props.addLabelList}
             removeLabel={this.props.removeLabel}
+            editLabel={this.props.editLabel}
           />
         ) : (
          ""

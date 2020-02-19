@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Form, Row, Button } from "react-bootstrap";
 import NoteController from "../Controller/NoteController";
 import CollaboratorModal from "./collaboratorModal";
 import { getCollaboratorList } from "../Controller/collaborator";
@@ -19,13 +19,15 @@ export default function Icon(props) {
   const [dateError, setDateError] = useState("");
   const [timeError, setTimeError] = useState("");
   const [colabShow, setColabShow] = useState(false);
+  const [note, setNote] = useState(props.note);
   const [collaboratorList, setCollaboratorList] = useState([]);
-  const [noteList, setNoteList] = useState(props.noteList);
+  const [labelShow, setLabelShow] = useState(false);
+  const colors = ["white","#ffcdd2","#ffe0b2","#fff59d","#e6ee9c","#e1f5fe","#d7ccc8","#e1bee7","#f1f8e9"];
 
   useEffect(() => {
     getCollaboratorList(props.noteId)
       .then(response => {
-        console.log("MESSAGE :", response.data.obj);
+        //console.log("MESSAGE :", response.data.obj);
         setCollaboratorList(response.data.obj);
       })
       .catch(error => {
@@ -68,6 +70,10 @@ export default function Icon(props) {
       .catch(error => {
         console.log("ERROR" + error.data.message);
       });
+  };
+
+  const colorChange = (clr) => {
+    console.log("Color :"+note.colour);
   };
   return (
     <div className="icon-list">
@@ -119,7 +125,6 @@ export default function Icon(props) {
           </button>
         </Dropdown.Menu>
       </Dropdown>
-      {/* </div> */}
       <div className="icon-div-content">
         <i
           className="fa fa-user-plus"
@@ -128,11 +133,7 @@ export default function Icon(props) {
           onClick={() => handleColabShow(props.noteId)}
         ></i>
       </div>
-      {/* <div className="icon-div-content"> */}
-      {/* <i className="fa fa-print" title="Change Color" aria-hidden="true"></i> */}
-      {/* <MdColorLens size={"20"}/> */}
-      {/* </div> */}
-      <Dropdown>
+      {/* <Dropdown>
         <Dropdown.Toggle
           className="rounded-circle bg-transparent"
           variant={"light"}
@@ -140,7 +141,71 @@ export default function Icon(props) {
         >
           <MdColorLens size={"20"} />
         </Dropdown.Toggle>
-      </Dropdown>
+        <Dropdown.Menu>
+          <Form>
+            <Row className="justify-content-center" style={{ height: "40px" }}>
+              {colors
+                .filter((clr, id) => {
+                  return id < 3;
+                })
+                .map((clr, id) => (
+                  <Button
+                    key={id}
+                    className="col-3 rounded-circle border p-0"
+                    style={{ backgroundColor: clr }}
+                    onClick={() => colorChange(clr)}
+                  >
+                    {clr === note.colour ? (
+                      <MdDone style={{ color: "black" }} />
+                    ) : (
+                      ""
+                    )}
+                  </Button>
+                ))}
+            </Row>
+            <Row className="justify-content-center" style={{ height: "40px" }}>
+              {colors
+                .filter((clr, id) => {
+                  return id >= 3 && id < 6;
+                })
+                .map((clr, id) => (
+                  <Button
+                    key={id}
+                    className="col-3 rounded-circle border p-0"
+                    style={{ backgroundColor: clr }}
+                    onClick={() => colorChange(clr)}
+                  >
+                    {clr === note.colour ? (
+                      <MdDone style={{ color: "black" }} />
+                    ) : (
+                      ""
+                    )}
+                  </Button>
+                ))}
+            </Row>
+            <Row className="justify-content-center" style={{ height: "40px" }}>
+              {colors
+                .filter((clr, id) => {
+                  return id >= 6 && id < 9;
+                })
+                .map((clr, id) => (
+                  <Button
+                    key={id}
+                    className="col-3 rounded-circle border p-0"
+                    style={{ backgroundColor: clr }}
+                    onClick={() => colorChange(clr)}
+                  >
+                    {clr === note.colour ? (
+                      <MdDone style={{ color: "black" }} />
+                    ) : (
+                      ""
+                    )}
+                  </Button>
+                ))}
+            </Row>
+          </Form>
+        </Dropdown.Menu>
+      </Dropdown> */}
       <div className="icon-div-content">
         <i
           className="fa fa-archive"
@@ -163,9 +228,9 @@ export default function Icon(props) {
           ></i>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item>Add Label</Dropdown.Item>
+          <Dropdown.Item onClick={() =>setLabelShow(!labelShow)}>Add Label</Dropdown.Item>
           <Dropdown.Item onClick={props.handleTrash}>
-            Delete Label
+            Delete note
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
@@ -180,6 +245,9 @@ export default function Icon(props) {
       ) : (
         ""
       )}
+      {labelShow ? <div style={{position:'relative'}}>
+            <div style={{padding:'5px'}}>Label Note</div>
+          </div>:""}
     </div>
   );
 }

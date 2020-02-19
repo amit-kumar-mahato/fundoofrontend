@@ -22,3 +22,9 @@ export function deleteLabel(labelId){
         headers:headers
     })
 }
+export function editLabel(labelInfo){
+    console.log(labelInfo.labelId+", "+labelInfo.name);
+    return Axios.put('labels/update?labelId='+labelInfo.labelId,labelInfo,{
+        headers:headers
+    })
+}

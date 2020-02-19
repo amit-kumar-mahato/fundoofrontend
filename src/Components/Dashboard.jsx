@@ -5,7 +5,7 @@ import SideDrawer from "../Components/SideDrawer";
 import CreateNote from "./CreateNote";
 import NoteList from "../Components/NoteList";
 import "../App.css";
-import { getUserLabel, addUserLabel, deleteLabel } from "../Controller/labelController";
+import { getUserLabel, addUserLabel, deleteLabel, editLabel } from "../Controller/labelController";
 
 export default class Dashboard extends Component {
   constructor(props){
@@ -111,7 +111,7 @@ export default class Dashboard extends Component {
   componentDidMount() {
     getUserLabel()
       .then(response => {
-        // console.log("LABEl :", response.data.obj);
+        console.log("LABEl :", response.data.obj);
         this.setState({ labels: response.data.obj });
       })
       .catch(error => {
@@ -137,6 +137,21 @@ export default class Dashboard extends Component {
         this.setState({labels:[...this.state.labels.filter(l => labelId!==l.labelId)]})
       }) 
     }
+  }
+
+  editLabel = (labelId,labelName) => {
+    const labelInfo = {
+      labelId: labelId,
+      name: labelName
+    }
+    editLabel(labelInfo).then(response => {
+      console.log(response.data.obj);
+      // this.setState({labels:[...this.state.labels,labelInfo.name]})
+      //this.setState({labels:[...this.state.labels,]})
+    })
+    .catch(error => {
+      console.log(error.data.message);
+    })
   }
   /* Change View (List or Grid) */
   changeView = () => {
@@ -176,6 +191,7 @@ export default class Dashboard extends Component {
                 addLabelList={this.addLabelList}
                 removeLabel={this.removeLabel}
                 visible={this.state.visible}
+                editLabel={this.editLabel}
               />
             </div>
           </div>

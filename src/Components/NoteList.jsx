@@ -10,6 +10,7 @@ function NoteList(props) {
   const [reminderNote, setReminderNote] = useState([]);
   useEffect(() => {
     NoteController.allNotes().then(response => {
+      console.log(response.data.obj)
       setNoteList(response.data.obj);
     });
   }, []);

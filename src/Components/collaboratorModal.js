@@ -73,8 +73,8 @@ export default function CollaboratorModal(props) {
                   </div>
                 </div>
               </div>
-              {cList.map(colabEmail => (
-                <div style={{ fontSize: "13px" }}>
+              {cList.map((colabEmail,id) => (
+                <div key={id} style={{ fontSize: "13px" }}>
                   <div style={{ display: "flex", padding: "5px" }}>
                     <div className="colab-owner">
                       <div className="colab-owner-content">

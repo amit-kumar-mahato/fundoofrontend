@@ -15,17 +15,6 @@ class Note extends Component {
       isPinned: false,
       show: false,
       note: props.fnote,
-      colors: [
-        "white",
-        "#ffcdd2",
-        "#ffe0b2",
-        "#fff59d",
-        "#e6ee9c",
-        "#e1f5fe",
-        "#d7ccc8",
-        "#e1bee7",
-        "#f1f8e9"
-      ]
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -87,6 +76,7 @@ class Note extends Component {
                   handleTrash={this.props.handleTrash}
                   noteId={noteId}
                   addReminder={this.props.addReminder}
+                  note={this.props.fnote}
                 />
               </div>
             </Card.Body>

@@ -5,6 +5,8 @@ export default function AddLabel(props) {
   const inRef = useRef(null);
   const [ic, setIc] = useState("add");
   const [error, setError] = useState("");
+  const [updatedLabel, setUpdatedLabel] = useState("");
+  const [icon, setIcon] = useState(false);
 
   // useEffect(()=>{
   //   setLables(props.labelList);
@@ -35,20 +37,14 @@ export default function AddLabel(props) {
     document.getElementById(id).getElementsByTagName("i")[0].innerText =
       "delete";
   };
-  
   const hideDelete = id => {
     document.getElementById(id).getElementsByTagName("i")[0].innerText =
       "label";
   };
-
-  // const deleteLabel = id => {
-  //   if (window.confirm("Are you sure? label will be permanently deleted")) {
-  //     const newLabelList = labels.filter(label => {
-  //       return label !== id;
-  //     });
-  //     // setLables(newLabelList);
-  //   }
-  // };
+  const changeLabel = (e) => {
+    setUpdatedLabel(e.target.value);
+    setIcon(!icon);
+  }
   return (
     <Modal size="sm" show={props.show} onHide={props.hide} centered>
       <InputGroup className="p-2">
@@ -63,21 +59,22 @@ export default function AddLabel(props) {
           <MaterialIcon icon={"check"} size={20} />
         </Button>
       </InputGroup>
-      {props.labelList.map(label => (
-        <div key={label.lebelId} onMouseOver={() => showDelete(label + "icon")} 
-          onMouseLeave={() => hideDelete(label + "icon")}>
+      {props.labelList.map((label,id) => (
+        <div key={id} onMouseOver={() => showDelete(label.name + "icon")} 
+          onMouseLeave={() => hideDelete(label.name + "icon")}>
           <InputGroup className="p-2">
-            <Button id={label + "icon"} className="navBtn" size="sm" variant={"light"}
-            onClick={() => console.log("Label Id :",label.lebelId)}
+            <Button id={label.name + "icon"} className="navBtn" size="sm" variant={"light"}
+            onClick={() => props.removeLabel(label.labelId)}
             >
               <MaterialIcon icon={"label"} size={20} />
             </Button>
-            <FormControl id={label}
+            <FormControl id={label.name}
               className="border-top-0 border-left-0 border-right-0 border-bottom-0 mx-1"
               defaultValue={label.name}
+              onChange={changeLabel}  
             />
-            <Button name={label} className="navBtn" size="sm" variant={"light"}
-              // onClick={() => editLabel(label)}
+            <Button name={label.name} className="navBtn" size="sm" variant={"light"}
+              onClick={() => props.editLabel(label.labelId,updatedLabel)}
             >
               <MaterialIcon icon={"edit"} size={20} />
             </Button>
