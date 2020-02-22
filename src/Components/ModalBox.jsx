@@ -19,8 +19,10 @@ export default function ModalBox(props) {
     } 
     NoteController.updateNote(noteInfo).then(response =>{
       console.log("Message :",response.data)
+      props.onHide();
+    props.getAllNotes();
     })
-    .catch(error => {
+    .catch(error => { 
       console.log("Message :",error.data.mesage)
     })
     
@@ -73,7 +75,7 @@ export default function ModalBox(props) {
             <div className="icon-component" style={{ marginTop: "50px" }}>
               <div style={{ display: "flex" }}>
                 <div style={{ flex: 1 }}>
-                  <Icon />
+                  <Icon labels={props.labels} note={props.note} />
                 </div>
                 <div style={{ marginTop: "10px" }}>
                   <button

@@ -48,9 +48,7 @@ h3{
     margin-bottom: 20px;
     margin-left: 32%;
 }
-::placeholder{
-    /* color: #1a1a1a; */
-}
+
 .danger-error{
     margin-left: 32%;
     color: red;

@@ -9,70 +9,57 @@ function NoteList(props) {
   const [archiveNote, setArchiveNote] = useState([]);
   const [reminderNote, setReminderNote] = useState([]);
   useEffect(() => {
-    NoteController.allNotes().then(response => {
-      console.log(response.data.obj)
-      setNoteList(response.data.obj);
-    });
-  }, []);
-  useEffect(() => {
-    setPinnedNote(
-      notelist.filter(note => {
-        return note.pin;
-      })
-    );
-    setUnPinnedNote(
-      notelist.filter(note => {
-        return !note.pin && !note.archiev && !note.trash;
-      })
-    );
-    setArchiveNote(
-      notelist.filter(note => {
-        return note.archiev;
-      })
-    );
-    setTrashNote(
-      notelist.filter(note => {
-        return note.trash;
-      })
-    );
-    setReminderNote(
-      notelist.filter(note => {
-        return note.reminder;
-      })
-    );
-  }, [notelist]);
+    console.log("notelist props",props.notelist)
+      setNoteList(props.notelist);
+      setPinnedNote(
+        props.notelist.filter(note => {
+          return note.pin;
+        })
+      );
+      setUnPinnedNote(
+        props.notelist.filter(note => {
+          return !note.pin && !note.archiev && !note.trash;
+        })
+      );
+      setArchiveNote(
+        props.notelist.filter(note => {
+          return note.archiev;
+        })
+      );
+      setTrashNote(
+        props.notelist.filter(note => {
+          return note.trash;
+        })
+      );
+      setReminderNote(
+        props.notelist.filter(note => {
+          return note.reminder;
+        })
+      );
+  }, [props]);
 
   const updateNoteListPin = (id, status) => {
     console.log(id+", "+status);
-    setNoteList(
-      notelist.map(nt => {
-        if (nt.noteId === id) {
-          if(status === "pinned"){
-          NoteController.pinNote(id)
-            .then(response => {
-              console.log("Message :", response.data.message);
-            })
-            .catch(error => {
-              console.log("Message :", error.data.message);
-            });
-          nt.archiev = false;
-          nt.trash = false;
-          nt.pin = !nt.pin;
-          }
-          else if(status === "Trash") {
-            console.log("Trash");
-            NoteController.deleteNote(id)
-              .then(response => {
-                console.log(response.data.message);
-              })
-              .catch(error => {
-                console.log(error.data.message);
-              });
-          }
-        }
-        return nt;
-      })
-    );
+    if(status === "pinned"){
+      NoteController.pinNote(id)
+        .then(response => {
+          console.log("Message :", response.data.message);
+        })
+        .catch(error => {
+          console.log("Message :", error.data.message);
+        });
+      }
+      else if(status === "Trash") {
+        console.log("Trash");
+        NoteController.deleteNote(id)
+          .then(response => {
+            console.log(response.data.message);
+          })
+          .catch(error => {
+            console.log(error.data.message);
+          });
+      }
+      props.getAllNotes();
   };
 
   const updateNoteListStatus = (id, status) => {
@@ -84,6 +71,8 @@ function NoteList(props) {
             NoteController.archiveNote(note.noteId)
               .then(response => {
                 console.log("Message :", response.data.message);
+                props.activateToast("Note Archived");
+                props.getAllNotes();
               })
               .catch(error => {
                 console.log("Message :", error.data.message);
@@ -96,6 +85,8 @@ function NoteList(props) {
             NoteController.archiveNote(note.noteId)
               .then(response => {
                 console.log("Message :", response.data.message);
+                props.activateToast("Note Active");
+                props.getAllNotes();
               })
               .catch(error => {
                 console.log("Message :", error.data.message);
@@ -107,6 +98,8 @@ function NoteList(props) {
             NoteController.deleteNote(note.noteId)
               .then(response => {
                 console.log(response.data.message);
+                props.activateToast("Note added to the trash");
+                props.getAllNotes();
               })
               .catch(error => {
                 console.log(error.data.message);
@@ -131,12 +124,14 @@ function NoteList(props) {
     NoteController.deleteReminder(noteId).then(response => {
       console.log("Reminder Deleted...");
       setNoteList( notelist.filter(n => noteId!==n.noteId));
+      props.activateToast("Remainder Removed");
+      props.getAllNotes();
     })
     .catch(error => {
       console.log("error...");
     });
-    
   }
+
   const addReminder = (note) => {
     setNoteList(
         notelist.map(nt => {
@@ -149,8 +144,9 @@ function NoteList(props) {
   }
 
   const addColor = (note) => {
+    console.log("Note :",note);
     setNoteList(
-      notelist.map(nt => (nt.noteId===note.noteId ? {...nt,colour:note.colour} : nt))
+      notelist.map(nt => (nt.noteId===note.noteId ?note: nt))
     )
   }
   return (
@@ -166,14 +162,15 @@ function NoteList(props) {
               return (
                 <Note key={note.noteId}
                   list={props.list}
-                  noteId={note.noteId}
-                  title={note.title}
-                  description={note.description}
-                  pin={note.pin}
+                  addColor={addColor}
                   fnote={note}
                   onPinClick={() => updateNoteListPin(note.noteId,"pinned")}
                   handleTrash={() => updateNoteListStatus(note.noteId, "Trash")}
                   handleArchive={() => updateNoteListStatus(note.noteId, "Archive")}
+                  handleReminder={() => removeReminder(note.noteId)}
+                  labels={props.labels}
+                  getAllNotes={props.getAllNotes}
+                  activateToast={props.activateToast}
                 />
               );
             })}
@@ -184,13 +181,11 @@ function NoteList(props) {
               return (
                 <Note key={note.noteId}
                   list={props.list}
-                  noteId={note.noteId}
-                  title={note.title}
-                  description={note.description}
-                  pin={note.pin}
                   fnote={note}
                   addReminder={addReminder}
                   addColor={addColor}
+                  getAllNotes={props.getAllNotes}
+                  labels={props.labels}
                   onPinClick={() => updateNoteListPin(note.noteId,"pinned")}
                   handleTrash={() =>updateNoteListStatus(note.noteId, "Trash") }
                   handleArchive={() =>updateNoteListStatus(note.noteId, "Archive")}
@@ -207,16 +202,12 @@ function NoteList(props) {
               return (
                 <Note  key={note.noteId}
                   list={props.list}
-                  noteId={note.noteId}
-                  title={note.title}
-                  description={note.description}
-                  pin={note.pin}
                   fnote={note}
+                  labels={props.labels}
+                  getAllNotes={props.getAllNotes}
                   handleTrash={() =>    updateNoteListStatus(note.noteId, "Trash") }
-                  onPinClick={() => updateNoteListPin(note.noteId)}
-                  handleArchive={() =>
-                    updateNoteListStatus(note.noteId, "Active")
-                  }
+                  onPinClick={() => updateNoteListPin(note.noteId,"pinned")}
+                  handleArchive={() =>updateNoteListStatus(note.noteId, "Active")}
                 />
               );
             })}
@@ -229,11 +220,10 @@ function NoteList(props) {
               return (
                 <Note key={note.noteId}
                   list={props.list}
-                  noteId={note.noteId}
-                  title={note.title}
-                  description={note.description}
-                  pin={note.pin}
                   fnote={note}
+                  labels={props.labels}
+                  getAllNotes={props.getAllNotes}
+                  onPinClick={() => updateNoteListPin(note.noteId,"pinned")}
                   handleTrash={() => updateNoteListStatus(note.noteId, "Trash") }
                 />
               );
@@ -246,11 +236,9 @@ function NoteList(props) {
           return (
             <Note  key={note.noteId}
               list={props.list}
-              noteId={note.noteId}
-              title={note.title}
-              description={note.description}
-              pin={note.pin}
               fnote={note}
+              labels={props.labels}
+              getAllNotes={props.getAllNotes}
               handleTrash={() => updateNoteListStatus(note.noteId, "Reminder") }
             />
           );

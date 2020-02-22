@@ -1,23 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, Form, Row, Button } from "react-bootstrap";
+import { Dropdown, Form, Row, Button, FormControl } from "react-bootstrap";
+import { Typeahead } from "react-bootstrap-typeahead";
 import NoteController from "../Controller/NoteController";
 import CollaboratorModal from "./collaboratorModal";
 import { getCollaboratorList } from "../Controller/collaborator";
-import {MdColorLens,MdDone} from "react-icons/md";
+import { MdColorLens, MdDone } from "react-icons/md";
+import { mapLabelwithNote } from "../Controller/labelController";
+import { Label } from "react-bootstrap";
 
 export default function Icon(props) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [note, setNote] = useState(props.note);
-  const [dateError, setDateError] = useState("");
+  const [note, setNote] = useState({});
+  const [allLabels, setAllLabels] = useState([]);
   const [timeError, setTimeError] = useState("");
   const [colabShow, setColabShow] = useState(false);
   const [collaboratorList, setCollaboratorList] = useState([]);
   const [labelShow, setLabelShow] = useState(false);
-  const colors = ["white","#ffcdd2","#ffe0b2","#fff59d","#e6ee9c","#e1f5fe","#d7ccc8","#e1bee7","#f1f8e9"];
-
+  const colors = [
+    "white",
+    "#ffcdd2",
+    "#ffe0b2",
+    "#fff59d",
+    "#e6ee9c",
+    "#e1f5fe",
+    "#d7ccc8",
+    "#e1bee7",
+    "#f1f8e9"
+  ];
+  const userlabels = props.labels;
   useEffect(() => {
-    getCollaboratorList(props.noteId)
+    getCollaboratorList(props.note.noteId)
       .then(response => {
         //console.log("MESSAGE :", response.data.obj);
         setCollaboratorList(response.data.obj);
@@ -25,10 +38,15 @@ export default function Icon(props) {
       .catch(error => {
         console.log("ERROR :", error.response.data.message);
       });
-  }, [colabShow]);
+    setNote(props.note);
+    //console.log(props.labels);
+    setAllLabels(props.labels.map(lbl => {
+      return lbl.name;
+    }));
+  }, []);
 
-  const handleColabShow = id => {
-    getCollaboratorList(props.noteId)
+  const handleColabShow = () => {
+    getCollaboratorList(props.note.noteId)
       .then(response => {
         console.log("MESSAGE :", response.data.obj);
         setCollaboratorList(response.data.obj);
@@ -49,7 +67,7 @@ export default function Icon(props) {
   const onSubmit = noteID => {
     var reminder = {
       datetime: date + " " + time,
-      noteId: props.noteId
+      noteId: note.noteId
     };
     setDate("");
     setTime("");
@@ -63,25 +81,38 @@ export default function Icon(props) {
       });
   };
 
-  const colorChange = (clr) => {
-    console.log("Color :"+clr);
-    console.log(note);
-    setNote({...note,colour:clr})
+  const colorChange = clr => {
+    // console.log("Color :"+clr);
+     console.log("axios",note);
+    // setNote({...note,colour:clr})
     const colorInfo = {
-      color:clr,
-      noteId:props.noteId
+      color: clr,
+      noteId: note.noteId
     };
-    NoteController.addColour(colorInfo).then(response => {
-      console.log("Response :",response.data.obj);
-      props.addColor(response.data.obj);
-    })
-    .catch(error => {
-      console.log("Error :",error.data.message);
-    })
-
+    NoteController.addColour(colorInfo)
+      .then(response => {
+        console.log("Response :", response.data.obj);
+        props.addColor(response.data.obj);
+        setNote(response.data.obj);
+      })
+      .catch(error => {
+        console.log("Error :", error.data.message);
+      });
   };
+
+  const mapLabel = (labels) =>{
+    labels.map(labelName => {
+      if(!note.labelList.includes(labelName)){
+        let noteId=note.noteId;
+        mapLabelwithNote({labelName,noteId}).then(props.getAllNotes).catch(e =>console.log(e.response))
+      }
+    });
+    setNote({...note,labelList:labels});
+    
+  }
   return (
     <div className="icon-list">
+      {/* {console.log("render",note)} */}
       <Dropdown>
         <Dropdown.Toggle
           bsPrefix="dropdown"
@@ -124,7 +155,7 @@ export default function Icon(props) {
 
           <button
             className="float-right reminder-save-btn"
-            onClick={() => onSubmit(props.noteId)}
+            onClick={() => onSubmit(note.noteId)}
           >
             Save
           </button>
@@ -135,7 +166,7 @@ export default function Icon(props) {
           className="fa fa-user-plus"
           title="Collaborator"
           aria-hidden="true"
-          onClick={() => handleColabShow(props.noteId)}
+          onClick={() => handleColabShow(note.noteId)}
         ></i>
       </div>
       <Dropdown>
@@ -154,17 +185,14 @@ export default function Icon(props) {
                   return id < 3;
                 })
                 .map((clr, id) => (
-                  <div 
+                  <div
+                    key={id}
                     className="colorBtn"
-                    style={{backgroundColor: clr
-                    }}
-                    onClick={() => colorChange(clr)}>
-                    {clr === props.note.colour ? (
-                      <MdDone />
-                    ) : (
-                      ""
-                    )}
-                    </div>
+                    style={{ backgroundColor: clr }}
+                    onClick={() => colorChange(clr)}
+                  >
+                    {clr === note.colour ? <MdDone /> : ""}
+                  </div>
                 ))}
             </Row>
             <Row className="justify-content-center" style={{ height: "40px" }}>
@@ -173,18 +201,18 @@ export default function Icon(props) {
                   return id >= 3 && id < 6;
                 })
                 .map((clr, id) => (
-                  <div 
-                  className="colorBtn"
-                    style={{backgroundColor: clr
-                    }}
+                  <div
+                    key={id}
+                    className="colorBtn"
+                    style={{ backgroundColor: clr }}
                     onClick={() => console.log(colorChange(clr))}
-                    >
-                    {clr === props.note.colour ? (
+                  >
+                    {clr === note.colour ? (
                       <MdDone style={{ color: "black" }} />
                     ) : (
                       ""
                     )}
-                    </div>
+                  </div>
                 ))}
             </Row>
             <Row className="justify-content-center" style={{ height: "40px" }}>
@@ -193,18 +221,18 @@ export default function Icon(props) {
                   return id >= 6 && id < 9;
                 })
                 .map((clr, id) => (
-                  <div 
-                  className="colorBtn"
-                  style={{backgroundColor: clr
-                  }}
+                  <div
+                    key={id}
+                    className="colorBtn"
+                    style={{ backgroundColor: clr }}
                     onClick={() => console.log(colorChange(clr))}
-                    >
-                    {clr === props.note.colour ? (
+                  >
+                    {clr === note.colour ? (
                       <MdDone style={{ color: "black" }} />
                     ) : (
                       ""
                     )}
-                    </div>
+                  </div>
                 ))}
             </Row>
           </Form>
@@ -233,27 +261,46 @@ export default function Icon(props) {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown>
+            <Dropdown.Toggle
+              id="dropdown-more"
+              bsPrefix="dropdown"
+              style={{
+                border: "none",
+                background: "#fff",
+                color: "black",
+                marginLeft: "12px"
+              }}
+            >
+              Add Label
+            </Dropdown.Toggle>
+            <Dropdown.Menu style={{width:"500px",height:'auto'}}>
+              <div className="font-weight-light pl-1">Create Label</div>
+              <Typeahead
+                id={"typeHead"+ note.noteId}
+                clearButton
+                defaultSelected={note.labelList}
+                multiple
+                options={allLabels}
+                onChange={mapLabel}
 
+              />
+            </Dropdown.Menu>
           </Dropdown>
-          <Dropdown.Item onClick={props.handleTrash}>
-            Delete note
-          </Dropdown.Item>
+          <Dropdown.Item onClick={props.handleTrash}>Delete note</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
       {colabShow ? (
         <CollaboratorModal
           show={colabShow}
           onHide={handleColabClose}
-          collaboratorList={collaboratorList}
+          collaboratorList={note.colabList}
           loadColb={handleColabShow}
-          noteId={props.noteId}
+          noteId={note.noteId}
+          getAllNotes={props.getAllNotes}
         />
       ) : (
         ""
       )}
-      {labelShow ? <div style={{position:'relative'}}>
-            <div style={{padding:'5px'}}>Label Note</div>
-          </div>:""}
     </div>
   );
 }

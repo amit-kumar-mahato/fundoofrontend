@@ -4,6 +4,21 @@ import { Card } from "react-bootstrap";
 import Icon from "./Icon";
 
 class CreateNote extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      note: {
+        noteId: 0,
+        title: "",
+        description: "",
+        colour: "white",
+        reminder: null,
+        pin: false,
+        trash: false,
+        archiev: false
+      }
+    };
+  }
   render() {
     const {
       title,
@@ -69,7 +84,12 @@ class CreateNote extends Component {
 
               <div>
                 <div className="button-icon">
-                  <Icon />
+                  <Icon
+                    note={this.state.note}
+                    labels={this.props.labels}
+                    getAllNotes={this.props.getAllNotes}
+                    activateToast={this.props.activateToast}
+                  />
                   <button
                     className="float-right"
                     variant="light"

@@ -50,7 +50,7 @@ export default class ForgotPassword extends Component {
           <div className="form-group">
             <div className="form-row ">
               <span>
-                <img src="../keep.png" className="logo"></img>
+                <img src="../keep.png" alt ="logo" className="logo"></img>
               </span>
               <h1 className="header">fundoo</h1>
             </div>

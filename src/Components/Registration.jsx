@@ -28,7 +28,7 @@ class Registration extends Component {
     this.setState(prevState => {
       let newArr = [];
       for (let err of prevState.errors) {
-        if (elm != err.elm) {
+        if (elm !== err.elm) {
           newArr.push(err);
         }
       }

@@ -1,6 +1,4 @@
-
 .bars :hover{
-  background-color: chartreuse;
   border: 1px solid black;
 }
 .search-field{
@@ -122,9 +120,7 @@ border: 1px solid whitesmoke;
 .form-control ::placeholder{
 font-size: 25px;
 }
-.note-list{
-/* padding-left:32px; */
-}
+
 /* Note */
 .pin-icon{
 height: 32px;

@@ -5,17 +5,23 @@ import SideDrawer from "../Components/SideDrawer";
 import CreateNote from "./CreateNote";
 import NoteList from "../Components/NoteList";
 import "../App.css";
-import { getUserLabel, addUserLabel, deleteLabel, editLabel } from "../Controller/labelController";
+import {
+  getUserLabel,
+  addUserLabel,
+  deleteLabel,
+  editLabel
+} from "../Controller/labelController";
+import { Toast } from "react-bootstrap";
 
 export default class Dashboard extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       titles: [],
       descriptions: [],
       title: "",
       description: "",
-      listOfNotes: [],
+      notelist: [],
       openNote: false,
       addReminder: false,
       editLabel: false,
@@ -26,20 +32,28 @@ export default class Dashboard extends Component {
       labels: [],
       sidenav: false,
       edit: false,
-      addLabel:'',
-      listView:'col-',
+      addLabel: "",
+      listView: "col-",
       viewText: "List View",
       viewIcon: "list",
-      visible : true
+      visible: true,
+      toastShow:false,
+      toastText:""
     };
-    this.handleSideBar = this.handleSideBar.bind(this)
+    this.handleSideBar = this.handleSideBar.bind(this);
   }
+  activateToast = (text) =>{
+    this.setState({toastShow:true,toastText:text});
+  } 
+  deActivateToast = () =>{
+    this.setState({toastShow:false,toastText:""});
+  } 
   handleSideBar() {
-    this.setState(prev => ({ visible: !prev.visible }))
+    this.setState(prev => ({ visible: !prev.visible }));
   }
 
   handleSideNav = () => {
-    console.log('hidden');
+    console.log("hidden");
     this.setState({ sidenav: !this.state.sidenav });
   };
 
@@ -95,7 +109,7 @@ export default class Dashboard extends Component {
       NoteController.createNote(notes)
         .then(response => {
           this.setState({
-            listOfNotes: [...this.state.listOfNotes, notes],
+            notelist: [notes, ...this.state.notelist],
             title: "",
             description: "",
             createNote: true,
@@ -117,70 +131,84 @@ export default class Dashboard extends Component {
       .catch(error => {
         console.log("No Data Found", error.response.data.message);
       });
+    this.getAllNotes();
   }
+  getAllNotes = () => {
+    NoteController.allNotes().then(response => {
+      console.log(response.data.obj);
+      this.setState({ notelist: response.data.obj.reverse() });
+    });
+  };
   /* Add Label to the user*/
-  addLabelList = (labelName) => {
-    // console.log(labelName);
-    // console.log(this.state.labels);
+  addLabelList = labelName => {
     addUserLabel(labelName)
       .then(response => {
-        this.setState({labels:[...this.state.labels,response.data.obj]});
+        this.setState({ labels: [...this.state.labels, response.data.obj] });
       })
       .catch(error => {
         console.log("Error :", error.response.data.message);
       });
   };
- 
-  removeLabel = (labelId) => {
+
+  removeLabel = labelId => {
     if (window.confirm("Are you sure? label will be permanently deleted")) {
       deleteLabel(labelId).then(response => {
-        this.setState({labels:[...this.state.labels.filter(l => labelId!==l.labelId)]})
-      }) 
+        this.setState({
+          labels: this.state.labels.filter(l => labelId !== l.labelId)
+        });
+        this.getAllNotes();
+      });
     }
-  }
+  };
 
-  editLabel = (labelId,labelName) => {
+  editLabel = (labelId, labelName) => {
     const labelInfo = {
       labelId: labelId,
       name: labelName
-    }
-    editLabel(labelInfo).then(response => {
-      console.log(response.data.obj);
-      this.setState({
-        labels:this.state.labels.map(el => (el.labelId===labelId ? {...el,name:labelInfo.name} : el))
+    };
+    editLabel(labelInfo)
+      .then(response => {
+        console.log(response.data.obj);
+        this.setState({
+          labels: this.state.labels.map(el =>
+            el.labelId === labelId ? { ...el, name: labelInfo.name } : el
+          )
+        });
       })
-    })
-    .catch(error => {
-      console.log(error.data.message);
-    })
-  }
+      .catch(error => {
+        console.log(error.data.message);
+      });
+  };
   /* Change View (List or Grid) */
   changeView = () => {
-    console.log("View",this.state.viewIcon);
+    console.log("View", this.state.viewIcon);
     if (this.state.viewIcon !== "grid_on") {
-        this.setState({viewIcon: "grid_on", viewText: "Grid View"});
-        this.setState({listView:'col-12'});
+      this.setState({ viewIcon: "grid_on", viewText: "Grid View" });
+      this.setState({ listView: "col-12" });
     } else {
-        this.setState({viewIcon: "list", viewText: "List View"});
-        this.setState({listView:"col-"});
+      this.setState({ viewIcon: "list", viewText: "List View" });
+      this.setState({ listView: "col-" });
     }
-};
+  };
   render() {
     return (
       <div className="App">
         <div className="">
           <div className="new-nav">
-            <Header 
-              handleSideNav={this.handleSideNav} 
+            <Header
+              handleSideNav={this.handleSideNav}
               text={this.state.viewText}
               handleView={this.changeView}
               icon={this.state.viewIcon}
               handleSideBar={this.handleSideBar}
-              />
+            />
           </div>
         </div>
         <div className="side-main">
-          <div id="my-navbar" className={this.state.visible ? 'slideIn' : 'slideOut'}>
+          <div
+            id="my-navbar"
+            className={this.state.visible ? "slideIn" : "slideOut"}
+          >
             <div className="side-bar-content">
               <SideDrawer
                 onClickArchive={this.handleArchive}
@@ -208,6 +236,8 @@ export default class Dashboard extends Component {
                     onChangeTitle={this.onChangeTitle}
                     onChangeDescription={this.onChangeDescription}
                     onClose={this.onClose}
+                    labels={this.state.labels}
+                    getAllNotes={this.props.getAllNotes}
                   />
                 </div>
               </div>
@@ -226,11 +256,26 @@ export default class Dashboard extends Component {
                   addReminder={this.state.addReminder}
                   onClickReminderIcon={this.onClickReminderIcon}
                   list={this.state.listView}
+                  labels={this.state.labels}
+                  notelist={this.state.notelist}
+                  getAllNotes={this.getAllNotes}
+                  activateToast={this.activateToast}
                 />
               </div>
             </div>
           </div>
         </div>
+        <Toast
+          show={this.state.toastShow}
+          onClose={this.deActivateToast}
+          className="fixed-bottom"
+          style={{ right: "auto" }}
+          autohide
+        >
+          <Toast.Header className="bg-dark text-white">
+            <strong className="mr-2">{this.state.toastText}</strong>
+          </Toast.Header>
+        </Toast>
       </div>
     );
   }

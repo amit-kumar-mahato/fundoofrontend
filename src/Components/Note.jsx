@@ -4,7 +4,10 @@ import NoteController from "../Controller/NoteController";
 import ModalBox from "./ModalBox";
 import Icon from "./Icon";
 import MyTag from "./myTag";
-import {IoMdTime} from "react-icons/io";
+import { IoMdTime } from "react-icons/io";
+import { MdAccountCircle } from "react-icons/md";
+import { deleteCollaborator } from "../Controller/collaborator";
+import { removeLabelFromNote } from "../Controller/labelController";
 
 class Note extends Component {
   constructor(props) {
@@ -13,12 +16,11 @@ class Note extends Component {
       condition: false,
       //iconShow: false,
       isPinned: false,
-      show: false,
-      note: props.fnote,
+      show: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
-  
+
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
 
@@ -27,7 +29,7 @@ class Note extends Component {
   }
 
   handleTrash = () => {
-    NoteController.deleteNote(this.props.noteId)
+    NoteController.deleteNote(this.props.fnote.noteId)
       .then(response => {
         console.log(response.data.message);
       })
@@ -35,19 +37,39 @@ class Note extends Component {
         console.log(error.data.message);
       });
   };
+
+  handleCollaborator = (email, noteId) => {
+    deleteCollaborator({ email, noteId })
+      .then(() => {
+        this.props.getAllNotes();
+        this.props.activateToast("Collabarator Deleted");
+      })
+      .catch(e => console.log(e.response));
+  };
+  handleRemoveLabel = (noteId, labelText) => {
+    removeLabelFromNote({ noteId, labelText })
+      .then(() => {
+        this.props.getAllNotes();
+        this.props.activateToast("Label Deleted");
+      })
+      .catch(e => console.log(e.response));
+  };
   render() {
-    const { title, description, noteId } = this.props;
     return (
       <Fragment>
         <Fragment>
           <Card
             className={"shadow-sm mr-2 mb-2 " + this.props.list}
-            style={{ width: "15rem", borderRadius: "7px",backgroundColor:this.state.note.colour}}
+            style={{
+              width: "15rem",
+              borderRadius: "7px",
+              backgroundColor: this.props.fnote.colour
+            }}
           >
             <Card.Body>
               <div style={{ display: "flex" }}>
                 <div style={{ flex: 1 }} onClick={this.handleShow}>
-                  {title}
+                  {this.props.fnote.title}
                 </div>
                 <div className="pin-icon">
                   <i
@@ -57,30 +79,61 @@ class Note extends Component {
                   ></i>
                 </div>
               </div>
-              <div onClick={this.handleShow}>{description}</div>
+              <div onClick={this.handleShow}>
+                {this.props.fnote.description}
+              </div>
               <div className="row ml-1 p-2 w-100">
-                {
-                  (this.props.fnote.reminder !== null && this.props.fnote.reminder !== "") ?
-                  <MyTag icon={<IoMdTime/>} id={"reminder"+this.props.noteId}
-                  data={(this.props.fnote.reminder !== null ? this.props.fnote.reminder : "")}
-                  handleCloseIcon={this.props.handleReminder}
+                {this.props.fnote.reminder !== null &&
+                this.props.fnote.reminder !== "" ? (
+                  <MyTag
+                    icon={<IoMdTime />}
+                    id={"reminder" + this.props.fnote.noteId}
+                    data={
+                      this.props.fnote.reminder !== null
+                        ? this.props.fnote.reminder
+                        : ""
+                    }
+                    handleCloseIcon={this.props.handleReminder}
                   />
-                  : ""
-                }
-                {
-
-                }
-            
-                </div>
+                ) : (
+                  ""
+                )}
+                {this.props.fnote.colabList.map((colabEmail, id) => (
+                  <MyTag
+                    icon={<MdAccountCircle />}
+                    id={"colab" + this.props.fnote.noteId + id}
+                    key={"colab" + this.props.fnote.noteId + id}
+                    data={colabEmail}
+                    handleCloseIcon={() =>
+                      this.handleCollaborator(
+                        colabEmail,
+                        this.props.fnote.noteId
+                      )
+                    }
+                  />
+                ))}
+                {this.props.fnote.labelList.map((label, id) => (
+                  <MyTag
+                    icon={<MdAccountCircle />}
+                    id={"label" + this.props.fnote.noteId + id}
+                    key={"label" + this.props.fnote.noteId + id}
+                    data={label}
+                    handleCloseIcon={() =>
+                      this.handleRemoveLabel(this.props.fnote.noteId, label)
+                    }
+                  />
+                ))}
+              </div>
               <div style={{ marginTop: "30px" }}>
                 <Icon
                   handleClick={this.handleClick}
                   handleArchive={this.props.handleArchive}
                   handleTrash={this.props.handleTrash}
-                  noteId={noteId}
                   addReminder={this.props.addReminder}
                   addColor={this.props.addColor}
                   note={this.props.fnote}
+                  labels={this.props.labels}
+                  getAllNotes={this.props.getAllNotes}
                 />
               </div>
             </Card.Body>
@@ -90,6 +143,8 @@ class Note extends Component {
           show={this.state.show}
           onHide={this.handleClose}
           note={this.props.fnote}
+          labels={this.props.labels}
+          getAllNotes={this.props.getAllNotes}
         />
       </Fragment>
     );

@@ -28,3 +28,17 @@ export function editLabel(labelInfo){
         headers:headers
     })
 }
+export function mapLabelwithNote(labelInfo){
+    console.log(labelInfo.noteId+", "+labelInfo.labelName);
+    return Axios.post('addlabels',null,{
+        headers:headers,
+        params:labelInfo
+    })
+}
+export function removeLabelFromNote(labelInfo){
+    console.log(labelInfo);
+    return Axios.delete('labels/remove',{
+        headers:headers,
+        params:labelInfo
+    })
+}

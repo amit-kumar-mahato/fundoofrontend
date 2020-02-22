@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import "../Collaborator.css";
 import { updateCollaborator } from "../Controller/collaborator";
@@ -8,21 +8,23 @@ export default function CollaboratorModal(props) {
   const [email, setEmail] = useState("");
   const [updateColab, setUpdateColab] = useState({
     newEmail: [],
-    noteId:0,
+    noteId: 0,
     removeEmail: []
   });
-  const [cList, setCList] = useState(
-    props.collaboratorList.map(clb => {
-      return clb.email;
-    })
-  );
+  const [cList, setCList] = useState(props.collaboratorList);
 
   const addCollaborator = e => {
     e.preventDefault();
     console.log(email);
-    setCList([...cList, email]);
-    setUpdateColab({...updateColab,newEmail:updateColab.newEmail.concat([email]),noteId:props.noteId});
-    console.log(updateColab.newEmail.concat([email]));
+    if (!cList.includes(email)) {
+      setCList([...cList, email]);
+      setUpdateColab({
+        ...updateColab,
+        newEmail: updateColab.newEmail.concat([email]),
+        noteId: props.noteId
+      });
+      console.log(updateColab.newEmail.concat([email]));
+    }
     setEmail("");
   };
   const removeCollaborator = colab => {
@@ -31,17 +33,26 @@ export default function CollaboratorModal(props) {
         return emailId !== colab;
       })
     );
-    setUpdateColab({...updateColab,removeEmail:updateColab.removeEmail.concat([colab]),noteId:props.noteId});
+    setUpdateColab({
+      ...updateColab,
+      removeEmail: updateColab.removeEmail.concat([colab]),
+      noteId: props.noteId
+    });
   };
 
   const saveColab = () => {
-    updateCollaborator(updateColab).then(response =>{
-      console.log(response);
-    })
-    .catch(error => {
-      alert('false');
-      console.log(error.response);
-    })
+    if (updateColab.noteId !== 0) {
+      updateCollaborator(updateColab)
+        .then(() => {
+          props.getAllNotes();
+          setUpdateColab({ newEmail: [], noteId: 0, removeEmail: [] });
+        })
+        .catch(error => {
+          alert("false");
+          console.log(error.response);
+        });
+    }
+    props.onHide();
   };
 
   return (
@@ -58,7 +69,11 @@ export default function CollaboratorModal(props) {
                       <img
                         src="https://akprofilepic.s3.ap-south-1.amazonaws.com/ak.jpg"
                         alt="logo"
-                        style={{borderRadius:'50%',width:'40px',height:'40px'}}
+                        style={{
+                          borderRadius: "50%",
+                          width: "40px",
+                          height: "40px"
+                        }}
                       />
                     </div>
                   </div>
@@ -73,7 +88,7 @@ export default function CollaboratorModal(props) {
                   </div>
                 </div>
               </div>
-              {cList.map((colabEmail,id) => (
+              {cList.map((colabEmail, id) => (
                 <div key={id} style={{ fontSize: "13px" }}>
                   <div style={{ display: "flex", padding: "5px" }}>
                     <div className="colab-owner">
