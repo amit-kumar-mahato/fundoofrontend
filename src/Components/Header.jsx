@@ -4,6 +4,8 @@ import MyToolTip from "./myToolTip";
 import MaterialIcon from "react-google-material-icons";
 import { Button,FormControl,Dropdown } from "react-bootstrap";
 import {ImagePicker} from "react-file-picker";
+import Axios from "axios";
+import { uploadFile } from "../Controller/profile";
 class Header extends Component {
   constructor(props){
     super(props);
@@ -13,8 +15,9 @@ class Header extends Component {
   }
 
   getOnChange = (file) => {
-    // axios.post("/api/uploadFile", null, {params: {file}, headers: context.header})
-    //     .then(resp => setPic(resp.data.response)).catch(err => context.catchError(err));
+   uploadFile(file).
+   then(resp => this.setState({profilePic:resp.data.obj}))
+   .catch(err => console.log(err.response));
   };
   render() {
     return (
@@ -28,9 +31,8 @@ class Header extends Component {
               <i
                 className="fa fa-bars"
                 aria-hidden="true"
-                style={{ fontSize: "20px" }}
+                style={{ fontSize: "20px",cursor:'pointer'}}
                 onClick={this.props.handleSideBar}
-                style={{cursor:'pointer'}}
               ></i>
             </div>
             <div className="col-sm-2">
@@ -50,7 +52,7 @@ class Header extends Component {
           </div>
 
           <div
-            className="col-sm-3"
+            className="col-sm-3 right-content"
             style={{ display: "flex", alignItems: "center"}}
           >
             <div className="col-sm-3"></div>
@@ -74,12 +76,9 @@ class Header extends Component {
               </MyToolTip>
             </div>
             <div className="col-sm-3">
-              {/* <img src="https://akprofilepic.s3.ap-south-1.amazonaws.com/ak.jpg" alt="Profile" style={{borderRadius:'50%',width:'40px',height:'40px'}}/> */}
               <Dropdown>
                     <Dropdown.Toggle as={Button} variant={"light"} className="p-0" bsPrefix="dropdown">
                         <MyToolTip text={"Profile"}>
-                            {/* <Image src={pic} width={50}
-                                   height={50} roundedCircle={"true"}/> */}
                             <img src="https://akprofilepic.s3.ap-south-1.amazonaws.com/ak.jpg" alt="Profile" style={{borderRadius:'50%',width:'40px',height:'40px'}}/>
                         </MyToolTip>
                     </Dropdown.Toggle>
@@ -87,11 +86,11 @@ class Header extends Component {
                         <div className="bg-light text-center p-2 border shadow-lg position-fixed"
                              style={{right: 10, width: "300px", borderRadius: "10px"}}>
                             <div className="w-100 mb-2">
-                                <img src="https://akprofilepic.s3.ap-south-1.amazonaws.com/ak.jpg" style={{borderRadius:'50%'}} width={70} height={70} roundedCircle/>
+                                <img src="https://akprofilepic.s3.ap-south-1.amazonaws.com/ak.jpg" alt="Profile pic" style={{borderRadius:'50%'}} width={70} height={70} roundedcircle="true"/>
                                 <MyToolTip text={"Update"}>
                                     <ImagePicker
                                         extensions={['jpg', 'jpeg', 'png']}
-                                        dims={{minWidth: 100, maxWidth: 500, minHeight: 100, maxHeight: 500}}
+                                        dims={{minWidth: 100, maxWidth: 1024, minHeight: 100, maxHeight: 1024}}
                                         onChange={this.getOnChange}
                                         onError={errMsg => alert(errMsg)}>
                                         <Button variant={"light"} className="p-0"
@@ -110,7 +109,6 @@ class Header extends Component {
                                 className="bg-transparent border-0 text-center text-#eceff1" 
                                 style={{fontSize: "15px"}}
                                 type="text"
-                                // value={context.myID} disabled
                                 />
                                 </div>
 

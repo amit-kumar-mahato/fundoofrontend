@@ -1,5 +1,6 @@
 import React, { Component,Fragment } from "react";
 import "../sidedrawer.css";
+import "../App.css";
 import AddLabel from "./addLabel";
 import MaterialIcon from "react-google-material-icons";
 class SideDrawer extends Component {
@@ -27,7 +28,7 @@ class SideDrawer extends Component {
                 style={{ color: "gray", fontSize: "18px" }}
               ></i>
               <div
-                className="side-drawer-content"
+                className="side-drawer-content "
                 onClick={this.props.onClickActive}
               >
                 Note
@@ -57,6 +58,7 @@ class SideDrawer extends Component {
                 <div className="side-drawer-header">
                   <MaterialIcon icon={"label"} size={20}/>
                   <div
+                    className="label-list"
                     style={{marginLeft:'25px'}}
                   >
                     {lbl.name}

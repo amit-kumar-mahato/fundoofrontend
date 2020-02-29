@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect, Fragment } from "react";
+import React, { useState, useRef} from "react";
 import { Modal, InputGroup, Button, FormControl } from "react-bootstrap";
 import MaterialIcon from "react-google-material-icons";
 export default function AddLabel(props) {
   const inRef = useRef(null);
   const [ic, setIc] = useState("add");
-  const [error, setError] = useState("");
   const [updatedLabel, setUpdatedLabel] = useState("");
   const [icon, setIcon] = useState(false);
 

@@ -49,7 +49,9 @@
 .side-drawer-content{
   font-size: 15px;
   cursor: pointer;
+  padding-left: 32px;
 }
+
 /*----------*/
 #my-navbar{
   position: fixed;

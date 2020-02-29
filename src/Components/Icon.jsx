@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, Form, Row, Button, FormControl } from "react-bootstrap";
+import { Dropdown, Form, Row} from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import NoteController from "../Controller/NoteController";
 import CollaboratorModal from "./collaboratorModal";
 import { getCollaboratorList } from "../Controller/collaborator";
 import { MdColorLens, MdDone } from "react-icons/md";
 import { mapLabelwithNote } from "../Controller/labelController";
-import { Label } from "react-bootstrap";
 
 export default function Icon(props) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [note, setNote] = useState({});
   const [allLabels, setAllLabels] = useState([]);
-  const [timeError, setTimeError] = useState("");
   const [colabShow, setColabShow] = useState(false);
   const [collaboratorList, setCollaboratorList] = useState([]);
-  const [labelShow, setLabelShow] = useState(false);
   const colors = [
     "white",
     "#ffcdd2",
@@ -28,18 +25,17 @@ export default function Icon(props) {
     "#e1bee7",
     "#f1f8e9"
   ];
-  const userlabels = props.labels;
   useEffect(() => {
-    getCollaboratorList(props.note.noteId)
-      .then(response => {
-        //console.log("MESSAGE :", response.data.obj);
-        setCollaboratorList(response.data.obj);
-      })
-      .catch(error => {
-        console.log("ERROR :", error.response.data.message);
-      });
-    setNote(props.note);
-    //console.log(props.labels);
+    // getCollaboratorList(props.note.noteId)
+    //   .then(response => {
+    //     //console.log("MESSAGE :", response.data.obj);
+    //     setCollaboratorList(response.data.obj);
+    //   })
+    //   .catch(error => {
+    //     console.log("ERROR :", error.response.data.message);
+    //   });
+     setNote(props.note);
+    //console.log(props.note);
     setAllLabels(props.labels.map(lbl => {
       return lbl.name;
     }));
@@ -83,7 +79,7 @@ export default function Icon(props) {
 
   const colorChange = clr => {
     // console.log("Color :"+clr);
-     console.log("axios",note);
+     //console.log("axios",note);
     // setNote({...note,colour:clr})
     const colorInfo = {
       color: clr,
@@ -108,12 +104,23 @@ export default function Icon(props) {
       }
     });
     setNote({...note,labelList:labels});
-    
+  }
+
+  const deletePermanently = (noteId) =>{
+    console.log("Note ID :",noteId);
+    NoteController.permanentDelete(noteId).then(props.getAllNotes).catch(err => console.log(err.response))
   }
   return (
     <div className="icon-list">
-      {/* {console.log("render",note)} */}
-      <Dropdown>
+      {
+        props.trashStatus ?
+        <div style={{display:'flex'}}>
+        <img src="images/delete_forever.svg" alt="Delete" onClick={() =>deletePermanently(note.noteId)}/>
+        <img src="images/delete-restore.svg" alt="Restore" style={{paddingLeft:'20px'}}/>
+        </div>
+        :
+        <div className="icon-list">
+          <Dropdown>
         <Dropdown.Toggle
           bsPrefix="dropdown"
           style={{ background: "none", border: "none" }}
@@ -205,7 +212,7 @@ export default function Icon(props) {
                     key={id}
                     className="colorBtn"
                     style={{ backgroundColor: clr }}
-                    onClick={() => console.log(colorChange(clr))}
+                    onClick={() => colorChange(clr)}
                   >
                     {clr === note.colour ? (
                       <MdDone style={{ color: "black" }} />
@@ -225,7 +232,7 @@ export default function Icon(props) {
                     key={id}
                     className="colorBtn"
                     style={{ backgroundColor: clr }}
-                    onClick={() => console.log(colorChange(clr))}
+                    onClick={() => colorChange(clr)}
                   >
                     {clr === note.colour ? (
                       <MdDone style={{ color: "black" }} />
@@ -301,6 +308,9 @@ export default function Icon(props) {
       ) : (
         ""
       )}
+        </div>
+      }
+      
     </div>
   );
 }

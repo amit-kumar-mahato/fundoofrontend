@@ -59,10 +59,11 @@ class Note extends Component {
       <Fragment>
         <Fragment>
           <Card
-            className={"shadow-sm mr-2 mb-2 " + this.props.list}
+            className={"shadow-sm mr-2 mb-10" + this.props.list}
             style={{
               width: "15rem",
               borderRadius: "7px",
+              marginBottom: "10px",
               backgroundColor: this.props.fnote.colour
             }}
           >
@@ -134,6 +135,7 @@ class Note extends Component {
                   note={this.props.fnote}
                   labels={this.props.labels}
                   getAllNotes={this.props.getAllNotes}
+                  trashStatus={this.props.trashStatus}
                 />
               </div>
             </Card.Body>

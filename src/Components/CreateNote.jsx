@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import "../App.css";
 import { Card } from "react-bootstrap";
 import Icon from "./Icon";
@@ -15,7 +15,8 @@ class CreateNote extends Component {
         reminder: null,
         pin: false,
         trash: false,
-        archiev: false
+        archiev: false,
+        colabList:[]
       }
     };
   }
@@ -30,7 +31,7 @@ class CreateNote extends Component {
       openNote
     } = this.props;
     return (
-      <div>
+      <Fragment>
         <div style={{ margin: "0px 22%" }}>
           {!openNote ? (
             <Card style={{ borderRadius: "8px" }}>
@@ -76,7 +77,7 @@ class CreateNote extends Component {
                   fontSize: "18px",
                   paddingLeft: "8px"
                 }}
-                multiline
+                multiline="true"
                 placeholder="Take a note...."
                 value={description}
                 onChange={onChangeDescription}
@@ -108,7 +109,7 @@ class CreateNote extends Component {
             </Card>
           )}
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

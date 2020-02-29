@@ -9,7 +9,6 @@ import Dashboard from './Components/Dashboard';
 import SideDrawer from './Components/SideDrawer';
 import Header from './Components/Header';
 import CreateNote from './Components/CreateNote';
-import Reminder from './Components/Reminder';
 
 class App extends Component {
   render() {
@@ -24,7 +23,6 @@ class App extends Component {
         <Route path="/sidenav" component={SideDrawer}></Route>
         <Route path="/headers" component={Header}></Route>
         <Route path="/createnote" exact component={CreateNote}></Route>
-        <Route path="/reminder" component={Reminder}></Route>
         </Switch>
       </Router>
     );

@@ -9,7 +9,7 @@ function NoteList(props) {
   const [archiveNote, setArchiveNote] = useState([]);
   const [reminderNote, setReminderNote] = useState([]);
   useEffect(() => {
-    console.log("notelist props",props.notelist)
+    // console.log("notelist props",props.notelist)
       setNoteList(props.notelist);
       setPinnedNote(
         props.notelist.filter(note => {
@@ -44,6 +44,7 @@ function NoteList(props) {
       NoteController.pinNote(id)
         .then(response => {
           console.log("Message :", response.data.message);
+          props.getAllNotes();
         })
         .catch(error => {
           console.log("Message :", error.data.message);
@@ -59,7 +60,6 @@ function NoteList(props) {
             console.log(error.data.message);
           });
       }
-      props.getAllNotes();
   };
 
   const updateNoteListStatus = (id, status) => {
@@ -141,6 +141,7 @@ function NoteList(props) {
           return nt;
         })
       );
+      props.getAllNotes();
   }
 
   const addColor = (note) => {
@@ -148,6 +149,7 @@ function NoteList(props) {
     setNoteList(
       notelist.map(nt => (nt.noteId===note.noteId ?note: nt))
     )
+    props.getAllNotes()
   }
   return (
     <div style={{marginLeft:'27px'}}>
@@ -223,8 +225,9 @@ function NoteList(props) {
                   fnote={note}
                   labels={props.labels}
                   getAllNotes={props.getAllNotes}
+                  trashStatus={props.status.trash}
                   onPinClick={() => updateNoteListPin(note.noteId,"pinned")}
-                  handleTrash={() => updateNoteListStatus(note.noteId, "Trash") }
+                  handleTrash={() => updateNoteListStatus(note.noteId, "Trash")}
                 />
               );
             })}

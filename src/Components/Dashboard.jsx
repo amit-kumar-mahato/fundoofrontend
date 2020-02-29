@@ -238,6 +238,7 @@ export default class Dashboard extends Component {
                     onClose={this.onClose}
                     labels={this.state.labels}
                     getAllNotes={this.props.getAllNotes}
+                    notelist={this.state.notelist}
                   />
                 </div>
               </div>
